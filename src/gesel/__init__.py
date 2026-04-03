@@ -14,3 +14,7 @@ except PackageNotFoundError:  # pragma: no cover
     __version__ = "unknown"
 finally:
     del version, PackageNotFoundError
+
+from ._download_database_file import *
+from ._download_database_ranges import *
+from ._download_gene_file import *
