@@ -18,3 +18,9 @@ finally:
 from ._download_database_file import *
 from ._download_database_ranges import *
 from ._download_gene_file import *
+
+from ._fetch_all_collections import *
+from ._fetch_all_genes import *
+from ._fetch_all_sets import *
+
+from ._new_config import *
