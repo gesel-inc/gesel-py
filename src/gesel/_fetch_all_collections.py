@@ -14,7 +14,7 @@ def fetch_all_collections(species: str, config: Optional[dict] = None) -> biocfr
 
         config:
             Configuration object, typically created by :py:func:`~gesel.new_config`.
-            If ``NULL``, the default configuration is used.
+            If ``None``, the default configuration is used.
 
     Returns:
         A :py:class:`~biocframe.BiocFrame` where each row represents a collection.

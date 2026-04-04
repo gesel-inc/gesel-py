@@ -14,7 +14,7 @@ def fetch_all_sets(species: str, config: Optional[dict] = None) -> biocframe.Bio
 
         config:
             Configuration object, typically created by :py:func:`~gesel.new_config`.
-            If ``NULL``, the default configuration is used.
+            If ``None``, the default configuration is used.
 
     Returns:
         A :py:class:`~biocframe.BiocFrame` where each row represents a gene set.
@@ -58,12 +58,7 @@ def fetch_all_sets(species: str, config: Optional[dict] = None) -> biocframe.Bio
             size.append(int(details[2]))
 
     info = fetch_all_collections(species, config=config)
-    collection = []
-    number = []
-    for cidx in range(info.shape[0]):
-        csize = info["size"][cidx]
-        collection += [cidx] * csize
-        number += list(range(csize))
+    collection, number = _compute_set_to_collection_indices(info["size"])
 
     output = biocframe.BiocFrame({
         "name": name,
@@ -75,3 +70,12 @@ def fetch_all_sets(species: str, config: Optional[dict] = None) -> biocframe.Bio
 
     cfg.set_cache(config, "fetch_all_sets", species, output)
     return output
+
+
+def _compute_set_to_collection_indices(collection_sizes: list) -> tuple:
+    collection = []
+    number = []
+    for cidx, csize in enumerate(collection_sizes):
+        collection += [cidx] * csize
+        number += list(range(csize))
+    return collection, number

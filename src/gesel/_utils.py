@@ -45,3 +45,18 @@ def download_file(
                 os.remove(temppath)
 
     return target
+
+
+def _decode_indices(lines: str) -> list:
+    output = []
+    for line in lines:
+        if line == "\n":
+            output.append([])
+            continue
+        details = line.rstrip().split("\t") 
+        last = 0
+        for i, x in enumerate(details):
+            last += int(x)
+            details[i] = last
+        output.append(details)
+    return output

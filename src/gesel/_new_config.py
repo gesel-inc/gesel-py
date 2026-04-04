@@ -96,7 +96,7 @@ def fetch_file(config: dict, *args, **kwargs) -> str:
 
 
 def fetch_ranges(config: dict, *args, **kwargs) -> list[bytes]:
-    fetch_ranges <- config["fetch_ranges"]
+    fetch_ranges = config["fetch_ranges"]
     if fetch_ranges is None:
         fetch_ranges = download_database_ranges
     return fetch_ranges(*args, **kwargs, **(config["fetch_ranges_kwargs"]))
@@ -139,3 +139,45 @@ def set_cache(config: dict, context: str, species: str, value: Any):
     if context not in cache:
         cache[context] = {}
     cache[context][species] = value
+
+
+def _retrieve_ranges(config: dict, name: str) -> list:
+    path = fetch_file(config, name + ".ranges.gz")
+    import gzip
+    with gzip.open(path, "r") as f:
+        boundaries = [0]
+        last = 0
+        for line in f:
+            last += int(x) + 1 # +1 for the newline
+            boundaries.append(last)
+        return boundaries
+
+
+def _retrieve_ranges_with_sizes(config: dict, name: str) -> tuple:
+    path = fetch_file(config, name + ".ranges.gz")
+    import gzip
+    with gzip.open(path, "r") as f:
+        boundaries = [0]
+        last = 0
+        sizes = []
+        for line in f:
+            details = line.split(b"\t")
+            last += int(details[0]) + 1 # +1 for the newline
+            boundaries.append(last)
+            sizes.append(int(details[1]))
+        return boundaries, sizes
+
+
+def _retrieve_ranges_with_names(config: dict, name: str) -> tuple:
+    path = fetch_file(config, name + ".ranges.gz")
+    import gzip
+    with gzip.open(path, "r") as f:
+        boundaries = [0]
+        last = 0
+        names = []
+        for line in f:
+            details = line.split(b"\t")
+            names.append(details[0])
+            last += int(details[1]) + 1 # +1 for the newline
+            boundaries.append(last)
+        return names, boundaries
