@@ -47,16 +47,13 @@ def download_file(
     return target
 
 
-def _decode_indices(lines: str) -> list:
-    output = []
-    for line in lines:
-        if line == "\n":
-            output.append([])
-            continue
-        details = line.rstrip().split("\t") 
-        last = 0
-        for i, x in enumerate(details):
-            last += int(x)
-            details[i] = last
-        output.append(details)
-    return output
+def _decode_indices(line: str) -> list:
+    if line == b"\n":
+        return []
+
+    details = line.rstrip().split(b"\t") 
+    last = 0
+    for i, x in enumerate(details):
+        last += int(x)
+        details[i] = last
+    return details 

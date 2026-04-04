@@ -148,7 +148,7 @@ def _retrieve_ranges(config: dict, name: str) -> list:
         boundaries = [0]
         last = 0
         for line in f:
-            last += int(x) + 1 # +1 for the newline
+            last += int(line) + 1 # +1 for the newline
             boundaries.append(last)
         return boundaries
 

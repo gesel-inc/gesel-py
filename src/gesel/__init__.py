@@ -26,4 +26,10 @@ from ._fetch_all_sets import *
 from ._fetch_some_sets import *
 from ._fetch_some_collections import *
 
+from ._fetch_genes_for_all_sets import *
+from ._fetch_sets_for_all_genes import *
+
+from ._fetch_genes_for_some_sets import *
+from ._fetch_sets_for_some_genes import *
+
 from ._new_config import *
