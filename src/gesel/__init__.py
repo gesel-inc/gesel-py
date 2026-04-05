@@ -35,4 +35,6 @@ from ._find_overlapping_sets import *
 from ._map_genes_by_name import *
 from ._search_genes import *
 
+from ._search_set_text import *
+
 from ._new_config import *
