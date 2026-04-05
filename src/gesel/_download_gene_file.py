@@ -36,7 +36,7 @@ def download_gene_file(
     """
     if url is None:
         url = gene_url()
-    return utils.download_file(cache, url + "/" + name, overwrite)
+    return utils._download_file(cache, url + "/" + name, overwrite)
 
 
 _gene_url = None

@@ -49,7 +49,7 @@ def mock_request(url, ranges):
     if tmpdir is None:
         tmpdir = tempfile.mkdtemp()
 
-    out = ut.download_file(url=url, cache=tmpdir, overwrite=False)
+    out = ut._download_file(url=url, cache=tmpdir, overwrite=False)
     with open(out, "rb") as f:
         full_contents = f.read()
 

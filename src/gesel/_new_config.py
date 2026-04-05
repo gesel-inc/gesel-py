@@ -121,7 +121,7 @@ def flush_memory_cache(config: Optional[dict] = None):
         >>> import gesel
         >>> gesel.flush_memory_cache()
     """
-    config = get_config(config)
+    config = _get_config(config)
     config["cache"] = {}
 
 
@@ -142,7 +142,7 @@ def _set_cache(config: dict, context: str, species: str, value: Any):
 
 
 def _retrieve_ranges(config: dict, name: str) -> list:
-    path = fetch_file(config, name + ".ranges.gz")
+    path = _fetch_file(config, name + ".ranges.gz")
     import gzip
     with gzip.open(path, "r") as f:
         boundaries = [0]
@@ -154,7 +154,7 @@ def _retrieve_ranges(config: dict, name: str) -> list:
 
 
 def _retrieve_ranges_with_sizes(config: dict, name: str) -> tuple:
-    path = fetch_file(config, name + ".ranges.gz")
+    path = _fetch_file(config, name + ".ranges.gz")
     import gzip
     with gzip.open(path, "r") as f:
         boundaries = [0]
@@ -169,7 +169,7 @@ def _retrieve_ranges_with_sizes(config: dict, name: str) -> tuple:
 
 
 def _retrieve_ranges_with_names(config: dict, name: str) -> tuple:
-    path = fetch_file(config, name + ".ranges.gz")
+    path = _fetch_file(config, name + ".ranges.gz")
     import gzip
     with gzip.open(path, "r") as f:
         boundaries = [0]

@@ -79,7 +79,13 @@ def find_overlapping_sets(
         for s, count in collected.items():
             sets.append(s)
             counts.append(count)
-        o = biocutils.order(counts, decreasing=True)
+
+        for_sorting = []
+        for i, count in enumerate(counts):
+            for_sorting.append((count, i))
+        for_sorting.sort()
+        o = [i for _, i in for_sorting]
+        #o = biocutils.order(counts, decreasing=True)
 
         overlap = biocframe.BiocFrame({
             "set": biocutils.subset(sets, o),
@@ -103,7 +109,13 @@ def find_overlapping_sets(
             sets.append(s)
             members.append(genes)
             counts.append(len(genes))
-        o = biocutils.order(counts, decreasing=True)
+
+        for_sorting = []
+        for i, count in enumerate(counts):
+            for_sorting.append((count, i))
+        for_sorting.sort()
+        o = [i for _, i in for_sorting]
+        #o = biocutils.order(counts, decreasing=True)
 
         overlap = biocframe.BiocFrame({
             "set": biocutils.subset(sets, o),

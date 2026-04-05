@@ -30,16 +30,17 @@ def _download_file(
         # Saving to a temporary file and renaming it on success,
         # so we don't fail with a partially downloaded file in the cache.
         import tempfile
-        _, temppath = tempfile.mkstemp(dir=cache)
+        tempfid, temppath = tempfile.mkstemp(dir=cache)
+        os.close(tempfid) # avoid opening a handle to this file until we need it.
 
         try:
+            import shutil
             with requests.get(url, stream=True) as r:
                 if r.status_code >= 300:
                     raise _format_error(r)
-                import shutil
                 with open(temppath, "wb") as f:
                     shutil.copyfileobj(r.raw, f)
-            os.rename(temppath, target) # this should be more or less atomic, so no need for locks.
+            shutil.move(temppath, target) # this should be more or less atomic when both paths are on the same filesystem, so we'll omit the locks.
         finally:
             if os.path.exists(temppath):
                 os.remove(temppath)

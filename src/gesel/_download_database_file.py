@@ -36,7 +36,7 @@ def download_database_file(
     """
     if url is None:
         url = database_url()
-    return utils.download_file(cache, url + "/" + name, overwrite)
+    return utils._download_file(cache, url + "/" + name, overwrite)
 
 
 _db_url = None
