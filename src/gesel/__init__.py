@@ -32,4 +32,7 @@ from ._fetch_genes_for_some_sets import *
 from ._fetch_sets_for_some_genes import *
 from ._find_overlapping_sets import *
 
+from ._map_genes_by_name import *
+from ._search_genes import *
+
 from ._new_config import *
