@@ -24,9 +24,9 @@ def fetch_all_sets(species: str, config: Optional[dict] = None) -> biocframe.Bio
         - ``description``, string containing a description of the gene set.
         - ``size``: integer specifying the number of genes in this gene set.
         - ``collection``: integer, the collection index of the collection that contains this gene set.
-           The collection index refers to a row of the data frame returned by :py:func:`~gesel.fetch_all_collections`.
+          The collection index refers to a row of the data frame returned by :py:func:`~gesel.fetch_all_collections`.
         - ``number``: integer, the position of the gene set inside the specified collection.
-          The set index of the current gene set is defined by adding ``number` to the collection's ``start``. 
+          The set index of the current gene set is defined by adding ``number`` to the collection's ``start``. 
 
         If this function is called once, the data frame will be cached in memory and re-used in subsequent calls.
         The cached information will also be used to speed up :py:func:`~gesel.fetch_some_sets`.
@@ -37,13 +37,13 @@ def fetch_all_sets(species: str, config: Optional[dict] = None) -> biocframe.Bio
         >>> print(df)
     """
 
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_all_sets", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_all_sets", species)
     if candidate is not None:
         return candidate
 
     fname = species + "_sets.tsv.gz"
-    path = cfg.fetch_file(config, fname)
+    path = cfg._fetch_file(config, fname)
 
     name = []
     desc = []
@@ -68,7 +68,7 @@ def fetch_all_sets(species: str, config: Optional[dict] = None) -> biocframe.Bio
         "number": number
     })
 
-    cfg.set_cache(config, "fetch_all_sets", species, output)
+    cfg._set_cache(config, "fetch_all_sets", species, output)
     return output
 
 

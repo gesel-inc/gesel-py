@@ -38,13 +38,13 @@ def fetch_genes_for_all_sets(species: str, config: Optional[dict] = None) -> lis
         >>> print(set_info[0,:])
     """
 
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_genes_for_all_sets", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_genes_for_all_sets", species)
     if candidate is not None:
         return candidate
 
     fname = species + "_set2gene.tsv.gz"
-    path = cfg.fetch_file(config, fname)
+    path = cfg._fetch_file(config, fname)
 
     import gzip
     output = []
@@ -52,5 +52,5 @@ def fetch_genes_for_all_sets(species: str, config: Optional[dict] = None) -> lis
         for line in f:
             output.append(utils._decode_indices(line))
 
-    cfg.set_cache(config, "fetch_genes_for_all_sets", species, output)
+    cfg._set_cache(config, "fetch_genes_for_all_sets", species, output)
     return output

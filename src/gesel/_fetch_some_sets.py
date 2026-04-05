@@ -34,7 +34,7 @@ def fetch_some_sets(
             If ``None``, the default configuration is used.
 
     Returns:
-        A :py:func:`~biocframe.BiocFrame` with the same columns as that returned by :py:func:`~gesel.fetch_all_sets`,
+        A :py:class:`~biocframe.BiocFrame` with the same columns as that returned by :py:func:`~gesel.fetch_all_sets`,
         where each row corresponds to an entry of ``sets``.
 
     Examples:
@@ -42,8 +42,8 @@ def fetch_some_sets(
         >>> gesel.fetch_some_sets("9606", [0, 10, 20])
     """
 
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_all_sets", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_all_sets", species)
     if candidate is not None:
         output = candidate[sets,:]
         return output
@@ -68,7 +68,7 @@ def fetch_some_sets(
             starts.append(intervals[s])
             ends.append(intervals[s + 1] - 1) # remove the newline
 
-        deets = cfg.fetch_ranges(config, fname, starts, ends)
+        deets = cfg._fetch_ranges(config, fname, starts, ends)
         name = []
         desc = []
         for d in deets:
@@ -84,7 +84,7 @@ def fetch_some_sets(
     if modified:
         cached["prior"]["sets"] = prior_sets
         cached["prior"]["details"] = prior_details
-        cfg.set_cache(config, "fetch_some_sets", species, cached)
+        cfg._set_cache(config, "fetch_some_sets", species, cached)
 
     output = prior_details[biocutils.match(sets, prior_sets),:]
     output = output.set_column("size", biocutils.subset(cached["sizes"], sets))
@@ -94,7 +94,7 @@ def fetch_some_sets(
 
 
 def _get_single_set_ranges(config: dict, species: str, fname: str) -> tuple:
-    cached = cfg.get_cache(config, "fetch_some_sets", species)
+    cached = cfg._get_cache(config, "fetch_some_sets", species)
     if cached is not None:
         return cached, False
 
@@ -136,14 +136,14 @@ def fetch_set_sizes(species: str, config: Optional[dict] = None) -> list:
         >>> gesel.fetch_set_sizes("9606")
     """
 
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_all_sets", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_all_sets", species)
     if candidate is not None:
         return candidate["size"]
 
     fname = species + "_sets.tsv"
     cached, modified = _get_single_set_ranges(config, species, fname)
     if modified:
-        cfg.set_cache(config, "fetch_some_sets", species, cached)
+        cfg._set_cache(config, "fetch_some_sets", species, cached)
 
     return cached["sizes"]

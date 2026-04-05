@@ -37,13 +37,13 @@ def fetch_all_collections(species: str, config: Optional[dict] = None) -> biocfr
         >>> print(df)
     """
 
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_all_collections", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_all_collections", species)
     if candidate is not None:
         return candidate
 
     fname = species + "_collections.tsv.gz"
-    path = cfg.fetch_file(config, fname)
+    path = cfg._fetch_file(config, fname)
 
     title = []
     desc = []
@@ -75,5 +75,5 @@ def fetch_all_collections(species: str, config: Optional[dict] = None) -> biocfr
         "size": size
     })
 
-    cfg.set_cache(config, "fetch_all_collections", species, output)
+    cfg._set_cache(config, "fetch_all_collections", species, output)
     return output

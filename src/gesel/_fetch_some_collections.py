@@ -33,7 +33,7 @@ def fetch_some_collections(
             If ``None``, the default configuration is used.
 
     Returns:
-        A :py:func:`~biocframe.BiocFrame` with the same columns as that returned by :py:func:`~gesel.fetch_all_collections`,
+        A :py:class:`~biocframe.BiocFrame` with the same columns as that returned by :py:func:`~gesel.fetch_all_collections`,
         where each row corresponds to an entry of ``collections``.
 
     Examples:
@@ -41,8 +41,8 @@ def fetch_some_collections(
         >>> gesel.fetch_some_collections("9606", 0)
     """
 
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_all_collections", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_all_collections", species)
     if candidate is not None:
         return candidate[collections,:]
 
@@ -66,7 +66,7 @@ def fetch_some_collections(
             starts.append(intervals[s])
             ends.append(intervals[s + 1] - 1) # remove the newline
 
-        deets = cfg.fetch_ranges(config, fname, starts, ends)
+        deets = cfg._fetch_ranges(config, fname, starts, ends)
         title = []
         desc = []
         maintainer = []
@@ -86,7 +86,7 @@ def fetch_some_collections(
     if modified:
         cached["prior"]["collections"] = prior_collections
         cached["prior"]["details"] = prior_details
-        cfg.set_cache(config, "fetch_some_collections", species, cached)
+        cfg._set_cache(config, "fetch_some_collections", species, cached)
 
     output = prior_details[biocutils.match(collections, prior_collections),:]
     output = output.set_column("start", biocutils.subset(cached["starts"], collections))
@@ -95,7 +95,7 @@ def fetch_some_collections(
 
 
 def _get_single_collection_ranges(config: dict, species: str, fname: str) -> list:
-    cached = cfg.get_cache(config, "fetch_some_collections", species)
+    cached = cfg._get_cache(config, "fetch_some_collections", species)
     if cached is not None:
         return cached, False
 
@@ -145,14 +145,14 @@ def fetch_collection_sizes(species: str, config: Optional[dict] = None) -> list:
         >>> gesel.fetch_collection_sizes("9606")
     """
 
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_all_collections", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_all_collections", species)
     if candidate is not None:
         return candidate["size"]
 
     fname = species + "_collections.tsv"
     cached, modified = _get_single_collection_ranges(config, species, fname)
     if modified:
-        cfg.set_cache(config, "fetchSomeCollections", species, cached)
+        cfg._set_cache(config, "fetchSomeCollections", species, cached)
 
     return cached["sizes"]

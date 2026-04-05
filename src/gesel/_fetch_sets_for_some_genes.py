@@ -42,8 +42,8 @@ def fetch_sets_for_some_genes(species: str, genes: list, config: Optional[dict] 
         >>> print(biocutils.subset(gene_symbols, [0, 5, 10]))
     """
 
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_sets_for_all_genes", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_sets_for_all_genes", species)
     if candidate is not None:
         return biocutils.subset(candidate, genes)
 
@@ -66,7 +66,7 @@ def fetch_sets_for_some_genes(species: str, genes: list, config: Optional[dict] 
         for g in needed:
             starts.append(intervals[g])
             ends.append(intervals[g + 1])
-        deets = cfg.fetch_ranges(config, fname, starts, ends)
+        deets = cfg._fetch_ranges(config, fname, starts, ends)
         for line in deets:
             prior_sets.append(utils._decode_indices(line))
         prior_gene += needed
@@ -75,14 +75,14 @@ def fetch_sets_for_some_genes(species: str, genes: list, config: Optional[dict] 
     if modified:
         cached["prior"]["gene"] = prior_gene
         cached["prior"]["sets"] = prior_sets
-        cfg.set_cache(config, "fetch_sets_for_some_genes", species, cached)
+        cfg._set_cache(config, "fetch_sets_for_some_genes", species, cached)
 
     m = biocutils.match(genes, prior_gene)
     return biocutils.subset(prior_sets, m)
 
 
 def _get_sets_for_some_genes_ranges(config: dict, species: str, fname: str) -> tuple:
-    cached = cfg.get_cache(config, "fetch_sets_for_some_genes", species)
+    cached = cfg._get_cache(config, "fetch_sets_for_some_genes", species)
     if cached is not None:
         return cached, False
 
@@ -116,8 +116,8 @@ def _get_sets_for_some_genes_ranges(config: dict, species: str, fname: str) -> t
 #' @export
 
 def effective_number_of_genes(species: str, config: Optional[dict] = None) -> int:
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_sets_for_all_genes", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_sets_for_all_genes", species)
     if candidate is not None:
         number = 0
         for can in candidate:
@@ -127,7 +127,7 @@ def effective_number_of_genes(species: str, config: Optional[dict] = None) -> in
     fname  = species + "_gene2set.tsv"
     cached, modified = _get_sets_for_some_genes_ranges(config, species, fname)
     if modified:
-        cfg.set_cache(config, "fetch_sets_for_some_genes", species, cached)
+        cfg._set_cache(config, "fetch_sets_for_some_genes", species, cached)
 
     intervals = cached["intervals"]
     number = 0

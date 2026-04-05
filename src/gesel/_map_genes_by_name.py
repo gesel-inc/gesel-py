@@ -52,8 +52,8 @@ def map_genes_by_name(
     else:
         store_name = "cased"
 
-    config = cfg.get_config(config)
-    cached = cfg.get_cache(config, "map_genes_by_name", species)
+    config = cfg._get_config(config)
+    cached = cfg._get_cache(config, "map_genes_by_name", species)
 
     modified = False
     if cached is None:
@@ -90,6 +90,6 @@ def map_genes_by_name(
     if modified:
         sfound[type] = tfound
         cached[store_name] = sfound
-        cfg.set_cache(config, "map_genes_by_name", species, cached)
+        cfg._set_cache(config, "map_genes_by_name", species, cached)
 
     return tfound

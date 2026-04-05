@@ -41,13 +41,13 @@ def fetch_genes_for_some_sets(species: str, sets: list, config: Optional[dict] =
         >>> print(set_info[[0, 10, 20], :])
     """
 
-    config = cfg.get_config(config)
-    candidate = cfg.get_cache(config, "fetch_genes_for_all_sets", species)
+    config = cfg._get_config(config)
+    candidate = cfg._get_cache(config, "fetch_genes_for_all_sets", species)
     if candidate is not None:
         return biocutils.subset(candidate, sets)
 
     fname = species + "_set2gene.tsv"
-    cached = cfg.get_cache(config, "fetch_genes_for_some_sets", species)
+    cached = cfg._get_cache(config, "fetch_genes_for_some_sets", species)
     modified = False
 
     if cached is None:
@@ -78,7 +78,7 @@ def fetch_genes_for_some_sets(species: str, sets: list, config: Optional[dict] =
         for s in needed:
             starts.append(intervals[s])
             ends.append(intervals[s + 1])
-        deets = cfg.fetch_ranges(config, fname, starts, ends)
+        deets = cfg._fetch_ranges(config, fname, starts, ends)
         for line in deets:
             prior_genes.append(utils._decode_indices(line))
         prior_set += needed
@@ -88,7 +88,7 @@ def fetch_genes_for_some_sets(species: str, sets: list, config: Optional[dict] =
         # Technically not necessary as these were modified by reference, but let's just set them to be safe.
         cached["prior"]["set"] = prior_set
         cached["prior"]["genes"] = prior_genes
-        cfg.set_cache(config, "fetch_genes_for_some_sets", species, cached)
+        cfg._set_cache(config, "fetch_genes_for_some_sets", species, cached)
 
     m = biocutils.match(sets, prior_set)
     return biocutils.subset(prior_genes, m)

@@ -5,7 +5,7 @@ import requests
 import datetime
 
 
-def format_error(res):
+def _format_error(res):
     ctype = res.headers["content-type"]
     if ctype == "text/plain":
         return requests.HTTPError(res.status_code, res.text)
@@ -13,7 +13,7 @@ def format_error(res):
         return requests.HTTPError(res.status_code)
 
 
-def download_file(
+def _download_file(
     cache: Optional[str],
     url: str,
     overwrite: bool
@@ -35,7 +35,7 @@ def download_file(
         try:
             with requests.get(url, stream=True) as r:
                 if r.status_code >= 300:
-                    raise format_error(r)
+                    raise _format_error(r)
                 import shutil
                 with open(temppath, "wb") as f:
                     shutil.copyfileobj(r.raw, f)

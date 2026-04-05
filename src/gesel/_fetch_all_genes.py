@@ -24,7 +24,7 @@ def fetch_all_genes(
             If ``None``, the default configuration is used.
 
     Returns:
-        Data frame where each row represents a gene.
+        A :py:class:`~biocframe.BiocFrame` where each row represents a gene.
         Each column corresponds to one of the ``types`` and is a list of lists.
         Each inner list in the column contains the names of the specified type for each gene.
 
@@ -35,8 +35,8 @@ def fetch_all_genes(
         >>> print(df["symbol"][1:10])
     """
 
-    config = cfg.get_config(config)
-    cached = cfg.get_cache(config, "fetch_all_genes", species)
+    config = cfg._get_config(config)
+    cached = cfg._get_cache(config, "fetch_all_genes", species)
 
     modified = False
     if cached is None:
@@ -48,7 +48,7 @@ def fetch_all_genes(
             output[t] = cached[t]
             continue
 
-        path = cfg.fetch_gene(config, species + "_" + t + ".tsv.gz")
+        path = cfg._fetch_gene(config, species + "_" + t + ".tsv.gz")
         collected = []
 
         import gzip
@@ -65,6 +65,6 @@ def fetch_all_genes(
         modified = True
 
     if modified:
-        cfg.set_cache(config, "fetch_all_genes", species, cached)
+        cfg._set_cache(config, "fetch_all_genes", species, cached)
 
     return biocframe.BiocFrame(output)

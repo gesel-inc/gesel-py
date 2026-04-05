@@ -60,7 +60,7 @@ def search_set_text(
             tokens.add(tok)
     tokens = list(tokens)
 
-    config = cfg.get_config(config)
+    config = cfg._get_config(config)
     if use_name:
         gathered_names = _fetch_sets_by_token(config, species, tokens, "names")
     if use_description:
@@ -86,7 +86,7 @@ def _fetch_sets_by_token(
     tokens: list,
     type: str
 ) -> list:
-    cached = cfg.get_cache(config, "search_set_text", species)
+    cached = cfg._get_cache(config, "search_set_text", species)
     modified = False
 
     if cached is None:
@@ -170,7 +170,7 @@ def _fetch_sets_by_token(
             starts.append(ranges[r])
             ends.append(ranges[r + 1])
 
-        deets = cfg.fetch_ranges(config, fname, starts, ends)
+        deets = cfg._fetch_ranges(config, fname, starts, ends)
         for i, r in enumerate(to_request):
             prior[tnames[r]] = utils._decode_indices(deets[i])
         modified = True
@@ -186,7 +186,7 @@ def _fetch_sets_by_token(
     if modified:
         tfound["prior"] = prior
         cached[type] = tfound
-        cfg.set_cache(config, "search_set_text", species, cached)
+        cfg._set_cache(config, "search_set_text", species, cached)
 
     output = []
     for tok in tokens:

@@ -15,26 +15,33 @@ except PackageNotFoundError:  # pragma: no cover
 finally:
     del version, PackageNotFoundError
 
-from ._download_database_file import *
-from ._download_database_ranges import *
-from ._download_gene_file import *
 
-from ._fetch_all_collections import *
-from ._fetch_all_genes import *
-from ._fetch_all_sets import *
+from ._download_database_file import download_database_file, database_url
+from ._download_database_ranges import download_database_ranges, download_multipart_ranges
+from ._download_gene_file import download_gene_file, gene_url
 
-from ._fetch_some_sets import *
-from ._fetch_some_collections import *
+from ._fetch_all_collections import fetch_all_collections
+from ._fetch_all_genes import fetch_all_genes
+from ._fetch_all_sets import fetch_all_sets
+from ._fetch_some_sets import fetch_some_sets, fetch_set_sizes
+from ._fetch_some_collections import fetch_some_collections, fetch_collection_sizes
 
-from ._fetch_genes_for_all_sets import *
-from ._fetch_sets_for_all_genes import *
-from ._fetch_genes_for_some_sets import *
-from ._fetch_sets_for_some_genes import *
-from ._find_overlapping_sets import *
+from ._fetch_genes_for_all_sets import fetch_genes_for_all_sets
+from ._fetch_sets_for_all_genes import fetch_sets_for_all_genes
+from ._fetch_genes_for_some_sets import fetch_genes_for_some_sets
+from ._fetch_sets_for_some_genes import fetch_sets_for_some_genes, effective_number_of_genes
+from ._find_overlapping_sets import find_overlapping_sets
 
-from ._map_genes_by_name import *
-from ._search_genes import *
+from ._map_genes_by_name import map_genes_by_name
+from ._search_genes import search_genes
+from ._search_set_text import search_set_text
 
-from ._search_set_text import *
+from ._new_config import new_config, flush_memory_cache
 
-from ._new_config import *
+
+__all__ = []
+_toignore = set(["sys", "biocutils", "biocframe"]) 
+for _name in dir():
+    if _name.startswith("_") or _name in _toignore:
+        continue
+    __all__.append(_name)

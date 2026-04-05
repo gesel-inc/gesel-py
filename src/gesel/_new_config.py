@@ -68,34 +68,34 @@ def new_config(
     }
 
 
-default_config = None
+_default_config = None
 
 
-def get_config(config: Optional[dict]) -> dict:
+def _get_config(config: Optional[dict]) -> dict:
     if config is None:
-        global default_config
-        config = default_config
+        global _default_config
+        config = _default_config
         if config is None:
-            default_config = new_config()
-            config = default_config
+            _default_config = new_config()
+            config = _default_config
     return config
 
 
-def fetch_gene(config: dict, *args, **kwargs) -> str:
+def _fetch_gene(config: dict, *args, **kwargs) -> str:
     fetch_gene = config["fetch_gene"]
     if fetch_gene is None:
         fetch_gene = download_gene_file
     return fetch_gene(*args, **kwargs, **(config["fetch_gene_kwargs"]))
 
 
-def fetch_file(config: dict, *args, **kwargs) -> str:
+def _fetch_file(config: dict, *args, **kwargs) -> str:
     fetch_file = config["fetch_file"]
     if fetch_file is None:
         fetch_file = download_database_file
     return fetch_file(*args, **kwargs, **(config["fetch_file_kwargs"]))
 
 
-def fetch_ranges(config: dict, *args, **kwargs) -> list[bytes]:
+def _fetch_ranges(config: dict, *args, **kwargs) -> list[bytes]:
     fetch_ranges = config["fetch_ranges"]
     if fetch_ranges is None:
         fetch_ranges = download_database_ranges
@@ -125,7 +125,7 @@ def flush_memory_cache(config: Optional[dict] = None):
     config["cache"] = {}
 
 
-def get_cache(config: dict, context: str, species: str) -> Optional[Any]:
+def _get_cache(config: dict, context: str, species: str) -> Optional[Any]:
     cache = config["cache"]
     if context in cache:
         available = cache[context]
@@ -134,7 +134,7 @@ def get_cache(config: dict, context: str, species: str) -> Optional[Any]:
     return None
 
 
-def set_cache(config: dict, context: str, species: str, value: Any):
+def _set_cache(config: dict, context: str, species: str, value: Any):
     cache = config["cache"]
     if context not in cache:
         cache[context] = {}
