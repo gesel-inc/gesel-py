@@ -44,7 +44,7 @@ _gene_url = None
 
 def gene_url(url: Optional[str] = None) -> str:
     """
-    Get or set the gene URL.
+    Get or set the base URL to the Gesel gene files, which is used in :py:func:`~download_gene_file`.
 
     Args:
         url: 
@@ -53,7 +53,7 @@ def gene_url(url: Optional[str] = None) -> str:
     Returns:
         If ``url = None``, the URL to the Gesel gene is returned.
         The default gene URL is set to the `GitHub releases page <https://github.com/LTLA/gesel-feedstock>`_.
-        This can be altered by setting the ``GESEL_DATABASE_URL`` environment variable.
+        This can be altered by setting the ``GESEL_GENE_URL`` environment variable.
 
         If ``url`` is provided, this function sets the gene URL to ``url``, and returns the previous value of the URL.
 
@@ -66,21 +66,14 @@ def gene_url(url: Optional[str] = None) -> str:
     """
 
     global _gene_url
+    if _gene_url is None:
+        import os
+        if "GESEL_GENE_URL" in os.environ:
+            _gene_url = os.environ["GESEL_GENE_URL"]
+        else:
+            _gene_url = "https://github.com/LTLA/gesel-feedstock/releases/download/genes-v1.0.0"
+
+    previous = _gene_url
     if url is not None:
-        previous = _gene_url
         _gene_url = url
-        return previous
-
-    url = _gene_url
-    if url is not None:
-        return url
-
-    import os
-    if "GESEL_DATABASE_URL" in os.environ:
-        url = os.environ["GESEL_DATABASE_URL"]
-    else:
-        url = "https://github.com/LTLA/gesel-feedstock/releases/download/genes-v1.0.0"
-
-    _gene_url = url
-    return url 
-
+    return previous

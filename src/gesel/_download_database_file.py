@@ -44,7 +44,7 @@ _db_url = None
 
 def database_url(url: Optional[str] = None) -> str:
     """
-    Get or set the database URL.
+    Get or set the base URL to the Gesel database files, which is used in :py:func:`~download_database_file`.
 
     Args:
         url: 
@@ -66,20 +66,14 @@ def database_url(url: Optional[str] = None) -> str:
     """
 
     global _db_url
+    if _db_url is None:
+        import os
+        if "GESEL_DATABASE_URL" in os.environ:
+            _db_url = os.environ["GESEL_DATABASE_URL"]
+        else:
+            _db_url = "https://github.com/LTLA/gesel-feedstock/releases/download/indices-v0.2.1"
+
+    previous = _db_url
     if url is not None:
-        previous = _db_url
         _db_url = url
-        return previous
-
-    url = _db_url
-    if url is not None:
-        return url
-
-    import os
-    if "GESEL_DATABASE_URL" in os.environ:
-        url = os.environ["GESEL_DATABASE_URL"]
-    else:
-        url = "https://github.com/LTLA/gesel-feedstock/releases/download/indices-v0.2.1"
-
-    _db_url = url
-    return url
+    return previous
