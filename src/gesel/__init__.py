@@ -37,6 +37,7 @@ from ._search_genes import search_genes
 from ._search_set_text import search_set_text
 
 from ._new_config import new_config, flush_memory_cache
+from ._utils import cache_directory
 
 
 __all__ = []

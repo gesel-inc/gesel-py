@@ -22,7 +22,7 @@ def download_gene_file(
 
         cache:
             Path to a cache directory.
-            If ``None``, a cache location is automatically chosen.
+            If ``None``, it is set to :py:func:`~cache_directory`.
 
         overwrite:
             Boolean indicating whether any cached file should be overwritten with a new download.
