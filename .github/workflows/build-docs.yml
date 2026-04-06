@@ -1,0 +1,41 @@
+name: Build documentation
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  test:
+    name: Build docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.14
+          cache: 'pip'
+
+      - name: Get latest CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Build docs
+        run: |
+          pip install tox
+          tox -e docs
+
+      - name: Edit CSS
+        run: |
+          CSSPATH=./docs/_build/html/_static/styles/furo.css
+          cat ${CSSPATH} | sed "s/ol,ul{\\([^}]*\\);padding-left:1\\.2rem}/ol,ul{\\1}/" > tmp.css
+          mv tmp.css ${CSSPATH}
+
+      - name: GH Pages Deployment
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./docs/_build/html
+          clean: true # Automatically remove deleted files from the deploy branch

@@ -28,7 +28,7 @@ jobs:
   test:
     strategy:
       matrix:
-        python: ["3.10", "3.14"]
+        python: ["3.10", "3.14"] # only testing the extreme versions, for brevity.
         platform:
           - ubuntu-latest
           - macos-latest
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         id: setup-python
         with:
           python-version: ${{ matrix.python }}
