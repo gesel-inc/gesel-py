@@ -9,7 +9,8 @@ def download_database_ranges(
     start: list[int],
     end: list[int],
     url: Optional[str] = None,
-    multipart: bool = False
+    multipart: bool = False,
+    concurrency: Optional[int] = None 
 ) -> list[str]:
     """
     Download any number of byte ranges from a Gesel database file.
@@ -30,10 +31,15 @@ def download_database_ranges(
 
         url:
             Base URL to the Gesel database files.
-            If ``None``, it is set to :py:func:`~download_database_file.database_url`.
+            If ``None``, it is set to :py:func:`~gesel.database_url`.
 
         multipart:
             Whether the server at ``url`` supports multi-part range requests.
+
+        concurrency:
+            Maximum number of concurrent range requests.
+            If ``None``, defaults to :py:func:`~gesel.range_concurrency`.
+            Only used if ``multipart = False``.
 
     Returns:
         List of byte strings containing the requested bytes for each range.
@@ -52,21 +58,60 @@ def download_database_ranges(
     if multipart:
         return download_multipart_ranges(url, start, end)
 
-    output = [b""] * len(start)
-    for i in range(len(start)):
-        curstart = start[i]
-        curend = end[i]
-        if curend <= curstart:
-            continue
+    if concurrency is None:
+        concurrency = range_concurrency()
+    from concurrent.futures import ThreadPoolExecutor
 
-        resp = requests.get(url, headers = { "Range": "bytes=" + str(curstart) + "-" + str(curend - 1) }) # byte ranges are closed intervals, not half-open.
-        if resp.status_code >= 300:
-            raise utils.format_error(resp)
+    with ThreadPoolExecutor(max_workers = concurrency) as executor:
+        collected = []
+        for i in range(len(start)):
+            curstart = start[i]
+            curend = end[i]
+            if curstart < curend:
+                collected.append((i, executor.submit(_make_range_request, url, curstart, curend)))
 
-        # We use 'content' instead of 'text' to handle multi-byte characters correctly.
-        output[i] = resp.content[:(curend - curstart)]
+        output = [b""] * len(start)
+        for i, val in collected:
+            output[i] = val.result()
 
     return output
+
+
+_range_concurrency = 10
+
+
+def range_concurrency(concurrency: Optional[int] = None):
+    """
+    Set the default number of threads for concurrent range requests in :py:func:`~gesel.download_database_ranges`.
+
+    Args:
+        concurrency:
+            Number of threads.
+
+    Results:
+        If ``concurrency = None``, the number of threads is returned (default 10).
+
+        If ``concurrency`` is provided, it is used to set the number of threads, and the previous number of threads is returned.
+
+    Examples:
+        >>> import gesel
+        >>> gesel.range_concurrency()
+        >>> old = gesel.range_concurrency(5)
+        >>> print(old)
+        >>> gesel.range_concurrency(old)
+    """
+    global _range_concurrency
+    previous = _range_concurrency
+    if concurrency is not None:
+        _range_concurrency = concurrency
+    return previous
+
+
+def _make_range_request(url, curstart, curend) -> bytes:
+    resp = requests.get(url, headers = { "Range": "bytes=" + str(curstart) + "-" + str(curend - 1) }) # byte ranges are closed intervals, not half-open.
+    if resp.status_code >= 300:
+        raise utils.format_error(resp)
+    return resp.content[:(curend - curstart)] # We use 'content' instead of 'text' to handle multi-byte characters correctly.
 
 
 def download_multipart_ranges(

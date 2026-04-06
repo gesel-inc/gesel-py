@@ -37,6 +37,14 @@ def test_download_database_ranges():
             assert ranges[i] == full_contents[starts[i]:ends[i]]
 
 
+def test_range_concurrency():
+    assert gesel.range_concurrency() > 0
+    old = gesel.range_concurrency(5)
+    assert gesel.range_concurrency() == 5
+    gesel.range_concurrency(old)
+    assert gesel.range_concurrency() == old
+
+
 class MockRequest:
     def __init__(self, status_code, content, headers):
         self.status_code = status_code

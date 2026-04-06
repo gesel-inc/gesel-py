@@ -17,7 +17,7 @@ finally:
 
 
 from ._download_database_file import download_database_file, database_url
-from ._download_database_ranges import download_database_ranges, download_multipart_ranges
+from ._download_database_ranges import download_database_ranges, download_multipart_ranges, range_concurrency
 from ._download_gene_file import download_gene_file, gene_url
 
 from ._fetch_all_collections import fetch_all_collections
