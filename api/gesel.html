@@ -1,0 +1,1225 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="prev" title="gesel" href="modules.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>gesel package - gesel 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">gesel 0.1.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">gesel 0.1.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributions &amp; Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">Module Reference</a><input aria-label="Toggle navigation of Module Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">gesel package</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/api/gesel.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="gesel-package">
+<h1>gesel package<a class="headerlink" href="#gesel-package" title="Link to this heading">¶</a></h1>
+<section id="module-gesel">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gesel" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.cache_directory">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">cache_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_utils.html#cache_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.cache_directory" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the default cache directory for <a class="reference internal" href="#gesel.download_database_file" title="gesel.download_database_file"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_database_file()</span></code></a> and <a class="reference internal" href="#gesel.download_gene_file" title="gesel.download_gene_file"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_gene_file()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Path to a new cache directory.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>If <code class="docutils literal notranslate"><span class="pre">path</span> <span class="pre">=</span> <span class="pre">None</span></code>, the path to the Gesel cache directory is returned.
+This defaults to a location defined by the <strong>appdirs</strong> package,
+and can be changed by setting the <code class="docutils literal notranslate"><span class="pre">GESEL_CACHE_DIRECTORY</span></code> environment variable before the first call to this function.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">path</span></code> is provided, it is used to set the location of the cache directory, and the previous location is returned.</p>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">cache_directory</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">old</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">cache_directory</span><span class="p">(</span><span class="s2">&quot;/tmp/foo/bar&quot;</span><span class="p">)</span> <span class="c1"># setting it.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">cache_directory</span><span class="p">()</span> <span class="c1"># now it&#39;s changed.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">cache_directory</span><span class="p">(</span><span class="n">old</span><span class="p">)</span> <span class="c1"># setting it back.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.database_url">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">database_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_download_database_file.html#database_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.database_url" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the base URL to the Gesel database files, which is used in <a class="reference internal" href="#gesel.download_database_file" title="gesel.download_database_file"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_database_file()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>url</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – The new database URL.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>If <code class="docutils literal notranslate"><span class="pre">url</span> <span class="pre">=</span> <span class="pre">None</span></code>, the URL to the Gesel database is returned.
+The URL defaults to the <a class="reference external" href="https://github.com/LTLA/gesel-feedstock">GitHub releases page</a>;
+this can be altered by setting the <code class="docutils literal notranslate"><span class="pre">GESEL_DATABASE_URL</span></code> environment variable before the first call to this function.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">url</span></code> is provided, this function sets the database URL to <code class="docutils literal notranslate"><span class="pre">url</span></code>, and returns the previous value of the URL.</p>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">database_url</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">old</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">database_url</span><span class="p">(</span><span class="s2">&quot;https://foo.bar&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">database_url</span><span class="p">(</span><span class="n">old</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">database_url</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.download_database_file">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">download_database_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_download_database_file.html#download_database_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.download_database_file" title="Link to this definition">¶</a></dt>
+<dd><p>Download Gesel database files and store them in a cache on the local file system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Name of the file.
+This usually has the species identifier as a prefix.</p></li>
+<li><p><strong>url</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Base URL to the Gesel database files.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, it is set to <a class="reference internal" href="#gesel.database_url" title="gesel.database_url"><code class="xref py py-func docutils literal notranslate"><span class="pre">database_url()</span></code></a>.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Path to a cache directory.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, it is set to <a class="reference internal" href="#gesel.cache_directory" title="gesel.cache_directory"><code class="xref py py-func docutils literal notranslate"><span class="pre">cache_directory()</span></code></a>.</p></li>
+<li><p><strong>overwrite</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Boolean indicating whether any cached file should be overwritten with a new download.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path to the downloaded file on the local file system.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">download_database_file</span><span class="p">(</span><span class="s2">&quot;9606_collections.tsv.gz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.download_database_ranges">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">download_database_ranges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multipart</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_download_database_ranges.html#download_database_ranges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.download_database_ranges" title="Link to this definition">¶</a></dt>
+<dd><p>Download any number of byte ranges from a Gesel database file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Name of the file.
+This usually has the species identifier as a prefix.</p></li>
+<li><p><strong>start</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3.14/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of integers containing the zero-indexed closed start of each byte range to extract from the file.
+This list may be empty.</p></li>
+<li><p><strong>end</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3.14/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of integers containing the zero-indexed open end of each byte range to extract from the file.
+This should have the same length as <code class="docutils literal notranslate"><span class="pre">start</span></code> such that the <code class="docutils literal notranslate"><span class="pre">i</span></code>-th range is defined as <code class="docutils literal notranslate"><span class="pre">[start[i],</span> <span class="pre">end[i])</span></code>.
+All ranges supplied in a single call to this function should be non-overlapping.</p></li>
+<li><p><strong>url</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Base URL to the Gesel database files.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, it is set to <a class="reference internal" href="#gesel.database_url" title="gesel.database_url"><code class="xref py py-func docutils literal notranslate"><span class="pre">database_url()</span></code></a>.</p></li>
+<li><p><strong>multipart</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether the server at <code class="docutils literal notranslate"><span class="pre">url</span></code> supports multi-part range requests.</p></li>
+<li><p><strong>concurrency</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Maximum number of concurrent range requests.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to <a class="reference internal" href="#gesel.range_concurrency" title="gesel.range_concurrency"><code class="xref py py-func docutils literal notranslate"><span class="pre">range_concurrency()</span></code></a>.
+Only used if <code class="docutils literal notranslate"><span class="pre">multipart</span> <span class="pre">=</span> <span class="pre">False</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of byte strings containing the requested bytes for each range.
+For ranges where <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">&lt;=</span> <span class="pre">start</span></code>, an empty string is returned.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">download_database_ranges</span><span class="p">(</span><span class="s2">&quot;9606_set2gene.tsv&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">download_database_ranges</span><span class="p">(</span><span class="s2">&quot;9606_set2gene.tsv&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">1100</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.download_gene_file">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">download_gene_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_download_gene_file.html#download_gene_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.download_gene_file" title="Link to this definition">¶</a></dt>
+<dd><p>Download Gesel gene files and store them in a cache on the local file system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Name of the file.
+This usually has the species identifier as a prefix.</p></li>
+<li><p><strong>url</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Base URL to the Gesel gene files.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, it is set to <a class="reference internal" href="#gesel.gene_url" title="gesel.gene_url"><code class="xref py py-func docutils literal notranslate"><span class="pre">gene_url()</span></code></a>.</p></li>
+<li><p><strong>cache</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Path to a cache directory.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, it is set to <a class="reference internal" href="#gesel.cache_directory" title="gesel.cache_directory"><code class="xref py py-func docutils literal notranslate"><span class="pre">cache_directory()</span></code></a>.</p></li>
+<li><p><strong>overwrite</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Boolean indicating whether any cached file should be overwritten with a new download.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path to the downloaded file on the local file system.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">download_gene_file</span><span class="p">(</span><span class="s2">&quot;9606_symbol.tsv.gz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.download_multipart_ranges">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">download_multipart_ranges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_mock</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_download_database_ranges.html#download_multipart_ranges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.download_multipart_ranges" title="Link to this definition">¶</a></dt>
+<dd><p>Perform a multi-part range request on a Gesel database file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – URL to a specific Gesel database file.</p></li>
+<li><p><strong>start</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3.14/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of integers containing the zero-indexed closed start of each byte range to extract from the file.
+This list may be empty.</p></li>
+<li><p><strong>end</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3.14/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – List of integers containing the zero-indexed open end of each byte range to extract from the file.
+This should have the same length as <code class="docutils literal notranslate"><span class="pre">start</span></code> such that the <code class="docutils literal notranslate"><span class="pre">i</span></code>-th range is defined as <code class="docutils literal notranslate"><span class="pre">[start[i],</span> <span class="pre">end[i])</span></code>.
+All ranges supplied in a single call to this function should be non-overlapping.</p></li>
+<li><p><strong>_mock</strong> – Internal use only.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of byte strings containing the requested bytes for each range.
+For ranges where <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">&lt;=</span> <span class="pre">start</span></code>, an empty string is returned.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">database_url</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/9606_set2gene.tsv&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">download_multipart_ranges</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">download_multipart_ranges</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">900</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Note: as of writing, GitHub releases don&#39;t support multi-part range requests.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.effective_number_of_genes">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">effective_number_of_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_sets_for_some_genes.html#effective_number_of_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.effective_number_of_genes" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_all_collections">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_all_collections</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_all_collections.html#fetch_all_collections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_all_collections" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch information about all gene set collections in the Gesel database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code> where each row represents a collection.
+This contains the following columns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>, string containing the title of the collection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code>, string containing a description of the collection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">maintainer</span></code>, string containing the identity of the collection’s maintainer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code>, string containing the source of origin of the collection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start</span></code>, integer containing the set index of the first gene set in this collection.
+The set index refers to a row in the data frame returned by <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code>, integer specifying the number of gene sets in the collection.</p></li>
+</ul>
+<p>If this function is called once, the data frame will be cached in memory and re-used in subsequent calls.
+The cached information will also be used to speed up <a class="reference internal" href="#gesel.fetch_some_collections" title="gesel.fetch_some_collections"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_some_collections()</span></code></a>.</p>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_collections</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_all_genes">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_all_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['symbol',</span> <span class="pre">'entrez',</span> <span class="pre">'ensembl']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_all_genes.html#fetch_all_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_all_genes" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch names and identifiers of various types for all genes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>types</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) – Types of gene names to return.
+Typically one or more of <code class="docutils literal notranslate"><span class="pre">symbol</span></code>, <code class="docutils literal notranslate"><span class="pre">entrez</span></code>, and/or <code class="docutils literal notranslate"><span class="pre">ensembl</span></code>.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code> where each row represents a gene.
+Each column corresponds to one of the <code class="docutils literal notranslate"><span class="pre">types</span></code> and is a list of lists.
+Each inner list in the column contains the names of the specified type for each gene.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_all_sets">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_all_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_all_sets.html#fetch_all_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_all_sets" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch information about all gene sets in the Gesel database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code> where each row represents a gene set.
+This contains the following columns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>, string containing the name of the gene set.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code>, string containing a description of the gene set.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code>: integer specifying the number of genes in this gene set.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">collection</span></code>: integer, the collection index of the collection that contains this gene set.
+The collection index refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_collections" title="gesel.fetch_all_collections"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_collections()</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number</span></code>: integer, the position of the gene set inside the specified collection.
+The set index of the current gene set is defined by adding <code class="docutils literal notranslate"><span class="pre">number</span></code> to the collection’s <code class="docutils literal notranslate"><span class="pre">start</span></code>.</p></li>
+</ul>
+<p>If this function is called once, the data frame will be cached in memory and re-used in subsequent calls.
+The cached information will also be used to speed up <a class="reference internal" href="#gesel.fetch_some_sets" title="gesel.fetch_some_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_some_sets()</span></code></a>.</p>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_collection_sizes">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_collection_sizes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_some_collections.html#fetch_collection_sizes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_collection_sizes" title="Link to this definition">¶</a></dt>
+<dd><p>Quickly get the sizes of the collections in the Gesel database.
+This is more efficient than <a class="reference internal" href="#gesel.fetch_all_collections" title="gesel.fetch_all_collections"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_collections()</span></code></a> when only the sizes are of interest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List containing the size of each collection (i.e., the number of gene sets in each collection).</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_collection_sizes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_genes_for_all_sets">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_genes_for_all_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_genes_for_all_sets.html#fetch_genes_for_all_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_genes_for_all_sets" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch the identities for genes in all sets in the Gesel database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of lists.
+Each inner list represents a gene set, corresponding to the rows of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a>.
+Each inner list contains the identities of the genes in that set,
+where each integer is a gene index that refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_genes" title="gesel.fetch_all_genes"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_genes()</span></code></a>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_to_gene</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_genes_for_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">set_to_gene</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_to_gene</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Genes in the first set:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_symbols</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)[</span><span class="s2">&quot;symbol&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">biocutils</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">gene_symbols</span><span class="p">,</span> <span class="n">set_to_gene</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Identity of the first set.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">set_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_genes_for_some_sets">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_genes_for_some_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_genes_for_some_sets.html#fetch_genes_for_some_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_genes_for_some_sets" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch genes for some sets in the Gesel database.
+This can be more efficient than <a class="reference internal" href="#gesel.fetch_genes_for_all_sets" title="gesel.fetch_genes_for_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_genes_for_all_sets()</span></code></a> if only a few sets are of interest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>sets</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) – List of set indices, where each set index refers to a row in the data frame returned by <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a>.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of integer vectors.
+Each vector corresponds to a set in <code class="docutils literal notranslate"><span class="pre">sets</span></code> and contains the identities of its member genes.
+Each gene is defined by its gene index, which refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_genes" title="gesel.fetch_all_genes"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_genes()</span></code></a>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">first_set</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_genes_for_some_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">first_set</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">first_set</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Genes in the first set:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_symbols</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)[</span><span class="s2">&quot;symbol&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">biocutils</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">gene_symbols</span><span class="p">,</span> <span class="n">first_set</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Identities of the sets used above.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">set_info</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="p">:])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_set_sizes">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_set_sizes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_some_sets.html#fetch_set_sizes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_set_sizes" title="Link to this definition">¶</a></dt>
+<dd><p>Quickly get the sizes of the sets in the Gesel database.
+This is more efficient than <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a> when only the sizes are of interest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List containing the size of each set (i.e., the number of genes in each set).</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_set_sizes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_sets_for_all_genes">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_sets_for_all_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_sets_for_all_genes.html#fetch_sets_for_all_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_sets_for_all_genes" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch the identities of the sets that contain each gene in the Gesel database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of lists.
+Each inner list represents a gene, corresponding to the rows of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_genes" title="gesel.fetch_all_genes"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_genes()</span></code></a>.
+Each inner list contains the identities of the sets that include that gene,
+where each integer is a set index that refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_to_set</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_sets_for_all_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">gene_to_set</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_to_set</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Sets containing the first gene.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">set_info</span><span class="p">[</span><span class="n">gene_to_set</span><span class="p">[</span><span class="mi">0</span><span class="p">],:])</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Identity of the first gene.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">gene_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_sets_for_some_genes">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_sets_for_some_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_sets_for_some_genes.html#fetch_sets_for_some_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_sets_for_some_genes" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch all sets that contain some genes in the Gesel database.
+This can be more efficient than <a class="reference internal" href="#gesel.fetch_sets_for_all_genes" title="gesel.fetch_sets_for_all_genes"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_sets_for_all_genes()</span></code></a> if only a few genes are of interest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>genes</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) – List of integers containing the gene indices.
+Each gene index refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_genes" title="gesel.fetch_all_genes"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_genes()</span></code></a>.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of integer vectors.
+Each vector corresponds to a gene in <code class="docutils literal notranslate"><span class="pre">genes</span></code> and contains the identities of the sets containing that gene.
+Each set is defined by its set index, which refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">has_genes</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_sets_for_some_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">has_genes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Sets containing the first gene:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">set_info</span><span class="p">[</span><span class="n">has_genes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:])</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Identities of the genes used above:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gene_symbols</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)[</span><span class="s2">&quot;symbol&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">biocutils</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">gene_symbols</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_some_collections">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_some_collections</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collections</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_some_collections.html#fetch_some_collections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_some_collections" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch the details of some gene set collections from the Gesel database.
+This can be more efficient than <a class="reference internal" href="#gesel.fetch_all_collections" title="gesel.fetch_all_collections"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_collections()</span></code></a> when only a few collections are of interest.</p>
+<p>Every time this function is called, information from the requested <code class="docutils literal notranslate"><span class="pre">collections</span></code> will be added to an in-memory cache.
+Subsequent calls to this function will re-use as many of the cached collections as possible.</p>
+<p>If <a class="reference internal" href="#gesel.fetch_all_collections" title="gesel.fetch_all_collections"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_collections()</span></code></a> was previously called, information from all collections are cached in memory and will be retrieved when this function is called.
+If <code class="docutils literal notranslate"><span class="pre">collections</span></code> is large, it may be beneficial to call <a class="reference internal" href="#gesel.fetch_all_collections" title="gesel.fetch_all_collections"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_collections()</span></code></a> first before calling this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>collections</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) – List of collection indices.
+Each entry refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_collections" title="gesel.fetch_all_collections"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_collections()</span></code></a>.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code> with the same columns as that returned by <a class="reference internal" href="#gesel.fetch_all_collections" title="gesel.fetch_all_collections"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_collections()</span></code></a>,
+where each row corresponds to an entry of <code class="docutils literal notranslate"><span class="pre">collections</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_collections</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.fetch_some_sets">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">fetch_some_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_fetch_some_sets.html#fetch_some_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.fetch_some_sets" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch the details of some gene sets from the Gesel database.
+This can be more efficient than <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a> when only a few sets are of interest.</p>
+<p>Every time this function is called, information from the requested <code class="docutils literal notranslate"><span class="pre">sets</span></code> will be added to an in-memory cache.
+Subsequent calls to this function will re-use as many of the cached sets as possible.</p>
+<p>If <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a> was previously called, information from all sets are cached in memory and will be retrieved when this function is called.
+If <code class="docutils literal notranslate"><span class="pre">sets</span></code> is large, it may be beneficial to call <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a> first before calling this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>sets</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) – List of set indices, where each set index refers to a row in the data frame returned by <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a>.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code> with the same columns as that returned by <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a>,
+where each row corresponds to an entry of <code class="docutils literal notranslate"><span class="pre">sets</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.find_overlapping_sets">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">find_overlapping_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_find_overlapping_sets.html#find_overlapping_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.find_overlapping_sets" title="Link to this definition">¶</a></dt>
+<dd><p>Find all sets overlapping any gene in a user-supplied list, and return the number of overlaps per set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>genes</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) – List of integers containing gene indices.
+Each gene index refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_genes" title="gesel.fetch_all_genes"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_genes()</span></code></a>.</p></li>
+<li><p><strong>counts_only</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to only report the number of overlapping genes for each set.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>A tuple of length 2.</p>
+<p>The first element is a <code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code> describing the overlapping sets.
+Each row represents a set that is identified by the set index in the <code class="docutils literal notranslate"><span class="pre">set</span></code> column.
+(This set index refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a>.)
+It also has:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">counts</span></code> column, if <code class="docutils literal notranslate"><span class="pre">counts_only</span> <span class="pre">=</span> <span class="pre">True</span></code>.
+This specifies the number of overlaps between the genes in the set and those in <code class="docutils literal notranslate"><span class="pre">genes</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">genes</span></code> column, if <code class="docutils literal notranslate"><span class="pre">counts_only</span> <span class="pre">=</span> <span class="pre">False</span></code>.
+This is a list that contains the entries of <code class="docutils literal notranslate"><span class="pre">genes</span></code> that overlap with those in the set.</p></li>
+</ul>
+<p>Rows are sorted by the number of overlapping genes, in decreasing order.</p>
+<p>The second element is an integer scalar containing the number of genes in <code class="docutils literal notranslate"><span class="pre">genes</span></code> that are present in at least one set in the Gesel database for <code class="docutils literal notranslate"><span class="pre">species</span></code>.
+This is intended for use as the number of draws when performing a hypergeomtric test for gene set enrichment, instead of <code class="docutils literal notranslate"><span class="pre">len(genes)</span></code>.
+It ensures that genes outside of the Gesel universe are ignored, e.g., due to user error, different genome versions.
+Otherwise, unknown genes would inappropriately increase the number of draws and inflate the enrichment p-value.</p>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Present like the first 10 genes are what we&#39;re interested in.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">genes_of_interest</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">overlaps</span><span class="p">,</span> <span class="n">present</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">find_overlapping_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="n">genes_of_interest</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">overlaps</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">present</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># More details on the overlapping sets.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_sets</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">all_sets</span><span class="p">[</span><span class="n">overlaps</span><span class="p">[</span><span class="s2">&quot;set&quot;</span><span class="p">],:])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.flush_memory_cache">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">flush_memory_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_new_config.html#flush_memory_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.flush_memory_cache" title="Link to this definition">¶</a></dt>
+<dd><p>Flush the in-memory cache for Gesel data structures in the current Python session.
+By default, Gesel functions caches the data structures in the current session to avoid unnecessary requests to the filesystem and remote server.
+On rare occasion, these cached data structures may be out of date when the Gesel database files change.
+In such cases, the cache can be flushed to ensure that the various Gesel functions operate on the latest version of the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The in-memory cache in <code class="docutils literal notranslate"><span class="pre">config</span></code> is cleared.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">flush_memory_cache</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.gene_url">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">gene_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_download_gene_file.html#gene_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.gene_url" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the base URL to the Gesel gene files, which is used in <a class="reference internal" href="#gesel.download_gene_file" title="gesel.download_gene_file"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_gene_file()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>url</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – The new gene URL.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>If <code class="docutils literal notranslate"><span class="pre">url</span> <span class="pre">=</span> <span class="pre">None</span></code>, the URL to the Gesel gene is returned.
+The default gene URL is set to the <a class="reference external" href="https://github.com/LTLA/gesel-feedstock">GitHub releases page</a>.
+This can be altered by setting the <code class="docutils literal notranslate"><span class="pre">GESEL_GENE_URL</span></code> environment variable.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">url</span></code> is provided, this function sets the gene URL to <code class="docutils literal notranslate"><span class="pre">url</span></code>, and returns the previous value of the URL.</p>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">gene_url</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">old</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">gene_url</span><span class="p">(</span><span class="s2">&quot;https://foo.bar&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">gene_url</span><span class="p">(</span><span class="n">old</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">gene_url</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.map_genes_by_name">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">map_genes_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_case</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_map_genes_by_name.html#map_genes_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.map_genes_by_name" title="Link to this definition">¶</a></dt>
+<dd><p>Create a mapping of gene names (Ensembl, symbol, etc.) to their gene indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>type</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Type of gene name/identifier.
+Typically one of <code class="docutils literal notranslate"><span class="pre">symbol</span></code>, <code class="docutils literal notranslate"><span class="pre">entrez</span></code>, and/or <code class="docutils literal notranslate"><span class="pre">ensembl</span></code>.</p></li>
+<li><p><strong>ignore_case</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether case should be ignored when creating the mapping.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary where each key is the gene name/identifier of the specified <code class="docutils literal notranslate"><span class="pre">type</span></code> and each value is a list of integers.
+Each list contains the genes associated with that name (after ignoring case, if <code class="docutils literal notranslate"><span class="pre">ignore_case</span> <span class="pre">=</span> <span class="pre">True</span></code>).
+List entries should be interpreted as indices into any of the lists returned by <a class="reference internal" href="#gesel.fetch_all_genes" title="gesel.fetch_all_genes"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_genes()</span></code></a>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mapping</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">map_genes_by_name</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;symbol&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Taking it for a spin:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">found</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;SNAP25&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Cross-checking it</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)[</span><span class="s2">&quot;symbol&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">biocutils</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">found</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.new_config">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">new_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch_gene</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fetch_gene_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fetch_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fetch_file_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fetch_ranges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fetch_ranges_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_new_config.html#new_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.new_config" title="Link to this definition">¶</a></dt>
+<dd><p>Create a new configuration object to specify how the Gesel database should be queried.
+This can be passed to each Gesel function to alter its behavior in a consistent manner.
+For example, we could point to a different Gesel database from the default,
+or we can override <code class="docutils literal notranslate"><span class="pre">fetch_file</span></code> to retrieve database files from a shared filesystem instead of performing a HTTP request.</p>
+<p>The configuration list also contains a cache of data structures that can be populated by Gesel functions.
+This avoids unnecessary fetch requests upon repeated calls to the same function.
+If the cache becomes stale or too large, it can be cleared by calling <a class="reference internal" href="#gesel.flush_memory_cache" title="gesel.flush_memory_cache"><code class="xref py py-func docutils literal notranslate"><span class="pre">flush_memory_cache()</span></code></a>.</p>
+<p>If no configuration list is supplied to Gesel functions, the default configuration is used.
+The default is created by calling <code class="docutils literal notranslate"><span class="pre">new_config()</span></code> without any arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fetch_gene</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/typing.html#typing.Callable" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Function that accepts the name of the file in the Gesel gene descriptions and returns an absolute path to the file.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, it defaults to <a class="reference internal" href="#gesel.download_gene_file" title="gesel.download_gene_file"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_gene_file()</span></code></a>.</p></li>
+<li><p><strong>fetch_gene_kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span>) – Dictionary of name:value pairs containing extra arguments to pass to <code class="docutils literal notranslate"><span class="pre">fetch_gene</span></code>.</p></li>
+<li><p><strong>fetch_file</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/typing.html#typing.Callable" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Function that accepts the name of the file in the Gesel database and returns an absolute path to the file.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, it defaults to <a class="reference internal" href="#gesel.download_database_file" title="gesel.download_database_file"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_database_file()</span></code></a>.</p></li>
+<li><p><strong>fetch_file_kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span>) – Dictionary of name:value pairs containing extra arguments to pass to <code class="docutils literal notranslate"><span class="pre">fetch_file</span></code>.</p></li>
+<li><p><strong>fetch_ranges</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/typing.html#typing.Callable" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Function that accepts three arguments -
+the name of the file in the Gesel database, an integer vector containing the starts of the byte ranges, and another vector containing the ends of the byte ranges -
+and returns a list of byte strings containing the contents of the specified ranges.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, it defaults to <a class="reference internal" href="#gesel.download_database_ranges" title="gesel.download_database_ranges"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_database_ranges()</span></code></a>.</p></li>
+<li><p><strong>fetch_ranges_kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span>) – Dictionary of name:value pairs containing extra arguments to pass to <code class="docutils literal notranslate"><span class="pre">fetch_ranges</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary of Gesel configuration settings.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">new_config</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.range_concurrency">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">range_concurrency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concurrency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_download_database_ranges.html#range_concurrency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.range_concurrency" title="Link to this definition">¶</a></dt>
+<dd><p>Set the default number of threads for concurrent range requests in <a class="reference internal" href="#gesel.download_database_ranges" title="gesel.download_database_ranges"><code class="xref py py-func docutils literal notranslate"><span class="pre">download_database_ranges()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>concurrency</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Number of threads.</p>
+</dd>
+</dl>
+<dl>
+<dt>Results:</dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">concurrency</span> <span class="pre">=</span> <span class="pre">None</span></code>, the number of threads is returned (default 10).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">concurrency</span></code> is provided, it is used to set the number of threads, and the previous number of threads is returned.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">range_concurrency</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">old</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">range_concurrency</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">old</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gesel</span><span class="o">.</span><span class="n">range_concurrency</span><span class="p">(</span><span class="n">old</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.search_genes">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">search_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['entrez',</span> <span class="pre">'ensembl',</span> <span class="pre">'symbol']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_case</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_search_genes.html#search_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.search_genes" title="Link to this definition">¶</a></dt>
+<dd><p>Search for genes by converting gene identifiers to gene indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>genes</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) – List of gene names of any type specified in <code class="docutils literal notranslate"><span class="pre">types</span></code>.</p></li>
+<li><p><strong>types</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) – Types of gene names to return.
+Typically one or more of <code class="docutils literal notranslate"><span class="pre">symbol</span></code>, <code class="docutils literal notranslate"><span class="pre">entrez</span></code>, and/or <code class="docutils literal notranslate"><span class="pre">ensembl</span></code>.</p></li>
+<li><p><strong>ignore_case</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether case should be ignored when creating the mapping.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of length equal to <code class="docutils literal notranslate"><span class="pre">genes</span></code>.
+Each entry is an integer vector of gene indices that refer to rows of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_genes" title="gesel.fetch_all_genes"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_genes()</span></code></a>.
+These rows represent the genes that match to the corresponding entry of <code class="docutils literal notranslate"><span class="pre">genes</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;SNAP25&quot;</span><span class="p">,</span> <span class="s2">&quot;NEUROD6&quot;</span><span class="p">,</span> <span class="s2">&quot;ENSG00000139618&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Round-tripping them:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">genes</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">genes</span><span class="p">[</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],:])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">genes</span><span class="p">[</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">],:])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">genes</span><span class="p">[</span><span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">],:])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gesel.search_set_text">
+<span class="sig-prename descclassname"><span class="pre">gesel.</span></span><span class="sig-name descname"><span class="pre">search_set_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gesel/_search_set_text.html#search_set_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gesel.search_set_text" title="Link to this definition">¶</a></dt>
+<dd><p>Search for sets based on their names and descriptions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>species</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – NCBI taxonomy ID of the species of interest.</p></li>
+<li><p><strong>query</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – One or more words to search on.
+A set is only matched if it matches to all of the tokens in the query in its name/description.
+The <code class="docutils literal notranslate"><span class="pre">*</span></code> and <code class="docutils literal notranslate"><span class="pre">?</span></code> wildcards can be used to match to any or one character, respectively.</p></li>
+<li><p><strong>genes</strong> – List of integers containing the gene indices.
+Each gene index refers to a row of the data frame returned by <a class="reference internal" href="#gesel.fetch_all_genes" title="gesel.fetch_all_genes"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_genes()</span></code></a>.</p></li>
+<li><p><strong>use_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to search for the query string in the name of the set.</p></li>
+<li><p><strong>use_description</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to search for the query string in the description of the set.</p></li>
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3.14/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – Configuration object, typically created by <a class="reference internal" href="#gesel.new_config" title="gesel.new_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_config()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.14/library/stdtypes.html#list" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of set indices for the matching gene sets.
+Each set index refers to a row in the data frame returned by <a class="reference internal" href="#gesel.fetch_all_sets" title="gesel.fetch_all_sets"><code class="xref py py-func docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_set_text</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="s2">&quot;cancer&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)[</span><span class="n">out</span><span class="p">,</span> <span class="p">:])</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_set_text</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="s2">&quot;innate immun*&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)[</span><span class="n">out</span><span class="p">,</span> <span class="p">:])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="modules.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">gesel</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, LTLA
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">gesel package</a><ul>
+<li><a class="reference internal" href="#module-gesel">Module contents</a><ul>
+<li><a class="reference internal" href="#gesel.cache_directory"><code class="docutils literal notranslate"><span class="pre">cache_directory()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.database_url"><code class="docutils literal notranslate"><span class="pre">database_url()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.download_database_file"><code class="docutils literal notranslate"><span class="pre">download_database_file()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.download_database_ranges"><code class="docutils literal notranslate"><span class="pre">download_database_ranges()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.download_gene_file"><code class="docutils literal notranslate"><span class="pre">download_gene_file()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.download_multipart_ranges"><code class="docutils literal notranslate"><span class="pre">download_multipart_ranges()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.effective_number_of_genes"><code class="docutils literal notranslate"><span class="pre">effective_number_of_genes()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_all_collections"><code class="docutils literal notranslate"><span class="pre">fetch_all_collections()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_all_genes"><code class="docutils literal notranslate"><span class="pre">fetch_all_genes()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_all_sets"><code class="docutils literal notranslate"><span class="pre">fetch_all_sets()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_collection_sizes"><code class="docutils literal notranslate"><span class="pre">fetch_collection_sizes()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_genes_for_all_sets"><code class="docutils literal notranslate"><span class="pre">fetch_genes_for_all_sets()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_genes_for_some_sets"><code class="docutils literal notranslate"><span class="pre">fetch_genes_for_some_sets()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_set_sizes"><code class="docutils literal notranslate"><span class="pre">fetch_set_sizes()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_sets_for_all_genes"><code class="docutils literal notranslate"><span class="pre">fetch_sets_for_all_genes()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_sets_for_some_genes"><code class="docutils literal notranslate"><span class="pre">fetch_sets_for_some_genes()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_some_collections"><code class="docutils literal notranslate"><span class="pre">fetch_some_collections()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.fetch_some_sets"><code class="docutils literal notranslate"><span class="pre">fetch_some_sets()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.find_overlapping_sets"><code class="docutils literal notranslate"><span class="pre">find_overlapping_sets()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.flush_memory_cache"><code class="docutils literal notranslate"><span class="pre">flush_memory_cache()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.gene_url"><code class="docutils literal notranslate"><span class="pre">gene_url()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.map_genes_by_name"><code class="docutils literal notranslate"><span class="pre">map_genes_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.new_config"><code class="docutils literal notranslate"><span class="pre">new_config()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.range_concurrency"><code class="docutils literal notranslate"><span class="pre">range_concurrency()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.search_genes"><code class="docutils literal notranslate"><span class="pre">search_genes()</span></code></a></li>
+<li><a class="reference internal" href="#gesel.search_set_text"><code class="docutils literal notranslate"><span class="pre">search_set_text()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

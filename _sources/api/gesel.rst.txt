@@ -1,0 +1,10 @@
+gesel package
+=============
+
+Module contents
+---------------
+
+.. automodule:: gesel
+   :members:
+   :show-inheritance:
+   :undoc-members:
