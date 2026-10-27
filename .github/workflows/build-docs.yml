@@ -27,6 +27,9 @@ jobs:
           pip install tox
           tox -e docs
 
+      - name: Disable jekyll
+        run: touch ./docs/_build/html/.nojekyll
+
       - name: Edit CSS
         run: |
           CSSPATH=./docs/_build/html/_static/styles/furo.css
