@@ -6,23 +6,6 @@ on:
       - master # for legacy repos
       - main
   pull_request:
-    branches:
-      - master # for legacy repos
-      - main
-  workflow_dispatch: # Allow manually triggering the workflow
-  schedule:
-    # Run roughly every 15 days at 00:00 UTC
-    # (useful to check if updates on dependencies break the package)
-    - cron: "0 0 1,16 * *"
-
-permissions:
-  contents: read
-
-concurrency:
-  group: >-
-    ${{ github.workflow }}-${{ github.ref_type }}-
-    ${{ github.event.pull_request.number || github.sha }}
-  cancel-in-progress: true
 
 jobs:
   test:
@@ -36,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     name: Python ${{ matrix.python }}, ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v6
         id: setup-python
@@ -65,7 +48,7 @@ jobs:
           fi
 
       - name: Upload coverage reports to Codecov with GitHub Action
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         if: ${{ steps.codecov-check.outputs.codecov == 'true' }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
