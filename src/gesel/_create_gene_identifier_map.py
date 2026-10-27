@@ -4,7 +4,7 @@ from . import _new_config as cfg
 from ._fetch_all_genes import fetch_all_genes
 
 
-def map_genes_by_name(
+def create_gene_identifier_map(
     species: str,
     type: str,
     ignore_case: bool = False,
@@ -35,7 +35,7 @@ def map_genes_by_name(
 
     Examples:
         >>> import gesel
-        >>> mapping = gesel.map_genes_by_name("9606", type="symbol")
+        >>> mapping = gesel.create_gene_identifier_map("9606", type="symbol")
         >>>
         >>> # Taking it for a spin:
         >>> found = mapping["SNAP25"]
@@ -53,7 +53,7 @@ def map_genes_by_name(
         store_name = "cased"
 
     config = cfg._get_config(config)
-    cached = cfg._get_cache(config, "map_genes_by_name", species)
+    cached = cfg._get_cache(config, "create_gene_identifier_map", species)
 
     modified = False
     if cached is None:
@@ -90,6 +90,16 @@ def map_genes_by_name(
     if modified:
         sfound[type] = tfound
         cached[store_name] = sfound
-        cfg._set_cache(config, "map_genes_by_name", species, cached)
+        cfg._set_cache(config, "create_gene_identifier_map", species, cached)
 
     return tfound
+
+
+def map_genes_by_name(
+    species: str,
+    type: str,
+    ignore_case: bool = False,
+    config: Optional[dict] = None
+) -> dict:
+    """Deprecated, use :py:func:`~create_gene_identifier_map` instead."""
+    return create_gene_identifier_map(species, type, ignore_case=ignore_case, config=config)

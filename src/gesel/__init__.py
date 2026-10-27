@@ -35,7 +35,7 @@ from ._fetch_genes_for_some_sets import fetch_genes_for_some_sets
 from ._fetch_sets_for_some_genes import fetch_sets_for_some_genes, effective_number_of_genes
 from ._find_overlapping_sets import find_overlapping_sets
 
-from ._map_genes_by_name import map_genes_by_name
+from ._create_gene_identifier_map import create_gene_identifier_map, map_genes_by_name
 from ._search_genes import search_genes
 from ._search_set_text import search_set_text
 

@@ -1,7 +1,7 @@
 from typing import Optional
 
 from . import _new_config as cfg
-from ._map_genes_by_name import map_genes_by_name
+from ._create_gene_identifier_map import create_gene_identifier_map
 
 
 def search_genes(
@@ -57,7 +57,7 @@ def search_genes(
         output.append([])
 
     for t in types:
-        mappings = map_genes_by_name(species, t, ignore_case=ignore_case, config=config)
+        mappings = create_gene_identifier_map(species, t, ignore_case=ignore_case, config=config)
         for i, g in enumerate(genes):
             if g in mappings:
                 output[i] += mappings[g]
