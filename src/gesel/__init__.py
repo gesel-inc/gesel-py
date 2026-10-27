@@ -42,6 +42,9 @@ from ._search_set_text import search_set_text
 from ._new_config import new_config, flush_memory_cache
 from ._utils import cache_directory
 
+from ._prepare_gene_files import prepare_gene_files
+from ._validate_gene_files import validate_gene_files
+
 
 __all__ = []
 _toignore = set(["sys", "biocutils", "biocframe"]) 
