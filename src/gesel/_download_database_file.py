@@ -71,7 +71,7 @@ def database_url(url: Optional[str] = None) -> str:
         if "GESEL_DATABASE_URL" in os.environ:
             _db_url = os.environ["GESEL_DATABASE_URL"]
         else:
-            _db_url = "https://github.com/LTLA/gesel-feedstock/releases/download/indices-v0.2.1"
+            _db_url = "https://github.com/gesel-inc/feedstock/releases/download/indices-v0.3.0"
 
     previous = _db_url
     if url is not None:

@@ -71,7 +71,7 @@ def gene_url(url: Optional[str] = None) -> str:
         if "GESEL_GENE_URL" in os.environ:
             _gene_url = os.environ["GESEL_GENE_URL"]
         else:
-            _gene_url = "https://github.com/LTLA/gesel-feedstock/releases/download/genes-v1.0.0"
+            _gene_url = "https://github.com/gesel-inc/feedstock/releases/download/genes-v0.3.1"
 
     previous = _gene_url
     if url is not None:

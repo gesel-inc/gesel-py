@@ -5,16 +5,16 @@ import os
 
 def test_download_gene_file():
     tmpdir = tempfile.mkdtemp()
-    out = gesel.download_gene_file("9606_symbol.tsv.gz", cache=tmpdir)
+    out = gesel.download_gene_file("9606_gene-type-symbol.tsv.gz", cache=tmpdir)
     assert os.path.exists(out)
     assert os.path.dirname(out) == tmpdir
 
     with open(out, "w") as f:
         f.write("")
-    assert gesel.download_gene_file("9606_symbol.tsv.gz", cache=tmpdir) == out # re-uses the cache.
+    assert gesel.download_gene_file("9606_gene-type-symbol.tsv.gz", cache=tmpdir) == out # re-uses the cache.
     assert os.stat(out).st_size == 0 # doesn't change the cached value.
 
-    assert gesel.download_gene_file("9606_symbol.tsv.gz", cache=tmpdir, overwrite=True) == out # re-uses the cache.
+    assert gesel.download_gene_file("9606_gene-type-symbol.tsv.gz", cache=tmpdir, overwrite=True) == out # re-uses the cache.
     assert os.stat(out).st_size > 0 # overwrites the broken cache value.
 
 

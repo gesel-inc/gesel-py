@@ -1,6 +1,9 @@
-from . import _new_config as cfg
 from typing import Optional
 import biocframe
+
+from . import _new_config as cfg
+from ._fetch_gene_types import fetch_gene_types
+from ._fetch_gene_version import fetch_gene_version
 
 
 def fetch_all_genes(
@@ -42,13 +45,20 @@ def fetch_all_genes(
     if cached is None:
         cached = {}
 
+    if types is None:
+        types = fetch_gene_types(species, config)
+    if fetch_gene_version(species, config) == "0.1.0":
+        sep = "_"
+    else:
+        sep = "_gene-type-"
+
     output = {}
     for t in types:
         if t in cached:
             output[t] = cached[t]
             continue
 
-        path = cfg._fetch_gene(config, species + "_" + t + ".tsv.gz")
+        path = cfg._fetch_gene(config, species + sep + t + ".tsv.gz")
         collected = []
 
         import gzip
