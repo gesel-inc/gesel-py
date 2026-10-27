@@ -4,11 +4,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
-    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>gesel._map_genes_by_name - gesel 0.1.0 documentation</title>
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>gesel._map_genes_by_name - gesel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -161,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.1.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.1.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.1.0 documentation</span>
+  <span class="sidebar-brand-text">gesel 0.1.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -247,15 +248,15 @@
     <span class="n">ignore_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a mapping of gene names (Ensembl, symbol, etc.) to their gene indices.</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Create a mapping of gene identifiers (Ensembl, symbol, etc.) to their gene indices.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        species:</span>
 <span class="sd">            NCBI taxonomy ID of the species of interest.</span>
 
 <span class="sd">        type:</span>
-<span class="sd">            Type of gene name/identifier.</span>
+<span class="sd">            Type of gene identifier.</span>
 <span class="sd">            Typically one of ``symbol``, ``entrez``, and/or ``ensembl``.</span>
 
 <span class="sd">        ignore_case:</span>
@@ -266,31 +267,31 @@
 <span class="sd">            If ``None``, the default configuration is used.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Dictionary where each key is the gene name/identifier of the specified ``type`` and each value is a list of integers.</span>
-<span class="sd">        Each list contains the genes associated with that name (after ignoring case, if ``ignore_case = True``).</span>
-<span class="sd">        List entries should be interpreted as indices into any of the lists returned by :py:func:`~gesel.fetch_all_genes`.</span>
+<span class="sd">        Dictionary where each key is the gene identifier of the specified ``type`` and each value is a list of integers.</span>
+<span class="sd">        Each list contains the indices of genes associated with that identifier (after ignoring case, if ``ignore_case = True``).</span>
+<span class="sd">        List entries should be interpreted as row indices into the data frame returned by :py:func:`~gesel.fetch_all_genes`.</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; mapping = gesel.map_genes_by_name(&quot;9606&quot;, type=&quot;symbol&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; mapping = gesel.map_genes_by_name("9606", type="symbol")</span>
 <span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; # Taking it for a spin:</span>
-<span class="sd">        &gt;&gt;&gt; found = mapping[&quot;SNAP25&quot;]</span>
+<span class="sd">        &gt;&gt;&gt; found = mapping["SNAP25"]</span>
 <span class="sd">        &gt;&gt;&gt; print(found)</span>
 <span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; # Cross-checking it</span>
-<span class="sd">        &gt;&gt;&gt; ref = gesel.fetch_all_genes(&quot;9606&quot;)[&quot;symbol&quot;]</span>
+<span class="sd">        &gt;&gt;&gt; ref = gesel.fetch_all_genes("9606")["symbol"]</span>
 <span class="sd">        &gt;&gt;&gt; import biocutils</span>
 <span class="sd">        &gt;&gt;&gt; biocutils.subset(ref, found)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">ignore_case</span><span class="p">:</span>
-        <span class="n">store_name</span> <span class="o">=</span> <span class="s2">&quot;lower&quot;</span>
+        <span class="n">store_name</span> <span class="o">=</span> <span class="s2">"lower"</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">store_name</span> <span class="o">=</span> <span class="s2">&quot;cased&quot;</span>
+        <span class="n">store_name</span> <span class="o">=</span> <span class="s2">"cased"</span>
 
     <span class="n">config</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_get_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-    <span class="n">cached</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_get_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;map_genes_by_name&quot;</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
+    <span class="n">cached</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_get_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">"map_genes_by_name"</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
 
     <span class="n">modified</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -327,7 +328,7 @@
     <span class="k">if</span> <span class="n">modified</span><span class="p">:</span>
         <span class="n">sfound</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span> <span class="o">=</span> <span class="n">tfound</span>
         <span class="n">cached</span><span class="p">[</span><span class="n">store_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">sfound</span>
-        <span class="n">cfg</span><span class="o">.</span><span class="n">_set_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;map_genes_by_name&quot;</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">cached</span><span class="p">)</span>
+        <span class="n">cfg</span><span class="o">.</span><span class="n">_set_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">"map_genes_by_name"</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">cached</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">tfound</span></div>
 
@@ -363,7 +364,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+</div><script src="../../_static/documentation_options.js?v=a58bc63e"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

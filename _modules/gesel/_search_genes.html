@@ -4,11 +4,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
-    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>gesel._search_genes - gesel 0.1.0 documentation</title>
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>gesel._search_genes - gesel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -161,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.1.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.1.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.1.0 documentation</span>
+  <span class="sidebar-brand-text">gesel 0.1.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -244,11 +245,11 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">search_genes</span><span class="p">(</span>
     <span class="n">species</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">genes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="n">types</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;entrez&quot;</span><span class="p">,</span> <span class="s2">&quot;ensembl&quot;</span><span class="p">,</span> <span class="s2">&quot;symbol&quot;</span><span class="p">],</span>
+    <span class="n">types</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"entrez"</span><span class="p">,</span> <span class="s2">"ensembl"</span><span class="p">,</span> <span class="s2">"symbol"</span><span class="p">],</span>
     <span class="n">ignore_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Search for genes by converting gene identifiers to gene indices.</span>
 
 <span class="sd">    Args:</span>
@@ -256,10 +257,10 @@
 <span class="sd">            NCBI taxonomy ID of the species of interest.</span>
 
 <span class="sd">        genes:</span>
-<span class="sd">            List of gene names of any type specified in ``types``.</span>
+<span class="sd">            List of gene identifiers of any type specified in ``types``.</span>
 
 <span class="sd">        types:</span>
-<span class="sd">            Types of gene names to return.</span>
+<span class="sd">            Types of gene identifiers to return.</span>
 <span class="sd">            Typically one or more of ``symbol``, ``entrez``, and/or ``ensembl``.</span>
 
 <span class="sd">        ignore_case:</span>
@@ -276,15 +277,15 @@
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; out = gesel.search_genes(&quot;9606&quot;, [&quot;SNAP25&quot;, &quot;NEUROD6&quot;, &quot;ENSG00000139618&quot;])</span>
+<span class="sd">        &gt;&gt;&gt; out = gesel.search_genes("9606", ["SNAP25", "NEUROD6", "ENSG00000139618"])</span>
 <span class="sd">        &gt;&gt;&gt; print(out)</span>
 <span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; # Round-tripping them:</span>
-<span class="sd">        &gt;&gt;&gt; genes = gesel.fetch_all_genes(&quot;9606&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; genes = gesel.fetch_all_genes("9606")</span>
 <span class="sd">        &gt;&gt;&gt; print(genes[out[0],:])</span>
 <span class="sd">        &gt;&gt;&gt; print(genes[out[1],:])</span>
 <span class="sd">        &gt;&gt;&gt; print(genes[out[2],:])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">ignore_case</span><span class="p">:</span>
         <span class="n">genes</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genes</span><span class="p">]</span>
@@ -333,7 +334,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+</div><script src="../../_static/documentation_options.js?v=a58bc63e"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

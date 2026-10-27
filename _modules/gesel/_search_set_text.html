@@ -4,11 +4,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
-    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>gesel._search_set_text - gesel 0.1.0 documentation</title>
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>gesel._search_set_text - gesel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -161,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.1.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.1.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.1.0 documentation</span>
+  <span class="sidebar-brand-text">gesel 0.1.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -249,7 +250,7 @@
     <span class="n">use_description</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> 
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Search for sets based on their names and descriptions.</span>
 
 <span class="sd">    Args:</span>
@@ -281,27 +282,27 @@
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; out = gesel.search_set_text(&quot;9606&quot;, &quot;cancer&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; print(gesel.fetch_all_sets(&quot;9606&quot;)[out, :])</span>
+<span class="sd">        &gt;&gt;&gt; out = gesel.search_set_text("9606", "cancer")</span>
+<span class="sd">        &gt;&gt;&gt; print(gesel.fetch_all_sets("9606")[out, :])</span>
 <span class="sd">        &gt;&gt;&gt;</span>
-<span class="sd">        &gt;&gt;&gt; out = gesel.search_set_text(&quot;9606&quot;, &quot;innate immun*&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; print(gesel.fetch_all_sets(&quot;9606&quot;)[out, :])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; out = gesel.search_set_text("9606", "innate immun*")</span>
+<span class="sd">        &gt;&gt;&gt; print(gesel.fetch_all_sets("9606")[out, :])</span>
+<span class="sd">    """</span>
 
     <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-    <span class="n">matcher</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;[^a-zA-Z0-9?*-]&quot;</span><span class="p">)</span>
+    <span class="n">matcher</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">"[^a-zA-Z0-9?*-]"</span><span class="p">)</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">matcher</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
-        <span class="n">tok</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="c1"># everything is a bytestring for consistency with the internal representation.</span>
-        <span class="k">if</span> <span class="n">tok</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span> <span class="ow">and</span> <span class="n">tok</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;-&quot;</span><span class="p">:</span>
+        <span class="n">tok</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="c1"># everything is a bytestring for consistency with the internal representation.</span>
+        <span class="k">if</span> <span class="n">tok</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">""</span> <span class="ow">and</span> <span class="n">tok</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">"-"</span><span class="p">:</span>
             <span class="n">tokens</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
 
     <span class="n">config</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_get_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">use_name</span><span class="p">:</span>
-        <span class="n">gathered_names</span> <span class="o">=</span> <span class="n">_fetch_sets_by_token</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">tokens</span><span class="p">,</span> <span class="s2">&quot;names&quot;</span><span class="p">)</span>
+        <span class="n">gathered_names</span> <span class="o">=</span> <span class="n">_fetch_sets_by_token</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">tokens</span><span class="p">,</span> <span class="s2">"names"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">use_description</span><span class="p">:</span>
-        <span class="n">gathered_descriptions</span> <span class="o">=</span> <span class="n">_fetch_sets_by_token</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">tokens</span><span class="p">,</span> <span class="s2">&quot;descriptions&quot;</span><span class="p">)</span>
+        <span class="n">gathered_descriptions</span> <span class="o">=</span> <span class="n">_fetch_sets_by_token</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">tokens</span><span class="p">,</span> <span class="s2">"descriptions"</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">use_name</span> <span class="ow">and</span> <span class="n">use_description</span><span class="p">:</span>
         <span class="n">gathered</span> <span class="o">=</span> <span class="p">[]</span>
@@ -324,28 +325,28 @@
     <span class="n">tokens</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
     <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-    <span class="n">cached</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_get_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;search_set_text&quot;</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
+    <span class="n">cached</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_get_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">"search_set_text"</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
     <span class="n">modified</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cached</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">modified</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="n">fname</span> <span class="o">=</span> <span class="n">species</span> <span class="o">+</span> <span class="s2">&quot;_tokens-&quot;</span> <span class="o">+</span> <span class="nb">type</span> <span class="o">+</span> <span class="s2">&quot;.tsv&quot;</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">species</span> <span class="o">+</span> <span class="s2">"_tokens-"</span> <span class="o">+</span> <span class="nb">type</span> <span class="o">+</span> <span class="s2">".tsv"</span>
     <span class="k">if</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">cached</span><span class="p">:</span>
         <span class="n">tfound</span> <span class="o">=</span> <span class="n">cached</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">tfound</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">names</span><span class="p">,</span> <span class="n">ranges</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_retrieve_ranges_with_names</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
-        <span class="n">tfound</span><span class="p">[</span><span class="s2">&quot;ranges&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ranges</span>
-        <span class="n">tfound</span><span class="p">[</span><span class="s2">&quot;names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span>
-        <span class="n">tfound</span><span class="p">[</span><span class="s2">&quot;prior&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">tfound</span><span class="p">[</span><span class="s2">"ranges"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ranges</span>
+        <span class="n">tfound</span><span class="p">[</span><span class="s2">"names"</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span>
+        <span class="n">tfound</span><span class="p">[</span><span class="s2">"prior"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">modified</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="n">tnames</span> <span class="o">=</span> <span class="n">tfound</span><span class="p">[</span><span class="s2">&quot;names&quot;</span><span class="p">]</span>
-    <span class="n">prior</span> <span class="o">=</span> <span class="n">tfound</span><span class="p">[</span><span class="s2">&quot;prior&quot;</span><span class="p">]</span>
+    <span class="n">tnames</span> <span class="o">=</span> <span class="n">tfound</span><span class="p">[</span><span class="s2">"names"</span><span class="p">]</span>
+    <span class="n">prior</span> <span class="o">=</span> <span class="n">tfound</span><span class="p">[</span><span class="s2">"prior"</span><span class="p">]</span>
 
-    <span class="c1"># Finding the unique set of all tokens that haven&#39;t been resolved yet.</span>
+    <span class="c1"># Finding the unique set of all tokens that haven't been resolved yet.</span>
     <span class="n">to_request</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">partial_request</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -353,8 +354,8 @@
         <span class="k">if</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">prior</span><span class="p">:</span>
             <span class="k">continue</span>
 
-        <span class="n">has_qm</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;?&quot;</span><span class="p">)</span>
-        <span class="n">has_star</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
+        <span class="n">has_qm</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">"?"</span><span class="p">)</span>
+        <span class="n">has_star</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">"*"</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">has_qm</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">has_star</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># No choice but to do a full scan if we start with a wildcard.</span>
@@ -398,10 +399,10 @@
                 <span class="k">if</span> <span class="n">tnames</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">==</span> <span class="n">tok</span><span class="p">:</span>
                     <span class="n">to_request</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
 
-    <span class="c1"># Requesting ranges for anything that we&#39;re missing.</span>
+    <span class="c1"># Requesting ranges for anything that we're missing.</span>
     <span class="n">to_request</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">to_request</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">to_request</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">ranges</span> <span class="o">=</span> <span class="n">tfound</span><span class="p">[</span><span class="s2">&quot;ranges&quot;</span><span class="p">]</span>
+        <span class="n">ranges</span> <span class="o">=</span> <span class="n">tfound</span><span class="p">[</span><span class="s2">"ranges"</span><span class="p">]</span>
         <span class="n">starts</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">ends</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">to_request</span><span class="p">:</span>
@@ -422,9 +423,9 @@
         <span class="n">modified</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">if</span> <span class="n">modified</span><span class="p">:</span>
-        <span class="n">tfound</span><span class="p">[</span><span class="s2">&quot;prior&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prior</span>
+        <span class="n">tfound</span><span class="p">[</span><span class="s2">"prior"</span><span class="p">]</span> <span class="o">=</span> <span class="n">prior</span>
         <span class="n">cached</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span> <span class="o">=</span> <span class="n">tfound</span>
-        <span class="n">cfg</span><span class="o">.</span><span class="n">_set_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;search_set_text&quot;</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">cached</span><span class="p">)</span>
+        <span class="n">cfg</span><span class="o">.</span><span class="n">_set_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">"search_set_text"</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">cached</span><span class="p">)</span>
 
     <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
@@ -434,18 +435,18 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_create_wildcard_regex</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="c1"># Easier to assemble it as a string and then convert it back to a bytestring.</span>
-    <span class="c1"># No need to set &#39;^&#39; as we use re.match to match only the start of the string.</span>
-    <span class="n">new_pattern</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> 
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">token</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;?&quot;</span><span class="p">:</span>
-            <span class="n">new_pattern</span> <span class="o">+=</span> <span class="s2">&quot;.&quot;</span>
-        <span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
-            <span class="n">new_pattern</span> <span class="o">+=</span> <span class="s2">&quot;.*&quot;</span>
+    <span class="c1"># No need to set '^' as we use re.match to match only the start of the string.</span>
+    <span class="n">new_pattern</span> <span class="o">=</span> <span class="s2">""</span> 
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">token</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">"?"</span><span class="p">:</span>
+            <span class="n">new_pattern</span> <span class="o">+=</span> <span class="s2">"."</span>
+        <span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">"*"</span><span class="p">:</span>
+            <span class="n">new_pattern</span> <span class="o">+=</span> <span class="s2">".*"</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_pattern</span> <span class="o">+=</span> <span class="n">x</span>
-    <span class="n">new_pattern</span> <span class="o">+=</span> <span class="s2">&quot;$&quot;</span>
+    <span class="n">new_pattern</span> <span class="o">+=</span> <span class="s2">"$"</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">new_pattern</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">new_pattern</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span>
 </pre></div>
         </article>
       </div>
@@ -478,7 +479,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+</div><script src="../../_static/documentation_options.js?v=a58bc63e"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

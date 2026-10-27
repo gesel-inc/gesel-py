@@ -4,11 +4,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
-    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>gesel._find_overlapping_sets - gesel 0.1.0 documentation</title>
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>gesel._find_overlapping_sets - gesel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -161,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.1.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.1.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.1.0 documentation</span>
+  <span class="sidebar-brand-text">gesel 0.1.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -248,7 +249,7 @@
     <span class="n">counts_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Find all sets overlapping any gene in a user-supplied list, and return the number of overlaps per set.</span>
 
 <span class="sd">    Args:</span>
@@ -287,18 +288,18 @@
 <span class="sd">        Otherwise, unknown genes would inappropriately increase the number of draws and inflate the enrichment p-value.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; # Present like the first 10 genes are what we&#39;re interested in.</span>
+<span class="sd">        &gt;&gt;&gt; # Present like the first 10 genes are what we're interested in.</span>
 <span class="sd">        &gt;&gt;&gt; genes_of_interest = range(10)</span>
 <span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; overlaps, present = gesel.find_overlapping_sets(&quot;9606&quot;, genes_of_interest)</span>
+<span class="sd">        &gt;&gt;&gt; overlaps, present = gesel.find_overlapping_sets("9606", genes_of_interest)</span>
 <span class="sd">        &gt;&gt;&gt; print(overlaps)</span>
 <span class="sd">        &gt;&gt;&gt; present</span>
 <span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; # More details on the overlapping sets.</span>
-<span class="sd">        &gt;&gt;&gt; all_sets = gesel.fetch_all_sets(&quot;9606&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; print(all_sets[overlaps[&quot;set&quot;],:])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; all_sets = gesel.fetch_all_sets("9606")</span>
+<span class="sd">        &gt;&gt;&gt; print(all_sets[overlaps["set"],:])</span>
+<span class="sd">    """</span>
 
     <span class="n">info</span> <span class="o">=</span> <span class="n">fetch_sets_for_some_genes</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">genes</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
 
@@ -325,8 +326,8 @@
         <span class="c1">#o = biocutils.order(counts, decreasing=True)</span>
 
         <span class="n">overlap</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span>
-            <span class="s2">&quot;set&quot;</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">o</span><span class="p">),</span>
-            <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+            <span class="s2">"set"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">o</span><span class="p">),</span>
+            <span class="s2">"count"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
         <span class="p">})</span>
 
     <span class="k">else</span><span class="p">:</span>
@@ -355,8 +356,8 @@
         <span class="c1">#o = biocutils.order(counts, decreasing=True)</span>
 
         <span class="n">overlap</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span>
-            <span class="s2">&quot;set&quot;</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">o</span><span class="p">),</span>
-            <span class="s2">&quot;genes&quot;</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+            <span class="s2">"set"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">o</span><span class="p">),</span>
+            <span class="s2">"genes"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
         <span class="p">})</span>
 
     <span class="n">present</span> <span class="o">=</span> <span class="mi">0</span>
@@ -397,7 +398,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+</div><script src="../../_static/documentation_options.js?v=a58bc63e"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

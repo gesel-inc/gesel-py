@@ -4,11 +4,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
-    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>gesel._utils - gesel 0.1.0 documentation</title>
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>gesel._utils - gesel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -161,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.1.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.1.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.1.0 documentation</span>
+  <span class="sidebar-brand-text">gesel 0.1.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -241,8 +242,8 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_format_error</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
-    <span class="n">ctype</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;content-type&quot;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">ctype</span> <span class="o">==</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">:</span>
+    <span class="n">ctype</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">"content-type"</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">ctype</span> <span class="o">==</span> <span class="s2">"text/plain"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
@@ -254,7 +255,7 @@
 <div class="viewcode-block" id="cache_directory">
 <a class="viewcode-back" href="../../api/gesel.html#gesel.cache_directory">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cache_directory</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get or set the default cache directory for :py:func:`~gesel.download_database_file` and :py:func:`~gesel.download_gene_file`.</span>
 
 <span class="sd">    Args:</span>
@@ -271,17 +272,17 @@
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
 <span class="sd">        &gt;&gt;&gt; gesel.cache_directory()</span>
-<span class="sd">        &gt;&gt;&gt; old = gesel.cache_directory(&quot;/tmp/foo/bar&quot;) # setting it.</span>
-<span class="sd">        &gt;&gt;&gt; gesel.cache_directory() # now it&#39;s changed.</span>
+<span class="sd">        &gt;&gt;&gt; old = gesel.cache_directory("/tmp/foo/bar") # setting it.</span>
+<span class="sd">        &gt;&gt;&gt; gesel.cache_directory() # now it's changed.</span>
 <span class="sd">        &gt;&gt;&gt; gesel.cache_directory(old) # setting it back.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">global</span> <span class="n">_cache_directory</span>
     <span class="k">if</span> <span class="n">_cache_directory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;GESEL_CACHE_DIRECTORY&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
-            <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GESEL_CACHE_DIRECTORY&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"GESEL_CACHE_DIRECTORY"</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"GESEL_CACHE_DIRECTORY"</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="kn">import</span><span class="w"> </span><span class="nn">appdirs</span>
-            <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">appdirs</span><span class="o">.</span><span class="n">user_cache_dir</span><span class="p">(</span><span class="s2">&quot;gesel&quot;</span><span class="p">)</span>
+            <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">appdirs</span><span class="o">.</span><span class="n">user_cache_dir</span><span class="p">(</span><span class="s2">"gesel"</span><span class="p">)</span>
 
     <span class="n">previous</span> <span class="o">=</span> <span class="n">_cache_directory</span>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -304,7 +305,7 @@
 
     <span class="k">if</span> <span class="n">overwrite</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
         <span class="c1"># Saving to a temporary file and renaming it on success,</span>
-        <span class="c1"># so we don&#39;t fail with a partially downloaded file in the cache.</span>
+        <span class="c1"># so we don't fail with a partially downloaded file in the cache.</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
         <span class="n">tempfid</span><span class="p">,</span> <span class="n">temppath</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">tempfid</span><span class="p">)</span> <span class="c1"># avoid opening a handle to this file until we need it.</span>
@@ -314,9 +315,9 @@
             <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">300</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">_format_error</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temppath</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temppath</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">temppath</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="c1"># this should be more or less atomic when both paths are on the same filesystem, so we&#39;ll omit the locks.</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">temppath</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="c1"># this should be more or less atomic when both paths are on the same filesystem, so we'll omit the locks.</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">temppath</span><span class="p">):</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temppath</span><span class="p">)</span>
@@ -325,10 +326,10 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_decode_indices</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[]</span>
 
-    <span class="n">details</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span> 
+    <span class="n">details</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span> 
     <span class="n">last</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">details</span><span class="p">):</span>
         <span class="n">last</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -366,7 +367,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+</div><script src="../../_static/documentation_options.js?v=a58bc63e"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

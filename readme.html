@@ -5,11 +5,12 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Contributing" href="contributing.html"><link rel="prev" title="gesel" href="index.html">
 
-    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Gene set selections in Python - gesel 0.1.0 documentation</title>
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>Gene set selections in Python - gesel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_autodoc_typehints.css?v=057ac668" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -162,7 +163,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">gesel 0.1.0 documentation</div></a>
+      <a href="index.html"><div class="brand">gesel 0.1.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,7 +184,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
-  <span class="sidebar-brand-text">gesel 0.1.0 documentation</span>
+  <span class="sidebar-brand-text">gesel 0.1.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -258,25 +259,25 @@ In this manner, we can execute a variety of interesting gene set queries with hi
 <p>Then we can find overlaps between our genes of interest and the gene sets in the Gesel database.
 (Note that the exact numbers are subject to change, pending updates to the version of the Gesel database.)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">gesel</span>
-<span class="n">my_genes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SNAP25&quot;</span><span class="p">,</span> <span class="s2">&quot;NEUROD6&quot;</span><span class="p">,</span> <span class="s2">&quot;GAD1&quot;</span><span class="p">,</span> <span class="s2">&quot;GAD2&quot;</span><span class="p">,</span> <span class="s2">&quot;RELN&quot;</span><span class="p">]</span>
+<span class="n">my_genes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"SNAP25"</span><span class="p">,</span> <span class="s2">"NEUROD6"</span><span class="p">,</span> <span class="s2">"GAD1"</span><span class="p">,</span> <span class="s2">"GAD2"</span><span class="p">,</span> <span class="s2">"RELN"</span><span class="p">]</span>
 
-<span class="c1"># First, mapping our gene names to Gesel&#39;s internal gene indices.</span>
-<span class="n">gene_idx</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="n">my_genes</span><span class="p">)</span> <span class="c1"># list of lists of gene indices.</span>
+<span class="c1"># First, mapping our gene names to Gesel's internal gene indices.</span>
+<span class="n">gene_idx</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_genes</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="n">my_genes</span><span class="p">)</span> <span class="c1"># list of lists of gene indices.</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">gene_idx</span><span class="p">)</span>
 <span class="c1">## [[4639], [12767], [1758], [1759], [3912]]</span>
 <span class="n">gene_idx</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gene_idx</span><span class="p">,</span> <span class="p">[])</span> <span class="c1"># collapsing it to a list of integers, for simplicity.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_genes</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)[</span><span class="n">gene_idx</span><span class="p">,:])</span> <span class="c1"># double-checking that we got it right.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_genes</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">)[</span><span class="n">gene_idx</span><span class="p">,:])</span> <span class="c1"># double-checking that we got it right.</span>
 <span class="c1">## BiocFrame with 5 rows and 3 columns</span>
 <span class="c1">##          symbol    entrez             ensembl</span>
 <span class="c1">##          &lt;list&gt;    &lt;list&gt;              &lt;list&gt;</span>
-<span class="c1">## [0]  [&#39;SNAP25&#39;]  [&#39;6616&#39;] [&#39;ENSG00000132639&#39;]</span>
-<span class="c1">## [1] [&#39;NEUROD6&#39;] [&#39;63974&#39;] [&#39;ENSG00000164600&#39;]</span>
-<span class="c1">## [2]    [&#39;GAD1&#39;]  [&#39;2571&#39;] [&#39;ENSG00000128683&#39;]</span>
-<span class="c1">## [3]    [&#39;GAD2&#39;]  [&#39;2572&#39;] [&#39;ENSG00000136750&#39;]</span>
-<span class="c1">## [4]    [&#39;RELN&#39;]  [&#39;5649&#39;] [&#39;ENSG00000189056&#39;]</span>
+<span class="c1">## [0]  ['SNAP25']  ['6616'] ['ENSG00000132639']</span>
+<span class="c1">## [1] ['NEUROD6'] ['63974'] ['ENSG00000164600']</span>
+<span class="c1">## [2]    ['GAD1']  ['2571'] ['ENSG00000128683']</span>
+<span class="c1">## [3]    ['GAD2']  ['2572'] ['ENSG00000136750']</span>
+<span class="c1">## [4]    ['RELN']  ['5649'] ['ENSG00000189056']</span>
 
 <span class="c1"># Now finding all sets with one or more overlaps to `my_genes`.</span>
-<span class="n">overlaps</span><span class="p">,</span> <span class="n">present</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">find_overlapping_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="n">gene_idx</span><span class="p">,</span> <span class="n">counts_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">overlaps</span><span class="p">,</span> <span class="n">present</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">find_overlapping_sets</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="n">gene_idx</span><span class="p">,</span> <span class="n">counts_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">overlaps</span><span class="p">)</span> <span class="c1"># set index and the identities of overlapping genes.</span>
 <span class="c1">## BiocFrame with 1163 rows and 2 columns</span>
 <span class="c1">##           set                     genes</span>
@@ -290,7 +291,7 @@ In this manner, we can execute a variety of interesting gene set queries with hi
 <span class="c1">## [1162]  40599                    [3912]</span>
 
 <span class="c1"># Actually getting the identities of the top sets:</span>
-<span class="n">set_info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="n">overlaps</span><span class="p">[</span><span class="s2">&quot;set&quot;</span><span class="p">][:</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">set_info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="n">overlaps</span><span class="p">[</span><span class="s2">"set"</span><span class="p">][:</span><span class="mi">10</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">set</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
 <span class="c1">## BiocFrame with 10 rows and 5 columns</span>
 <span class="c1">##                         name             description   size collection number</span>
@@ -307,7 +308,7 @@ In this manner, we can execute a variety of interesting gene set queries with hi
 <span class="c1">## [9] REACTOME_NEURONAL_SYSTEM http://www.gsea-msig...    411          4     33</span>
 
 <span class="c1"># As well as the collections from which they were derived.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_collections</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_collections</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">]))</span>
 <span class="c1">## BiocFrame with 4 rows and 6 columns</span>
 <span class="c1">##                       title             description maintainer                  source  start   size</span>
 <span class="c1">##                      &lt;list&gt;                  &lt;list&gt;     &lt;list&gt;                  &lt;list&gt; &lt;list&gt; &lt;list&gt;</span>
@@ -322,8 +323,8 @@ In this manner, we can execute a variety of interesting gene set queries with hi
 <section id="searching-on-text">
 <h2>Searching on text<a class="headerlink" href="#searching-on-text" title="Link to this heading">¶</a></h2>
 <p>We can also search for gene sets based on the text in their names or descriptions.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">chits</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_set_text</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="s2">&quot;cancer&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="n">chits</span><span class="p">[:</span><span class="mi">10</span><span class="p">]))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">chits</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_set_text</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="s2">"cancer"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="n">chits</span><span class="p">[:</span><span class="mi">10</span><span class="p">]))</span>
 <span class="c1">## BiocFrame with 10 rows and 5 columns</span>
 <span class="c1">##                        name             description   size collection number</span>
 <span class="c1">##                      &lt;list&gt;                  &lt;list&gt; &lt;list&gt;     &lt;list&gt; &lt;list&gt;</span>
@@ -338,8 +339,8 @@ In this manner, we can execute a variety of interesting gene set queries with hi
 <span class="c1">## [8] CHARAFE_BREAST_CANCE... http://www.gsea-msig...     52          2    124</span>
 <span class="c1">## [9] DOANE_BREAST_CANCER_... http://www.gsea-msig...     33          2    125</span>
 
-<span class="n">ihits</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_set_text</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="s2">&quot;innate immun*&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="n">ihits</span><span class="p">[:</span><span class="mi">10</span><span class="p">]))</span>
+<span class="n">ihits</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_set_text</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="s2">"innate immun*"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="n">ihits</span><span class="p">[:</span><span class="mi">10</span><span class="p">]))</span>
 <span class="c1">## BiocFrame with 10 rows and 5 columns</span>
 <span class="c1">##                        name             description   size collection number</span>
 <span class="c1">##                      &lt;list&gt;                  &lt;list&gt; &lt;list&gt;     &lt;list&gt; &lt;list&gt;</span>
@@ -354,8 +355,8 @@ In this manner, we can execute a variety of interesting gene set queries with hi
 <span class="c1">## [8]              GO:0002218 activation of innate...     32          0    813</span>
 <span class="c1">## [9]              GO:0002220 innate immune respon...      1          0    814</span>
 
-<span class="n">thits</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_set_text</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="s2">&quot;cd? t cell&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="n">thits</span><span class="p">[:</span><span class="mi">10</span><span class="p">]))</span>
+<span class="n">thits</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">search_set_text</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="s2">"cd? t cell"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="n">thits</span><span class="p">[:</span><span class="mi">10</span><span class="p">]))</span>
 <span class="c1">##                        name             description   size collection number</span>
 <span class="c1">##                      &lt;list&gt;                  &lt;list&gt; &lt;list&gt;     &lt;list&gt; &lt;list&gt;</span>
 <span class="c1">## [0] HOFT_CD4_POSITIVE_AL... http://www.gsea-msig...     47         13     49</span>
@@ -372,14 +373,14 @@ In this manner, we can execute a variety of interesting gene set queries with hi
 </div>
 <p>Users can construct powerful queries by intersecting the sets recovered from <code class="docutils literal notranslate"><span class="pre">search_set_text()</span></code> with those from <code class="docutils literal notranslate"><span class="pre">find_overlapping_sets()</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">biocutils</span>
-<span class="n">cancer_sets</span> <span class="o">=</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">chits</span><span class="p">,</span> <span class="n">overlaps</span><span class="p">[</span><span class="s2">&quot;set&quot;</span><span class="p">])</span>
-<span class="n">info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">,</span> <span class="n">cancer_sets</span><span class="p">)</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">cancer_sets</span><span class="p">,</span> <span class="n">overlaps</span><span class="p">[</span><span class="s2">&quot;set&quot;</span><span class="p">])</span>
-<span class="n">info</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">set_column</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">overlaps</span><span class="p">[</span><span class="s2">&quot;genes&quot;</span><span class="p">][</span><span class="n">r</span><span class="p">])</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">m</span><span class="p">])</span>
+<span class="n">cancer_sets</span> <span class="o">=</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">chits</span><span class="p">,</span> <span class="n">overlaps</span><span class="p">[</span><span class="s2">"set"</span><span class="p">])</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_some_sets</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">,</span> <span class="n">cancer_sets</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">cancer_sets</span><span class="p">,</span> <span class="n">overlaps</span><span class="p">[</span><span class="s2">"set"</span><span class="p">])</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">set_column</span><span class="p">(</span><span class="s2">"count"</span><span class="p">,</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">overlaps</span><span class="p">[</span><span class="s2">"genes"</span><span class="p">][</span><span class="n">r</span><span class="p">])</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">m</span><span class="p">])</span>
 
-<span class="c1"># We&#39;ll just use the proportion of enriched genes for ranking here;</span>
+<span class="c1"># We'll just use the proportion of enriched genes for ranking here;</span>
 <span class="c1"># a more sophisticated analysis might compute a hypergeometric p-value.</span>
-<span class="n">prop</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+<span class="n">prop</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">"count"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">info</span><span class="p">[</span><span class="s2">"size"</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
 <span class="n">ordered</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="n">biocutils</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="n">prop</span><span class="p">,</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">True</span><span class="p">),:]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ordered</span><span class="p">)</span>
 <span class="c1">## BiocFrame with 14 rows and 6 columns</span>
@@ -399,7 +400,7 @@ In this manner, we can execute a variety of interesting gene set queries with hi
 <h2>Fetching all data<a class="headerlink" href="#fetching-all-data" title="Link to this heading">¶</a></h2>
 <p><strong>gesel</strong> is designed around partial extraction from the database files, but it may be more efficient to pull all of the data into memory at once.
 This is most useful for the gene set details, which can be retrieved <em>en masse</em>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">set_info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">&quot;9606&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">set_info</span> <span class="o">=</span> <span class="n">gesel</span><span class="o">.</span><span class="n">fetch_all_sets</span><span class="p">(</span><span class="s2">"9606"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">set_info</span><span class="p">)</span>
 <span class="c1">## BiocFrame with 40654 rows and 5 columns</span>
 <span class="c1">##                            name             description   size collection number</span>
@@ -506,7 +507,7 @@ This provides a performant alternative to HTTP requests for an institutional col
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=01f34227"></script>
+</div><script src="_static/documentation_options.js?v=a58bc63e"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

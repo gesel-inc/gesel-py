@@ -4,11 +4,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
-    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>gesel._download_database_ranges - gesel 0.1.0 documentation</title>
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>gesel._download_database_ranges - gesel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -161,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.1.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.1.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.1.0 documentation</span>
+  <span class="sidebar-brand-text">gesel 0.1.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -249,7 +250,7 @@
     <span class="n">multipart</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">concurrency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> 
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Download any number of byte ranges from a Gesel database file.</span>
 
 <span class="sd">    Args:</span>
@@ -284,13 +285,13 @@
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; gesel.download_database_ranges(&quot;9606_set2gene.tsv&quot;, [0], [100])</span>
-<span class="sd">        &gt;&gt;&gt; gesel.download_database_ranges(&quot;9606_set2gene.tsv&quot;, [10, 100, 1000], [20, 150, 1100])</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; gesel.download_database_ranges("9606_set2gene.tsv", [0], [100])</span>
+<span class="sd">        &gt;&gt;&gt; gesel.download_database_ranges("9606_set2gene.tsv", [10, 100, 1000], [20, 150, 1100])</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">url</span> <span class="o">=</span> <span class="n">database_url</span><span class="p">()</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">name</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="n">name</span>
 
     <span class="k">if</span> <span class="n">multipart</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">download_multipart_ranges</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
@@ -307,7 +308,7 @@
             <span class="k">if</span> <span class="n">curstart</span> <span class="o">&lt;</span> <span class="n">curend</span><span class="p">:</span>
                 <span class="n">collected</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_make_range_request</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">curstart</span><span class="p">,</span> <span class="n">curend</span><span class="p">)))</span>
 
-        <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">collected</span><span class="p">:</span>
             <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
 
@@ -321,7 +322,7 @@
 <div class="viewcode-block" id="range_concurrency">
 <a class="viewcode-back" href="../../api/gesel.html#gesel.range_concurrency">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">range_concurrency</span><span class="p">(</span><span class="n">concurrency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Set the default number of threads for concurrent range requests in :py:func:`~gesel.download_database_ranges`.</span>
 
 <span class="sd">    Args:</span>
@@ -339,7 +340,7 @@
 <span class="sd">        &gt;&gt;&gt; old = gesel.range_concurrency(5)</span>
 <span class="sd">        &gt;&gt;&gt; print(old)</span>
 <span class="sd">        &gt;&gt;&gt; gesel.range_concurrency(old)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">global</span> <span class="n">_range_concurrency</span>
     <span class="n">previous</span> <span class="o">=</span> <span class="n">_range_concurrency</span>
     <span class="k">if</span> <span class="n">concurrency</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -349,10 +350,10 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_make_range_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">curstart</span><span class="p">,</span> <span class="n">curend</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;Range&quot;</span><span class="p">:</span> <span class="s2">&quot;bytes=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">curstart</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">curend</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">})</span> <span class="c1"># byte ranges are closed intervals, not half-open.</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">"Range"</span><span class="p">:</span> <span class="s2">"bytes="</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">curstart</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"-"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">curend</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">})</span> <span class="c1"># byte ranges are closed intervals, not half-open.</span>
     <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">300</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">format_error</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">[:(</span><span class="n">curend</span> <span class="o">-</span> <span class="n">curstart</span><span class="p">)]</span> <span class="c1"># We use &#39;content&#39; instead of &#39;text&#39; to handle multi-byte characters correctly.</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">[:(</span><span class="n">curend</span> <span class="o">-</span> <span class="n">curstart</span><span class="p">)]</span> <span class="c1"># We use 'content' instead of 'text' to handle multi-byte characters correctly.</span>
 
 
 <div class="viewcode-block" id="download_multipart_ranges">
@@ -363,7 +364,7 @@
     <span class="n">end</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
     <span class="n">_mock</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Perform a multi-part range request on a Gesel database file.</span>
 
 <span class="sd">    Args:</span>
@@ -388,11 +389,11 @@
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; url = gesel.database_url() + &quot;/9606_set2gene.tsv&quot; </span>
+<span class="sd">        &gt;&gt;&gt; url = gesel.database_url() + "/9606_set2gene.tsv" </span>
 <span class="sd">        &gt;&gt;&gt; gesel.download_multipart_ranges(url, [0], [100])</span>
 <span class="sd">        &gt;&gt;&gt; gesel.download_multipart_ranges(url, [10, 100, 1000], [10, 150, 900])</span>
-<span class="sd">        &gt;&gt;&gt; # Note: as of writing, GitHub releases don&#39;t support multi-part range requests.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; # Note: as of writing, GitHub releases don't support multi-part range requests.</span>
+<span class="sd">    """</span>
 
     <span class="n">collected</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">start</span><span class="p">)):</span>
@@ -403,18 +404,18 @@
         <span class="n">collected</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">curstart</span><span class="p">,</span> <span class="n">curend</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
     <span class="n">collected</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 
-    <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">collected</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">output</span>
 
     <span class="n">formatted</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">curstart</span><span class="p">,</span> <span class="n">curend</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">collected</span><span class="p">:</span>
-        <span class="n">formatted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">curstart</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">curend</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># byte ranges are closed intervals, not half-open.</span>
+        <span class="n">formatted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">curstart</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"-"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">curend</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># byte ranges are closed intervals, not half-open.</span>
 
     <span class="k">if</span> <span class="n">_mock</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;Range&quot;</span><span class="p">:</span> <span class="s2">&quot;bytes=&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span> <span class="p">})</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">"Range"</span><span class="p">:</span> <span class="s2">"bytes="</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span> <span class="p">})</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">_mock</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s2">&quot;bytes=&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted</span><span class="p">))</span> 
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">_mock</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s2">"bytes="</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted</span><span class="p">))</span> 
     <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">300</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">format_error</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
 
@@ -423,14 +424,14 @@
         <span class="n">output</span><span class="p">[</span><span class="n">curi</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">[:(</span><span class="n">curend</span> <span class="o">-</span> <span class="n">curstart</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">output</span>
 
-    <span class="n">ct</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span>
-    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;multipart/byteranges; boundary=&quot;</span>
+    <span class="n">ct</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">"Content-Type"</span><span class="p">]</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">"multipart/byteranges; boundary="</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ct</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;unexpected content type from multi-part range request&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"unexpected content type from multi-part range request"</span><span class="p">)</span>
     <span class="n">boundary</span> <span class="o">=</span> <span class="n">ct</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">):]</span>
 
     <span class="c1"># Remember, we operate on the byte strings to correctly handle ranges for multi-byte characters.</span>
-    <span class="n">parsed_start</span><span class="p">,</span> <span class="n">parsed_content</span> <span class="o">=</span> <span class="n">_parse_multipart_response</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">boundary</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+    <span class="n">parsed_start</span><span class="p">,</span> <span class="n">parsed_content</span> <span class="o">=</span> <span class="n">_parse_multipart_response</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">boundary</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">bisect</span>
     <span class="k">for</span> <span class="n">curstart</span><span class="p">,</span> <span class="n">curend</span><span class="p">,</span> <span class="n">curi</span> <span class="ow">in</span> <span class="n">collected</span><span class="p">:</span>
         <span class="n">chosen</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect_right</span><span class="p">(</span><span class="n">parsed_start</span><span class="p">,</span> <span class="n">curstart</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
@@ -442,46 +443,46 @@
 
 
 <span class="c1"># WARNING: this part only works when the contents of body are fully string-able;</span>
-<span class="c1"># otherwise, if it&#39;s binary data, we really should be working with them as raw data.</span>
+<span class="c1"># otherwise, if it's binary data, we really should be working with them as raw data.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_parse_multipart_response</span><span class="p">(</span><span class="n">body</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">boundary</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
     <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">boundary</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;--&quot;</span> <span class="o">+</span> <span class="n">boundary</span>
+    <span class="n">boundary</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"--"</span> <span class="o">+</span> <span class="n">boundary</span>
     <span class="n">starts</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">contents</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">body</span><span class="p">[</span><span class="n">position</span><span class="p">:(</span><span class="n">position</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">boundary</span><span class="p">))]</span> <span class="o">!=</span> <span class="n">boundary</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;missing boundary in multi-part range request&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"missing boundary in multi-part range request"</span><span class="p">)</span>
         <span class="n">position</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">boundary</span><span class="p">)</span>
 
         <span class="n">remaining</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="n">position</span><span class="p">:(</span><span class="n">position</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="n">remaining</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;--&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">remaining</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"--"</span><span class="p">:</span>
             <span class="k">break</span> 
-        <span class="k">if</span> <span class="n">remaining</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;unexpected content range format in multi-part response&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">remaining</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"unexpected content range format in multi-part response"</span><span class="p">)</span>
         <span class="n">position</span> <span class="o">+=</span> <span class="mi">2</span>
 
         <span class="c1"># Running through all headers. </span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">crlf</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+            <span class="n">crlf</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">crlf</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;failed to find CRLF to terminate headers in multi-part response&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"failed to find CRLF to terminate headers in multi-part response"</span><span class="p">)</span>
             <span class="n">curline</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">crlf</span><span class="p">]</span>
             <span class="n">position</span> <span class="o">=</span> <span class="n">crlf</span> <span class="o">+</span> <span class="mi">2</span>
-            <span class="k">if</span> <span class="n">curline</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">:</span> <span class="c1"># headers terminate at a CRLF empty line.</span>
+            <span class="k">if</span> <span class="n">curline</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">""</span><span class="p">:</span> <span class="c1"># headers terminate at a CRLF empty line.</span>
                 <span class="k">break</span> 
-            <span class="n">at_colon</span> <span class="o">=</span> <span class="n">curline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="n">at_colon</span> <span class="o">=</span> <span class="n">curline</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">":"</span><span class="p">)</span>
             <span class="n">headers</span><span class="p">[</span><span class="n">curline</span><span class="p">[:</span><span class="n">at_colon</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">curline</span><span class="p">[(</span><span class="n">at_colon</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span>
 
-        <span class="k">if</span> <span class="sa">b</span><span class="s2">&quot;content-range&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;expected a &#39;content-range&#39; header in each multi-part response&quot;</span><span class="p">)</span>
-        <span class="n">crange</span> <span class="o">=</span> <span class="n">headers</span><span class="p">[</span><span class="sa">b</span><span class="s2">&quot;content-range&quot;</span><span class="p">]</span>
-        <span class="n">to_bytes</span> <span class="o">=</span> <span class="n">crange</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;bytes &quot;</span><span class="p">)</span>
-        <span class="n">to_dash</span> <span class="o">=</span> <span class="n">crange</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
-        <span class="n">to_slash</span> <span class="o">=</span> <span class="n">crange</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="sa">b</span><span class="s2">"content-range"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"expected a 'content-range' header in each multi-part response"</span><span class="p">)</span>
+        <span class="n">crange</span> <span class="o">=</span> <span class="n">headers</span><span class="p">[</span><span class="sa">b</span><span class="s2">"content-range"</span><span class="p">]</span>
+        <span class="n">to_bytes</span> <span class="o">=</span> <span class="n">crange</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">"bytes "</span><span class="p">)</span>
+        <span class="n">to_dash</span> <span class="o">=</span> <span class="n">crange</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">"-"</span><span class="p">)</span>
+        <span class="n">to_slash</span> <span class="o">=</span> <span class="n">crange</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">b</span><span class="s2">"/"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">to_bytes</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">to_dash</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">to_slash</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">to_dash</span> <span class="o">&gt;=</span> <span class="n">to_slash</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;expected &#39;content-range&#39; header to follow a &#39;bytes &lt;start&gt;-&lt;end&gt;/&lt;size&gt;&#39; format&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"expected 'content-range' header to follow a 'bytes &lt;start&gt;-&lt;end&gt;/&lt;size&gt;' format"</span><span class="p">)</span>
 
         <span class="n">first</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">crange</span><span class="p">[(</span><span class="n">to_bytes</span> <span class="o">+</span> <span class="mi">6</span><span class="p">):</span><span class="n">to_dash</span><span class="p">])</span>
         <span class="n">last</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">crange</span><span class="p">[(</span><span class="n">to_dash</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span><span class="n">to_slash</span><span class="p">])</span>
@@ -491,8 +492,8 @@
         <span class="n">position</span> <span class="o">+=</span> <span class="n">curlen</span> 
 
         <span class="n">remaining</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="n">position</span><span class="p">:(</span><span class="n">position</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="n">remaining</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;expected a newline after each part of a multi-part response&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">remaining</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"expected a newline after each part of a multi-part response"</span><span class="p">)</span>
         <span class="n">position</span> <span class="o">+=</span> <span class="mi">2</span>
 
     <span class="k">return</span> <span class="n">starts</span><span class="p">,</span> <span class="n">contents</span>
@@ -528,7 +529,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+</div><script src="../../_static/documentation_options.js?v=a58bc63e"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

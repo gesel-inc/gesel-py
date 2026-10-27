@@ -4,11 +4,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
-    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>gesel._download_gene_file - gesel 0.1.0 documentation</title>
+    <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
+        <title>gesel._download_gene_file - gesel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -161,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.1.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.1.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.1.0 documentation</span>
+  <span class="sidebar-brand-text">gesel 0.1.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -245,7 +246,7 @@
     <span class="n">cache</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Download Gesel gene files and store them in a cache on the local file system.</span>
 
 <span class="sd">    Args:</span>
@@ -269,11 +270,11 @@
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; gesel.download_gene_file(&quot;9606_symbol.tsv.gz&quot;)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; gesel.download_gene_file("9606_symbol.tsv.gz")</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">url</span> <span class="o">=</span> <span class="n">gene_url</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">_download_file</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">_download_file</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">)</span></div>
 
 
 
@@ -283,7 +284,7 @@
 <div class="viewcode-block" id="gene_url">
 <a class="viewcode-back" href="../../api/gesel.html#gesel.gene_url">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gene_url</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get or set the base URL to the Gesel gene files, which is used in :py:func:`~download_gene_file`.</span>
 
 <span class="sd">    Args:</span>
@@ -300,18 +301,18 @@
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
 <span class="sd">        &gt;&gt;&gt; gesel.gene_url()</span>
-<span class="sd">        &gt;&gt;&gt; old = gesel.gene_url(&quot;https://foo.bar&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; old = gesel.gene_url("https://foo.bar")</span>
 <span class="sd">        &gt;&gt;&gt; gesel.gene_url(old)</span>
 <span class="sd">        &gt;&gt;&gt; gesel.gene_url()</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">global</span> <span class="n">_gene_url</span>
     <span class="k">if</span> <span class="n">_gene_url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-        <span class="k">if</span> <span class="s2">&quot;GESEL_GENE_URL&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
-            <span class="n">_gene_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GESEL_GENE_URL&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"GESEL_GENE_URL"</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">_gene_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"GESEL_GENE_URL"</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">_gene_url</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/LTLA/gesel-feedstock/releases/download/genes-v1.0.0&quot;</span>
+            <span class="n">_gene_url</span> <span class="o">=</span> <span class="s2">"https://github.com/gesel-inc/feedstock/releases/download/genes-v0.3.1"</span>
 
     <span class="n">previous</span> <span class="o">=</span> <span class="n">_gene_url</span>
     <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -350,7 +351,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+</div><script src="../../_static/documentation_options.js?v=a58bc63e"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
