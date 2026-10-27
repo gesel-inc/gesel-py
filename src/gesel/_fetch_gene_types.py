@@ -12,7 +12,7 @@ def fetch_gene_types(
     Fetch the list of available gene identifier types for this species.
 
     In older versions (0.1.0) of the Gesel gene annotation file specification, an explicit listing of types was not generated.
-    This function will just assume that `ensembl`, `entrez` and `symbol` are  available.
+    This function will just assume that ``ensembl``, ``entrez`` and ``symbol`` are  available.
 
     Args:
         species:

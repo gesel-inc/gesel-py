@@ -19,10 +19,10 @@ def search_genes(
             NCBI taxonomy ID of the species of interest.
 
         genes:
-            List of gene names of any type specified in ``types``.
+            List of gene identifiers of any type specified in ``types``.
 
         types:
-            Types of gene names to return.
+            Types of gene identifiers to return.
             Typically one or more of ``symbol``, ``entrez``, and/or ``ensembl``.
 
         ignore_case:

@@ -11,14 +11,14 @@ def map_genes_by_name(
     config: Optional[dict] = None
 ) -> dict:
     """
-    Create a mapping of gene names (Ensembl, symbol, etc.) to their gene indices.
+    Create a mapping of gene identifiers (Ensembl, symbol, etc.) to their gene indices.
 
     Args:
         species:
             NCBI taxonomy ID of the species of interest.
 
         type:
-            Type of gene name/identifier.
+            Type of gene identifier.
             Typically one of ``symbol``, ``entrez``, and/or ``ensembl``.
 
         ignore_case:
@@ -29,8 +29,8 @@ def map_genes_by_name(
             If ``None``, the default configuration is used.
 
     Returns:
-        Dictionary where each key is the gene name/identifier of the specified ``type`` and each value is a list of integers.
-        Each list contains the genes associated with that name (after ignoring case, if ``ignore_case = True``).
+        Dictionary where each key is the gene identifier of the specified ``type`` and each value is a list of integers.
+        Each list contains the indices of genes associated with that identifier (after ignoring case, if ``ignore_case = True``).
         List entries should be interpreted as row indices into the data frame returned by :py:func:`~gesel.fetch_all_genes`.
 
     Examples:

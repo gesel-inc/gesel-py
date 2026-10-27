@@ -8,19 +8,19 @@ from ._fetch_gene_version import fetch_gene_version
 
 def fetch_all_genes(
     species: str,
-    types: list = ["symbol", "entrez", "ensembl"],
+    types: Optional[list] = None,
     config: Optional[dict] = None
 ) -> biocframe.BiocFrame:
     """
-    Fetch names and identifiers of various types for all genes.
+    Fetch identifiers for all genes.
 
     Args:
         species:
             NCBI taxonomy ID of the species of interest.
 
         types:
-            Types of gene names to return.
-            Typically one or more of ``symbol``, ``entrez``, and/or ``ensembl``.
+            Types of gene identifiers to return.
+            If ``None``, this is taken from :py:func:`~gesel.fetch_gene_types`.
 
         config:
             Configuration object, typically created by :py:func:`~gesel.new_config`.
@@ -29,7 +29,7 @@ def fetch_all_genes(
     Returns:
         A :py:class:`~biocframe.BiocFrame` where each row represents a gene.
         Each column corresponds to one of the ``types`` and is a list of lists.
-        Each inner list in the column contains the names of the specified type for each gene.
+        Each inner list in the column contains the identifiers of the specified type for each gene.
 
     Examples:
         >>> import gesel
