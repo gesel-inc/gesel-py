@@ -31,7 +31,7 @@ def map_genes_by_name(
     Returns:
         Dictionary where each key is the gene name/identifier of the specified ``type`` and each value is a list of integers.
         Each list contains the genes associated with that name (after ignoring case, if ``ignore_case = True``).
-        List entries should be interpreted as indices into any of the lists returned by :py:func:`~gesel.fetch_all_genes`.
+        List entries should be interpreted as row indices into the data frame returned by :py:func:`~gesel.fetch_all_genes`.
 
     Examples:
         >>> import gesel

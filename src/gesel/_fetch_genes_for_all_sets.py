@@ -6,7 +6,7 @@ from . import _utils as utils
 
 def fetch_genes_for_all_sets(species: str, config: Optional[dict] = None) -> list:
     """
-    Fetch the identities for genes in all sets in the Gesel database.
+    Fetch the gene membership of all sets in the Gesel database.
 
     Args:
         species:

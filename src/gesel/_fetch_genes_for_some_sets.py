@@ -6,7 +6,7 @@ from . import _utils as utils
 
 def fetch_genes_for_some_sets(species: str, sets: list, config: Optional[dict] = None) -> list:
     """
-    Fetch genes for some sets in the Gesel database.
+    Fetch the gene membership for some sets in the Gesel database.
     This can be more efficient than :py:func:`~gesel.fetch_genes_for_all_sets` if only a few sets are of interest.
 
     Args:
