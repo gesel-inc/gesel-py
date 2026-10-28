@@ -61,7 +61,7 @@ def prepare_gene_files(
     """
 
     if isinstance(genes, biocframe.BiocFrame):
-        genes = genes.as_dict()
+        genes = genes.to_dict()
 
     if version == "0.1.0":
         sep = "_"
