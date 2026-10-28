@@ -4,15 +4,15 @@ def validate_gene_files(
     types: list = None
 ) -> int:
     """
-    Validate Gesel gene annotation files against `the specification <https://github.com/gesel-inc/gesel-spec>`_.
+    Validate Gesel gene annotation files against the `specification <https://github.com/gesel-inc/gesel-spec>`_.
     Invalid formatting will cause an error to be raised.
 
     Args:
-        species:
-            NCBI taxonomy ID of the species of interest.
-
         path:
             Path to a directory containing the gene annotation files.
+
+        species:
+            NCBI taxonomy ID of the species of interest.
 
         types:
             List of gene identifier types to validate, e.g., ``symbol``, ``ensembl``.

@@ -39,8 +39,8 @@ def prepare_gene_files(
         version:
             Version of the Gesel gene annotation file specification to use for saving ``genes``.
 
-    Returns:    
-        Several files are produced inside \code{path} with the \code{<species>_} prefix.
+    Returns:
+        Several files are produced inside ``path`` with the ``species_`` prefix.
         ``None`` is returned.
 
     Examples:
@@ -56,7 +56,8 @@ def prepare_gene_files(
         >>> gesel.prepare_gene_files("1234", genes, tmp)
         >>>
         >>> import os
-        >>> os.listdir(tmp) # having a look at the results
+        >>> config = gesel.new_config(fetch_gene = lambda x : os.path.join(tmp, x))
+        >>> print(gesel.fetch_all_genes("1234", config = config))
     """
 
     if isinstance(genes, biocframe.BiocFrame):

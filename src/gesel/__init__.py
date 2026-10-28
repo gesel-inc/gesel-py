@@ -44,6 +44,8 @@ from ._utils import cache_directory
 
 from ._prepare_gene_files import prepare_gene_files
 from ._validate_gene_files import validate_gene_files
+from ._prepare_database_files import prepare_database_files
+from ._validate_database_files import validate_database_files
 
 
 __all__ = []
