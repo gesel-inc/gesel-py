@@ -63,6 +63,7 @@ def find_overlapping_sets(
         >>> print(all_sets[overlaps["set"],:])
     """
 
+    genes = list(set(genes))
     info = fetch_sets_for_some_genes(species, genes, config)
 
     if counts_only:

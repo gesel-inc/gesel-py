@@ -31,15 +31,12 @@ def fetch_gene_version(
     if cached is not None:
         return cached
 
-    version = None
     try:
         payload = cfg._fetch_gene(config, species + "_gene-version.tsv")
+        with open(payload, "r") as handle:
+            version = handle.readline().strip()
     except:
         version = "0.1.0"
 
-    if version is None:
-        with open(payload, "r") as handle:
-            version = handle.readline().strip()
-    
     cfg._set_cache(config, "fetch_gene_version", species, version)
     return version

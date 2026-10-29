@@ -1,4 +1,36 @@
 import gesel
+import itertools
+
+
+def test_search_genes_local(local_config):
+    species = local_config["species"]
+    test_config = local_config["latest"]
+    ref_genes = local_config["genes"]
+
+    def get_first(col):
+        for x in col:
+            for y in x:
+                return y
+    chosen = [
+        get_first(ref_genes.get_column("alpha")),
+        get_first(ref_genes.get_column("Bravo")),
+        get_first(ref_genes.get_column("CHARLIE"))
+    ]
+
+    out = gesel.search_genes(species, chosen, types = ref_genes.get_column_names(), config = test_config) 
+    assert len(out) == len(chosen)
+    assert all([len(x) for x in out])
+
+    for i in out[0]:
+        assert chosen[0] in ref_genes.get_column("alpha")[i]
+    for i in out[1]:
+        assert chosen[1] in ref_genes.get_column("Bravo")[i]
+    for i in out[2]:
+        assert chosen[2] in ref_genes.get_column("CHARLIE")[i]
+
+    # Works after ignoring case.
+    lout = gesel.search_genes(species, [x.lower() for x in chosen], types = ref_genes.get_column_names(), ignore_case = True, config = test_config)
+    assert out == lout
 
 
 def test_search_genes_remote():

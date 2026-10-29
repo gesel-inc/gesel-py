@@ -1,6 +1,43 @@
 import gesel
 import random
 
+def test_fetch_some_collections_local(local_config):
+    species = local_config["species"]
+    test_config = local_config["latest"]
+
+    # Load all collections for reference comparison.
+    # However, we need to make sure we flush the cache so that range requests are actually performed.
+    everything = gesel.fetch_all_collections(species, config = test_config)
+    gesel.flush_memory_cache(test_config)
+
+    payload = gesel.fetch_some_collections(species, [0], config = test_config)
+    assert payload == everything[[0],:]
+
+    # Cache is not used.
+    payload = gesel.fetch_some_collections(species, [1], config = test_config)
+    assert payload == everything[[1],:]
+
+    # Works with partial caching.
+    chosen  = range(everything.shape[0])
+    payload = gesel.fetch_some_collections(species, chosen, config = test_config)
+    assert payload == everything
+
+    # Works with full caching
+    payload = gesel.fetch_some_collections(species, [2, 1], config = test_config)
+    assert payload == everything[[2,1],:]
+
+    # Works for sizes.
+    sizes = gesel.fetch_collection_sizes(species, config = test_config)
+    assert sizes == everything.get_column("size")
+
+    # Works with pre-loaded.
+    everything = gesel.fetch_all_collections(species, config = test_config)
+    preloaded = gesel.fetch_some_collections(species, [2, 0, 1], config = test_config)
+    assert preloaded == everything[[2, 0, 1],:]
+
+    sizes = gesel.fetch_collection_sizes(species, config = test_config)
+    assert sizes == everything.get_column("size")
+
 
 def test_fetch_some_collections_remote():
     everything = gesel.fetch_all_collections("9606")
