@@ -2,12 +2,13 @@ from typing import Optional
 
 from . import _new_config as cfg
 from ._create_gene_identifier_map import create_gene_identifier_map
+from ._fetch_gene_types import fetch_gene_types
 
 
 def search_genes(
     species: str,
     genes: list,
-    types: list = ["entrez", "ensembl", "symbol"],
+    types: Optional[list] = None,
     ignore_case: bool = True,
     config: Optional[dict] = None
 ) -> list:
@@ -23,7 +24,7 @@ def search_genes(
 
         types:
             Types of gene identifiers to return.
-            Typically one or more of ``symbol``, ``entrez``, and/or ``ensembl``.
+            If ``None``, defaults to the available types from :py:func:`~gesel.fetch_gene_types`.
 
         ignore_case:
             Whether case should be ignored when creating the mapping.
@@ -51,6 +52,9 @@ def search_genes(
 
     if ignore_case:
         genes = [g.lower() for g in genes]
+
+    if types is None:
+        types = fetch_gene_types(species, config = config)
 
     output = []
     for i in range(len(genes)):

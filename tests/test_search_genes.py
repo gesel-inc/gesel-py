@@ -17,7 +17,7 @@ def test_search_genes_local(local_config):
         get_first(ref_genes.get_column("CHARLIE"))
     ]
 
-    out = gesel.search_genes(species, chosen, types = ref_genes.get_column_names(), config = test_config) 
+    out = gesel.search_genes(species, chosen, config = test_config) 
     assert len(out) == len(chosen)
     assert all([len(x) for x in out])
 
@@ -28,8 +28,12 @@ def test_search_genes_local(local_config):
     for i in out[2]:
         assert chosen[2] in ref_genes.get_column("CHARLIE")[i]
 
+    # Same result when types are requested specifically. 
+    typed = gesel.search_genes(species, chosen, types = ref_genes.get_column_names(), config = test_config) 
+    assert out == typed
+
     # Works after ignoring case.
-    lout = gesel.search_genes(species, [x.lower() for x in chosen], types = ref_genes.get_column_names(), ignore_case = True, config = test_config)
+    lout = gesel.search_genes(species, [x.lower() for x in chosen], ignore_case = True, config = test_config)
     assert out == lout
 
 
