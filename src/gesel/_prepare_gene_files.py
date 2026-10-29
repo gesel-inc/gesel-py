@@ -24,7 +24,7 @@ def prepare_gene_files(
             Each list corresponds to an identifier type and is named accordingly, e.g., ``genes["ensembl"]`` for Ensembl.
             Each list should be of length equal to the total number of genes.
             Each entry of the list corresponds to a gene and is a nested list of strings containing identifiers of the specified type for that gene,
-            e.g., \code{genes["ensembl"][10]} is a list of Ensembl IDs for the 9th gene.
+            e.g., ``genes["ensembl"][10]`` contains a list of Ensembl IDs for the 9th gene.
             The nested list may be empty if no identifiers are available for a gene.
 
             Alternatively, a :py:class:`~biocframe.BiocFrame` where each row corresponds to a gene and each column is a list of nested lists of identifiers as described above,

@@ -190,7 +190,11 @@ def _fetch_sets_by_token(
 
     output = []
     for tok in tokens:
-        output.append(prior[tok])
+        if tok in prior:
+            output.append(prior[tok])
+        else:
+            # If the token is not already populated in the cache at this point, the token doesn't exist in our index.
+            output.append([])
     return output
 
 

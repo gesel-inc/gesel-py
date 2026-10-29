@@ -3,6 +3,40 @@ import random
 import biocutils
 
 
+def test_fetch_genes_for_some_sets_local(local_config):
+    species = local_config["species"]
+    test_config = local_config["latest"]
+
+    # Load all gene sets for reference comparison.
+    # However, we need to make sure we flush the cache so that range requests are actually performed.
+    everything = gesel.fetch_sets_for_all_genes(species, config = test_config)
+    gesel.flush_memory_cache(test_config)
+
+    sub = range(1, len(everything), 3)
+    payload = gesel.fetch_sets_for_some_genes(species, sub, config = test_config) 
+    assert biocutils.subset(everything, sub) == payload
+
+    # Subsequent requests with no caching. 
+    sub = range(0, len(everything), 3)
+    payload = gesel.fetch_sets_for_some_genes(species, sub, config = test_config) 
+    assert biocutils.subset(everything, sub) == payload
+
+    # Works with partial caching (we need new requests for range(2, len(everything), 3)).
+    together = range(len(everything))
+    payload = gesel.fetch_sets_for_some_genes(species, together, config = test_config)
+    assert everything == payload
+
+    # Works with full caching.
+    sub = range(2, len(everything), 3)
+    payload = gesel.fetch_sets_for_some_genes(species, sub, config = test_config) 
+    assert biocutils.subset(everything, sub) == payload
+
+    # Works with pre-loading.
+    everything = gesel.fetch_sets_for_all_genes(species, config = test_config)
+    preloaded = gesel.fetch_sets_for_some_genes(species, together, config = test_config)
+    assert everything == preloaded
+
+
 def test_fetch_sets_for_some_genes_remote():
     everything = gesel.fetch_sets_for_all_genes("9606")
     gesel.flush_memory_cache()
@@ -39,6 +73,7 @@ def test_fetch_sets_for_some_genes_remote():
 
 def test_effective_number_of_genes_remote():
     gesel.flush_memory_cache()
+
     out = gesel.effective_number_of_genes("9606")
     gesel.fetch_sets_for_all_genes("9606")
     alt = gesel.effective_number_of_genes("9606")

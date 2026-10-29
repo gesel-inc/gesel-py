@@ -1,7 +1,26 @@
 import gesel
+import itertools
+
+
+def test_fetch_genes_for_all_sets_local(local_config):
+    species = local_config["species"]
+    test_config = local_config["latest"]
+    gesel.flush_memory_cache(test_config)
+
+    full_set_membership = list(itertools.chain(*local_config["set2gene"]))
+    for y in full_set_membership:
+        y.sort()
+
+    payload = gesel.fetch_genes_for_all_sets(species, config = test_config)
+    assert payload == full_set_membership
+
+    preloaded = gesel.fetch_genes_for_all_sets(species, config = test_config)
+    assert payload == preloaded
 
 
 def test_fetch_genes_for_all_sets_remote():
+    gesel.flush_memory_cache()
+
     test = gesel.fetch_genes_for_all_sets("9606")
     num_genes = gesel.fetch_all_genes("9606", types=["ensembl"]).shape[0]
 

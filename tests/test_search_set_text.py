@@ -1,9 +1,43 @@
 import gesel
+import biocutils
 import re
+
+
+def test_search_set_text_local(local_config):
+    species = local_config["species"]
+    test_config = local_config["latest"]
+
+    # Load all set information as a reference.
+    # We need to flush this to ensure that the range requests actually work for the tokens.
+    full_set_info = gesel.fetch_all_sets(species, config = test_config)
+    gesel.flush_memory_cache(test_config)
+
+    out = gesel.search_set_text(species, "foo 1", config = test_config)
+    assert out == list(biocutils.which([x.lower().endswith("foo 1") for x in full_set_info.get_column("description")]))
+
+    # Name or description only.
+    nout = gesel.search_set_text(species, "this", use_description = False, config = test_config)
+    assert len(nout) == 0
+
+    nout = gesel.search_set_text(species, "this", use_name = False, config = test_config)
+    assert nout == list(biocutils.which([x.lower().startswith("this") for x in full_set_info.get_column("description")]))
+
+    nout = gesel.search_set_text(species, "this", use_description = False, use_name = False, config = test_config)
+    assert len(nout) == 0
+
+    # Throwing in some wildcards.
+    pout = gesel.search_set_text(species, "foo 1*", config = test_config)
+    rex = re.compile("foo 1", re.IGNORECASE)
+    assert pout == list(biocutils.which([rex.search(x) for x in full_set_info.get_column("description")]))
+
+    pout = gesel.search_set_text(species, "foo ?", config = test_config)
+    rex = re.compile("foo .$", re.IGNORECASE)
+    assert pout == list(biocutils.which([rex.search(x) for x in full_set_info.get_column("description")]))
 
 
 def test_search_set_text_remote():
     sets = gesel.fetch_all_sets("9606")
+    gesel.flush_memory_cache()
 
     cout = gesel.search_set_text("9606", "cancer")
     cmatcher = re.compile("cancer", re.I)
