@@ -34,7 +34,7 @@ def test_create_gene_identifier_map_local(local_config):
         lmapping = gesel.create_gene_identifier_map(species, type = "CHARLIE", ignore_case = True, config = test_config)
         assert list(lmapping.keys())[0].startswith("charlie_")
 
-        current_names = list(set(x.lower() for x in itertools.chain(*local_config["genes"]["CHARLIE"])]))
+        current_names = list(set(x.lower() for x in itertools.chain(*local_config["genes"]["CHARLIE"])))
         assert len(lmapping) == len(current_names)
 
         # Randomly sample a gene to check.
