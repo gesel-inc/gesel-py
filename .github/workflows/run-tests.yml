@@ -34,8 +34,7 @@ jobs:
       - name: Run tests
         run: >-
           pipx run --python '${{ steps.setup-python.outputs.python-path }}'
-          tox
-          -- -rFEx --durations 10 --color yes --cov --cov-branch --cov-report=xml  # pytest args
+          tox -- -rFEx --durations 10 --color yes --cov --cov-branch --cov-report=xml  # pytest args
 
       - name: Check for codecov token availability
         id: codecov-check
