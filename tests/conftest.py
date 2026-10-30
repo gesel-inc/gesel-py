@@ -27,9 +27,11 @@ def local_config():
         ids = random.choices(range(ref_num_genes), k=genes_plus)
         curgenes = []
         for j in range(ref_num_genes):
-            curgenes.append([])
+            curgenes.append(set())
         for j in range(genes_plus):
-            curgenes[ids[j]].append(chosen[j])
+            curgenes[ids[j]].add(chosen[j])
+        for j in range(ref_num_genes):
+            curgenes[j] = list(curgenes[j])
         ref_genes[tp] = curgenes
 
     ref_bdf = biocframe.BiocFrame(ref_genes)
