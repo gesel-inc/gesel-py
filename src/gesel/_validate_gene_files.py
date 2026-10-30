@@ -1,3 +1,8 @@
+import os
+
+from ._lib_gesel import validate_gene_files as validate
+
+
 def validate_gene_files(
     path: str,
     species: str,
@@ -21,5 +26,4 @@ def validate_gene_files(
     Returns:
         Number of genes, to be used as ``num_genes`` in :py:func:`~gesel.validate_database_files`.
     """
-    # Currently disabled!
-    return 0
+    return validate(os.path.join(path, species + "_"), types)

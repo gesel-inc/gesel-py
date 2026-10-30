@@ -1,3 +1,8 @@
+import os
+
+from ._lib_gesel import validate_database_files as validate
+
+
 def validate_database_files(
     path: str,
     species: str,
@@ -22,5 +27,4 @@ def validate_database_files(
         ``None``.
 
     """
-    # Currently disabled!
-    pass
+    validate(os.path.join(path, species + "_"), num_genes)
