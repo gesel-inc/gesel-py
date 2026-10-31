@@ -42,7 +42,7 @@ def search_overlapping_sets(
         - ``set``,  the identity of the set corresponding to each row.
           This set index refers to a row of the data frame returned by :py:func:`~gesel.fetch_all_sets`.
         - ``counts``, the number of overlaps between the genes in the set and those in ``genes``.
-        - ``genes``, if ``counts_only = False``.
+        - ``which``, if ``counts_only = False``.
           This contains the entries of ``genes`` that overlap with those in the set.
         - ``size``, if ``test_enrichment = True``.
           This contains the size of the set.
@@ -114,7 +114,7 @@ def search_overlapping_sets(
         overlap = biocframe.BiocFrame({
             "set": sets,
             "count": counts,
-            "genes": members
+            "which": members
         })
 
     if test_enrichment:
@@ -141,4 +141,8 @@ def search_overlapping_sets(
 def find_overlapping_sets(*args, **kwargs):
     """Deprecated, use :py:func:`~search_overlapping_sets` instead."""
     out = search_overlapping_sets(*args, **kwargs)
+    cn = out.get_column_names()
+    if "which" in cn:
+        cn[cn.as_list().index("which")] = "genes"
+        out.set_column_names(cn, in_place=True)
     return out, out.get_metadata()["present"]

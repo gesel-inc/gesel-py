@@ -26,7 +26,7 @@ def test_search_overlapping_sets_local(local_config):
     overlaps = gesel.search_overlapping_sets(species, genes, counts_only = False, config = test_config)
     expected_set = overlaps.get_column("set")
     assert sorted(expected_set) == sorted(found_idx)
-    assert biocutils.subset(found_members, expected_set) == [sorted(x) for x in overlaps.get_column("genes")]
+    assert biocutils.subset(found_members, expected_set) == [sorted(x) for x in overlaps.get_column("which")]
 
     assert overlaps.get_column("size") == [len(x) for x in biocutils.subset(full_set_membership, expected_set)]
     assert min(overlaps.get_column("pvalue")) >= 0
@@ -35,7 +35,7 @@ def test_search_overlapping_sets_local(local_config):
 
     counts = gesel.search_overlapping_sets(species, genes, config = test_config)
     assert counts.get_column("set") == overlaps.get_column("set")
-    assert counts.get_column("count") == [len(x) for x in overlaps.get_column("genes")]
+    assert counts.get_column("count") == [len(x) for x in overlaps.get_column("which")]
     assert counts.get_column("pvalue") == overlaps.get_column("pvalue")
 
     # Automatically removes duplicates from the genes.
@@ -68,9 +68,9 @@ def test_search_overlapping_sets_remote():
     assert sorted(overlaps["set"]) == sorted(keep)
 
     expected = [sorted(y) for y in biocutils.subset(collected, overlaps["set"])]
-    observed = [sorted(y) for y in overlaps["genes"]]
+    observed = [sorted(y) for y in overlaps["which"]]
     assert expected == observed
 
     counts = gesel.search_overlapping_sets("9606", chosen)
     assert counts["set"] == overlaps["set"]
-    assert counts["count"] == [len(y) for y in overlaps["genes"]]
+    assert counts["count"] == [len(y) for y in overlaps["which"]]
