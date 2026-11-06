@@ -1,5 +1,7 @@
 from typing import Optional
+
 from . import _utils as utils
+from ._cache_directory import cache_directory
 
 
 def download_gene_file(
@@ -22,7 +24,7 @@ def download_gene_file(
 
         cache:
             Path to a cache directory.
-            If ``None``, it is set to :py:func:`~cache_directory`.
+            If ``None``, it is set to :py:func:`~gesel.cache_directory`.
 
         overwrite:
             Boolean indicating whether any cached file should be overwritten with a new download.
@@ -36,6 +38,8 @@ def download_gene_file(
     """
     if url is None:
         url = gene_url()
+    if cache is None:
+        cache = cache_directory()
     return utils._download_file(cache, url + "/" + name, overwrite)
 
 

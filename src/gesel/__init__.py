@@ -16,6 +16,7 @@ finally:
     del version, PackageNotFoundError
 
 
+from ._cache_directory import cache_directory
 from ._download_database_file import download_database_file, database_url
 from ._download_database_ranges import download_database_ranges, download_multipart_ranges, range_concurrency
 from ._download_gene_file import download_gene_file, gene_url
@@ -41,7 +42,6 @@ from ._search_genes import search_genes
 from ._search_set_text import search_set_text
 
 from ._new_config import new_config, flush_memory_cache
-from ._utils import cache_directory
 
 from ._prepare_gene_files import prepare_gene_files
 from ._validate_gene_files import validate_gene_files
