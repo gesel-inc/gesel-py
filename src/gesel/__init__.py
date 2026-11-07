@@ -48,6 +48,10 @@ from ._validate_gene_files import validate_gene_files
 from ._prepare_database_files import prepare_database_files
 from ._validate_database_files import validate_database_files
 
+from ._rename_genes_in_sets import rename_genes_in_sets
+from ._load_all_sets import load_all_sets
+from ._query_sets import query_sets
+
 
 __all__ = []
 _toignore = set(["sys", "biocutils", "biocframe"]) 
