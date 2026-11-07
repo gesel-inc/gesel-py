@@ -24,6 +24,7 @@ jobs:
 
       - name: Build docs
         run: |
+          touch src/gesel/_lib_gesel.py # allow tox to load the library.
           pip install tox
           tox -e docs
 

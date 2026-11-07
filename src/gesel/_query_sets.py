@@ -65,7 +65,7 @@ def query_sets(
         - ``count``, integer containing the number of overlaps between the genes in the set and those in ``genes``.
         - ``which``, a nested list where each entry is a character vector containing the genes in ``genes`` that are present in each set.
           Only reported if ``counts_only = False``.
-        - ``pvalue``, a numeric column containing the hypergeometric p-value for overrepresentation of ``genes`` in eachset.
+        - ``pvalue``, a numeric column containing the hypergeometric p-value for overrepresentation of ``genes`` in each set.
           Rows will be sorted by this column if it is present.
 
     Examples:

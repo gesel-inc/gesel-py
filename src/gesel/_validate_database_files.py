@@ -1,6 +1,6 @@
 import os
 
-from ._lib_gesel import validate_database_files as validate
+from . import _lib_gesel as lib
 
 
 def validate_database_files(
@@ -27,4 +27,4 @@ def validate_database_files(
         ``None``.
 
     """
-    validate(os.path.join(path, species + "_"), num_genes)
+    lib.validate_database_files(os.path.join(path, species + "_"), num_genes)

@@ -30,16 +30,17 @@ def load_all_sets(
             If ``None``, the default configuration is used.
 
         as_compressed:
-            Whether to return a :py:class:`~compressed_lists.CompressedCharacterList`.
+            Whether to return a :py:class:`~compressed_lists.CompressedList`.
             This assumes that the **compressed_lists** package is installed.
 
     Returns:
-        If ``as_compressed = False``, a tuple is returned consisting of:
+        If ``as_compressed = False``, a tuple is returned with two elements.
+        This contains:
         
         1. ``sets``, a :py:class:`~biocutils.NamedList` of length equal to the total number of sets for ``species``.
            Each list element is a nested list that corresponds to a gene set and contains the genes in that set.
            Each gene is represented by zero, one or more identifiers of the specified ``type`` (see :py:func:`~gesel.rename_genes_in_sets` for details).
-           The positional index of each set in ``sets`` can be used as the Gesel set index in other functions like :py:class:`~gesel.fetch_genes_for_some_sets`.
+           The positional index of each set in ``sets`` can be used as the Gesel set index in other functions like :py:func:`~gesel.fetch_genes_for_some_sets`.
            Each list element is named according to its set, i.e., the ``name`` column of ``details``.
         2. ``details``, a :py:class:`~biocframe.BiocFrame` where each row corresponds to a gene set in ``sets``.
            This contains the following columns:
@@ -51,7 +52,7 @@ def load_all_sets(
              if any gene does not have exactly one identifier of the specified ``type``. 
            - ``collection``, the name of the collection that contains this gene set.
 
-           The row index of each set in ``details`` can be used as the Gesel set index in functions like :py:class:`~gesel.fetch_genes_for_some_sets`.
+           The row index of each set in ``details`` can be used as the Gesel set index in functions like :py:func:`~gesel.fetch_genes_for_some_sets`.
 
         If ``as_compressed = True``, a :py:class:`~compressed_lists.CompressedList` of length equal to the total number of sets for ``species`` is returned.
         Each list element is a nested list that contains the identifiers of genes in that set, as described above for ``sets``.

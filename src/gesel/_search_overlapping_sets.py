@@ -4,7 +4,7 @@ import biocframe
 
 from ._fetch_sets_for_some_genes import fetch_sets_for_some_genes, effective_number_of_genes
 from ._fetch_some_sets import fetch_set_sizes
-from ._lib_gesel import compute_enrichment
+from . import _lib_gesel as lib
 
 
 def search_overlapping_sets(
@@ -127,7 +127,7 @@ def search_overlapping_sets(
         overlap.set_column("size", set_sizes, in_place = True)
 
         universe = effective_number_of_genes(species, config = config)
-        pvalue = compute_enrichment(
+        pvalue = lib.compute_enrichment(
             overlap.get_column("count"),
             overlap.get_column("size"),
             universe, 

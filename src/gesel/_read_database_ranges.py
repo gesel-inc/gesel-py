@@ -33,7 +33,7 @@ def read_database_ranges(path: str, name: str, start: list, end: list) -> list:
         >>> import os
         >>> dpath = os.path.join(tmp, "foo.txt")
         >>> with open(dpath, "wb") as handle:
-        ...     handle.write(b"abcdefghijklmnopqrstuvwxyz\n")
+        ...     handle.write(b"abcdefghijklmnopqrstuvwxyz\\n")
         >>>
         >>> import gesel
         >>> gesel.read_database_ranges(tmp, "foo.txt", [0, 20, 10, 5], [6, 23, 15, 14])
