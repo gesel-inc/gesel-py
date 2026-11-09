@@ -58,35 +58,28 @@ def fetch_genes_for_some_sets(species: str, sets: list, config: Optional[dict] =
         cached = {
             "range_boundaries": intervals,
             "block_info": cons._define_blocks(intervals, cons._retrieve_consolidate_block_size(config)),
-            "prior": {
-                "set": [],
-                "genes": []
-            }
+            "prior": {}
         }
         modified = True
 
-    prior_set = cached["prior"]["set"]
-    prior_genes = cached["prior"]["genes"]
-
-    # TODO: move this to biocutils as setdiff().
+    priors = cached["prior"]
     needed = []
-    already_present = set(prior_set)
     for s in sets:
-        if s not in already_present:
+        if s not in priors:
             needed.append(s)
 
     if len(needed) > 0:
-        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
-        for line in deets:
-            prior_genes.append(utils._decode_indices(line))
-        prior_set += requested_ranges
         modified = True
+        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
+        for r, line in zip(requested_ranges, deets):
+            priors[r] = utils._decode_indices(line)
 
     if modified:
         # Technically not necessary as these were modified by reference, but let's just set them to be safe.
-        cached["prior"]["set"] = prior_set
-        cached["prior"]["genes"] = prior_genes
+        cached["prior"] = priors
         cfg._set_cache(config, "fetch_genes_for_some_sets", species, cached)
 
-    m = biocutils.match(sets, prior_set)
-    return biocutils.subset(prior_genes, m)
+    output = []
+    for s in sets:
+        output.append(priors[s])
+    return output

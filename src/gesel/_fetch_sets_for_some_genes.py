@@ -52,30 +52,28 @@ def fetch_sets_for_some_genes(species: str, genes: list, config: Optional[dict] 
 
     fname = species + "_gene2set.tsv"
     cached, modified = _get_sets_for_some_genes_ranges(config, species, fname)
-    prior_gene = cached["prior"]["gene"]
-    prior_sets = cached["prior"]["sets"]
+    priors = cached["prior"]
 
-    # TODO: move this to biocutils as setdiff().
     needed = []
-    already_present = set(prior_gene)
     for g in genes:
-        if g not in already_present:
+        if g not in priors:
             needed.append(g)
 
     if len(needed) > 0:
-        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
-        for line in deets:
-            prior_sets.append(utils._decode_indices(line))
-        prior_gene += requested_ranges 
         modified = True
+        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
+        for r, line in zip(requested_ranges, deets):
+            priors[r] = utils._decode_indices(line)
 
     if modified:
-        cached["prior"]["gene"] = prior_gene
-        cached["prior"]["sets"] = prior_sets
+        # Technically not necessary as these were modified by reference, but let's just set them to be safe.
+        cached["prior"] = priors
         cfg._set_cache(config, "fetch_sets_for_some_genes", species, cached)
 
-    m = biocutils.match(genes, prior_gene)
-    return biocutils.subset(prior_sets, m)
+    output = []
+    for g in genes:
+        output.append(priors[g])
+    return output
 
 
 def _get_sets_for_some_genes_ranges(config: dict, species: str, fname: str) -> tuple:
@@ -87,10 +85,7 @@ def _get_sets_for_some_genes_ranges(config: dict, species: str, fname: str) -> t
     cached = {
         "range_boundaries": intervals,
         "block_info": cons._define_blocks(intervals, cons._retrieve_consolidate_block_size(config)),
-        "prior": {
-            "gene": [],
-            "sets": []
-        }
+        "prior": {}
     }
     return cached, True
 

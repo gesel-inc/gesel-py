@@ -51,41 +51,39 @@ def fetch_some_sets(
 
     fname = species + "_sets.tsv"
     cached, modified = _get_single_set_ranges(config, species, fname)
-    prior_sets = cached["prior"]["sets"]
-    prior_details = cached["prior"]["details"]
+    priors = cached["prior"]
 
-    # TODO: move this to biocutils as setdiff().
-    needed = []
-    already_present = set(prior_sets)
+    needed_sets = []
     for s in sets:
-        if s not in already_present:
-            needed.append(s)
+        if s not in priors:
+            needed_sets.append(s)
 
-    if len(needed) > 0:
-        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
-
-        name = []
-        desc = []
-        for d in deets:
-            split = d.decode("utf-8").split("\t")
-            name.append(split[0])
-            desc.append(split[1])
-
-        extra_df = biocframe.BiocFrame({ "name": name, "description": desc })
-        prior_details = biocutils.combine_rows(prior_details, extra_df)
-        prior_sets += requested_ranges
+    if len(needed_sets) > 0:
         modified = True
+        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed_sets)
+        for r, line in zip(requested_ranges, deets):
+            split = line.decode("utf-8").split("\t")
+            priors[r] = (split[0], split[1])
 
     if modified:
-        cached["prior"]["sets"] = prior_sets
-        cached["prior"]["details"] = prior_details
+        # Technically not necessary as these were modified by reference, but let's just set them to be safe.
+        cached["prior"] = priors
         cfg._set_cache(config, "fetch_some_sets", species, cached)
 
-    output = prior_details[biocutils.match(sets, prior_sets),:]
-    output = output.set_column("size", biocutils.subset(cached["sizes"], sets))
-    output = output.set_column("collection", biocutils.subset(cached["collections"], sets))
-    output = output.set_column("number", biocutils.subset(cached["numbers"], sets))
-    return output
+    output_names = []
+    output_descriptions = []
+    for s in sets:
+        name, desc = priors[s]
+        output_names.append(name)
+        output_descriptions.append(desc)
+
+    return biocframe.BiocFrame({
+        "name": output_names,
+        "description": output_descriptions, 
+        "size": biocutils.subset(cached["sizes"], sets),
+        "collection": biocutils.subset(cached["collections"], sets),
+        "number": biocutils.subset(cached["numbers"], sets)
+    })
 
 
 def _get_single_set_ranges(config: dict, species: str, fname: str) -> tuple:
@@ -102,10 +100,7 @@ def _get_single_set_ranges(config: dict, species: str, fname: str) -> tuple:
         "collections": collections,
         "numbers": numbers,
         "sizes": sizes,
-        "prior": { 
-            "sets": [],
-            "details": biocframe.BiocFrame({ "name": [], "description": [] })
-        }
+        "prior": {}
     }
 
     return cached, True

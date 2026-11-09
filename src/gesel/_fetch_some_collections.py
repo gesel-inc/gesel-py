@@ -49,44 +49,44 @@ def fetch_some_collections(
 
     fname = species + "_collections.tsv"
     cached, modified = _get_single_collection_ranges(config, species, fname)
-    prior_collections = cached["prior"]["collections"]
-    prior_details = cached["prior"]["details"]
+    priors = cached["prior"]
 
-    # TODO: move this to biocutils as setdiff().
-    needed = []
-    already_present = set(prior_collections)
+    needed_col = []
     for c in collections:
-        if c not in already_present:
-            needed.append(c)
+        if c not in priors:
+            needed_col.append(c)
 
-    if len(needed) > 0:
-        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
-
-        title = []
-        desc = []
-        maintainer = []
-        src = []
-        for d in deets:
-            split = d.rstrip().decode("utf-8").split("\t")
-            title.append(split[0])
-            desc.append(split[1])
-            maintainer.append(split[3])
-            src.append(split[4])
-
-        extra_df = biocframe.BiocFrame({ "title": title, "description": desc, "maintainer": maintainer, "source": src })
-        prior_details = biocutils.combine_rows(prior_details, extra_df)
-        prior_collections += requested_ranges
+    if len(needed_col) > 0:
         modified = True
+        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed_col)
+        for r, line in zip(requested_ranges, deets):
+            split = line.decode("utf-8").split("\t")
+            priors[r] = (split[0], split[1], split[3], split[4])
 
     if modified:
-        cached["prior"]["collections"] = prior_collections
-        cached["prior"]["details"] = prior_details
+        # Technically not necessary as these were modified by reference, but let's just set them to be safe.
+        cached["prior"] = priors
         cfg._set_cache(config, "fetch_some_collections", species, cached)
 
-    output = prior_details[biocutils.match(collections, prior_collections),:]
-    output = output.set_column("start", biocutils.subset(cached["starts"], collections))
-    output = output.set_column("size", biocutils.subset(cached["sizes"], collections))
-    return output
+    output_titles = []
+    output_descriptions = []
+    output_maintainers = []
+    output_sources = []
+    for c in collections:
+        title, desc, mtr, src = priors[c]
+        output_titles.append(title)
+        output_descriptions.append(desc)
+        output_maintainers.append(mtr)
+        output_sources.append(src)
+
+    return biocframe.BiocFrame({
+        "title": output_titles,
+        "description": output_descriptions,
+        "maintainer": output_maintainers,
+        "source": output_sources,
+        "start": biocutils.subset(cached["starts"], collections),
+        "size": biocutils.subset(cached["sizes"], collections)
+    })
 
 
 def _get_single_collection_ranges(config: dict, species: str, fname: str) -> list:
@@ -106,15 +106,7 @@ def _get_single_collection_ranges(config: dict, species: str, fname: str) -> lis
         "block_info": cons._define_blocks(ranges, cons._retrieve_consolidate_block_size(config)),
         "starts": starts,
         "sizes": sizes,
-        "prior": {
-            "collections": [],
-            "details": biocframe.BiocFrame({
-                "title": [],
-                "description": [],
-                "maintainer": [],
-                "source": []
-            })
-        }
+        "prior": {}
     }
 
     return cached, True
