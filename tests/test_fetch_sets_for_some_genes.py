@@ -3,7 +3,7 @@ import random
 import biocutils
 
 
-def test_fetch_genes_for_some_sets_local(local_config):
+def test_fetch_sets_for_some_genes_local(local_config):
     species = local_config["species"]
     test_config = local_config["latest"]
 

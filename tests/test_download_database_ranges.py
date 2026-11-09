@@ -17,24 +17,20 @@ def get_full_contents(name):
         return f.read()
 
 
-def test_download_database_ranges():
+def test_download_database_ranges_no_multipart():
     full_contents = get_full_contents("9606_collections.tsv")
 
     starts = [0, 10, 20]
     ends = [5, 17, 27]
     ranges = gesel.download_database_ranges("9606_collections.tsv", starts, ends)
-    for i in range(len(starts)):
-        assert ranges[i] == full_contents[starts[i]:ends[i]]
+    assert len(ranges) == len(starts)
+    for i, currange in enumerate(ranges):
+        assert starts[i] >= currange[1]
+        assert ends[i] <= currange[2]
+        assert currange[0] == full_contents[currange[1]:currange[2]]
 
-    # Skips invalid ranges.
-    starts = [0, 10, 20, 30]
-    ends = [0, 15, 18, 40]
-    ranges = gesel.download_database_ranges("9606_collections.tsv", starts, ends)
-    for i in range(len(starts)):
-        if starts[i] >= ends[i]:
-            assert ranges[i] == b""
-        else:
-            assert ranges[i] == full_contents[starts[i]:ends[i]]
+    empty = gesel.download_database_ranges("9606_collections.tsv", [], [])
+    assert len(empty) == 0
 
 
 def test_range_concurrency():
@@ -69,19 +65,25 @@ def mock_request(url, ranges):
     if len(ranges) == 1:
         x = ranges[0]
         equals = x.find("-")
-        start = int(x[:equals])
-        end = int(x[equals + 1:]) + random.randint(0, 10) # adding some jitter.
-        return MockRequest(206, full_contents[start:end + 1], {})
+
+        # Adding some jitter.
+        start = max(0, int(x[:equals]) - random.randint(0, 10))
+        end = min(len(full_contents), int(x[equals + 1:]) + 1 + random.randint(0, 10))
+
+        return MockRequest(206, full_contents[start:end], { "Content-Range": "bytes " + str(start) + "-" + str(end - 1) + "/" + str(len(full_contents)) })
 
     output = b""
     boundary = b"FOOBAR"
     for x in ranges:
         equals = x.find("-")
-        start = int(x[:equals])
-        end = int(x[equals + 1:]) + random.randint(0, 10) # adding some jitter.
+
+        # Adding some jitter.
+        start = max(0, int(x[:equals]) - random.randint(0, 10))
+        end = min(len(full_contents), int(x[equals + 1:]) + 1 + random.randint(0, 10))
+
         output += b"--" + boundary + b"\r\nContent-Range: bytes "
-        output += str(start).encode("utf-8") + b"-" + str(end).encode("utf-8") + b"/" + str(len(full_contents)).encode("utf-8")
-        output += b"\r\n\r\n" + full_contents[start:end + 1] + b"\r\n"
+        output += str(start).encode("utf-8") + b"-" + str(end - 1).encode("utf-8") + b"/" + str(len(full_contents)).encode("utf-8")
+        output += b"\r\n\r\n" + full_contents[start:end] + b"\r\n"
     output += b"--" + boundary + b"--"
 
     return MockRequest(206, output, { "Content-Type": "multipart/byteranges; boundary=" + boundary.decode("UTF-8") })
@@ -95,29 +97,22 @@ def test_download_multipart_ranges():
     starts = [0, 10, 20]
     ends = [5, 17, 27]
     ranges = gesel.download_multipart_ranges(url, starts, ends, _mock=mock_request)
-    for i in range(len(starts)):
-        assert ranges[i] == full_contents[starts[i]:ends[i]]
+    assert len(ranges) == len(starts) # our mock implementation doesn't merge or reorder.
+    for i, currange in enumerate(ranges):
+        assert starts[i] >= currange[1]
+        assert ends[i] <= currange[2]
+        assert currange[0] == full_contents[currange[1]:currange[2]]
 
-    # Now trying out of order.
-    starts = [20, 10, 0]
-    ends = [30, 15, 8]
-    ranges = gesel.download_multipart_ranges(url, starts, ends, _mock=mock_request)
-    for i in range(len(starts)):
-        assert ranges[i] == full_contents[starts[i]:ends[i]]
+    # Behaves with just a single range.
+    single = gesel.download_multipart_ranges(url, [13], [39], _mock=mock_request)
+    assert len(single) == 1
+    assert 13 >= single[0][1]
+    assert 39 <= single[0][2]
+    assert single[0][0] == full_contents[single[0][1]:single[0][2]]
 
-    # Now throwing in some invalid ranges.
-    starts = [10, 20, 10, 50, 2]
-    ends = [5, 30, 15, 40, 8]
-    ranges = gesel.download_multipart_ranges(url, starts, ends, _mock=mock_request)
-    for i in range(len(starts)):
-        if starts[i] >= ends[i]:
-            assert ranges[i] == b""
-        else:
-            assert ranges[i] == full_contents[starts[i]:ends[i]]
-
-    # Behaves with just a single range, or even no ranges.
-    assert gesel.download_multipart_ranges(url, [13], [39], _mock=mock_request) == [full_contents[13:39]]
-    assert gesel.download_multipart_ranges(url, [], [], _mock=mock_request) == []
+    # Or even no ranges.
+    empty = gesel.download_multipart_ranges(url, [], [], _mock=mock_request)
+    assert len(empty) == 0
 
 
 def test_parse_multipart_ranges():
@@ -144,6 +139,8 @@ def test_parse_multipart_ranges():
         b"--foo--"
     ])
 
-    starts, contents = _parse_multipart_response(ex, b"foo") 
-    assert starts == [10, 30, 50]
-    assert contents == [payload1, payload2, payload3]
+    contents = _parse_multipart_response(ex, b"foo") 
+    assert [x[0] for x in contents] == [payload1, payload2, payload3]
+    assert [x[1] for x in contents] == [10, 30, 50]
+    for x in contents:
+        assert x[2] == x[1] + len(x[0])

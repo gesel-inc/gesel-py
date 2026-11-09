@@ -10,7 +10,8 @@ def new_config(
     fetch_file: Optional[Callable] = None,
     fetch_file_kwargs: dict = {},
     fetch_ranges: Optional[Callable] = None,
-    fetch_ranges_kwargs: dict = {}
+    fetch_ranges_kwargs: dict = {},
+    consolidate_block_size: Optional[int] = None
 ) -> dict:
     """
     Create a new configuration object to specify how the Gesel database should be queried.
@@ -41,13 +42,34 @@ def new_config(
             Dictionary of name:value pairs containing extra arguments to pass to ``fetch_file``.
 
         fetch_ranges:
-            Function that accepts three arguments - 
-            the name of the file in the Gesel database, an integer vector containing the starts of the byte ranges, and another vector containing the ends of the byte ranges -
-            and returns a list of byte strings containing the contents of the specified ranges.
+            Function that accepts three arguments:
+
+            - ``name``, the name of a Gesel database file.
+            - ``start``, a list of integers containing the zero-indexed closed start of each byte range to extract from the file.
+              This may be of zero length.
+            - ``end``, a list of integers containing the zero-indexed open end of each byte range to extract from the file.
+              This should have the same length as ``start`` such that the ``i``-th byte range is defined as ``[start[i], end[i])``.
+              The set of byte ranges should be non-empty, non-overlapping, and sorted by increasing start/end position.
+
+            It should return a list containing tuples of:
+
+            1. A byte string representing the contents of a "retrieved" byte range.
+            2. An integer containing the zero-indexed closed start of the retrieved range.
+            3. An integer containing the zero-indexed open end of the retrieved range.
+
+            All retrieved byte ranges are non-empty but may be overlapping and in any order.
+            Each "requested" byte range (i.e., defined by ``start`` and ``end``) will be enclosed within at least one retrieved byte range.
+            Note that the retrieved byte ranges may not have a 1-to-1 mapping to the requested byte ranges,
+            e.g., if the server decides that adjacent requested ranges can be merged into a single output range.
+
             If ``None``, it defaults to :py:func:`~gesel.download_database_ranges`.
 
         fetch_ranges_kwargs:
             Dictionary of name:value pairs containing extra arguments to pass to ``fetch_ranges``.
+
+        consolidate_block_size:
+            Block size for consolidated requests.
+            If ``None``, it defaults to :py:func:`~gesel.consolidate_block_size`.
 
     Returns:
         Dictionary of Gesel configuration settings.
@@ -64,7 +86,8 @@ def new_config(
         "fetch_file": fetch_file,
         "fetch_file_kwargs": fetch_file_kwargs,
         "fetch_ranges": fetch_ranges,
-        "fetch_ranges_kwargs": fetch_ranges_kwargs
+        "fetch_ranges_kwargs": fetch_ranges_kwargs,
+        "consolidate_block_size": consolidate_block_size
     }
 
 

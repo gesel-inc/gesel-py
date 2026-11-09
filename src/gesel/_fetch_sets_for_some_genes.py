@@ -3,6 +3,7 @@ import biocutils
 
 from . import _new_config as cfg
 from . import _utils as utils
+from . import _consolidate_ranges as cons
 
 
 def fetch_sets_for_some_genes(species: str, genes: list, config: Optional[dict] = None) -> list:
@@ -30,11 +31,13 @@ def fetch_sets_for_some_genes(species: str, genes: list, config: Optional[dict] 
     Examples:
         >>> import gesel
         >>> has_genes = gesel.fetch_sets_for_some_genes("9606", [0, 5, 10])
-        >>> has_genes[0]
+        >>> len(has_genes)
+        >>> first_gene = has_genes[0]
+        >>> print(first_gene)
         >>>
         >>> # Sets containing the first gene:
         >>> set_info = gesel.fetch_all_sets("9606")
-        >>> print(set_info[has_genes[0], :])
+        >>> print(set_info[first_gene,:])
         >>>
         >>> # Identities of the genes used above:
         >>> gene_symbols = gesel.fetch_all_genes("9606")["symbol"]
@@ -60,16 +63,10 @@ def fetch_sets_for_some_genes(species: str, genes: list, config: Optional[dict] 
             needed.append(g)
 
     if len(needed) > 0:
-        intervals = cached["intervals"]
-        starts = []
-        ends = []
-        for g in needed:
-            starts.append(intervals[g])
-            ends.append(intervals[g + 1])
-        deets = cfg._fetch_ranges(config, fname, starts, ends)
+        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
         for line in deets:
             prior_sets.append(utils._decode_indices(line))
-        prior_gene += needed
+        prior_gene += requested_ranges 
         modified = True
 
     if modified:
@@ -88,7 +85,8 @@ def _get_sets_for_some_genes_ranges(config: dict, species: str, fname: str) -> t
 
     intervals = cfg._retrieve_ranges(config, fname)
     cached = {
-        "intervals": intervals,
+        "range_boundaries": intervals,
+        "block_info": cons._define_blocks(intervals, cons._retrieve_consolidate_block_size(config)),
         "prior": {
             "gene": [],
             "sets": []
@@ -129,7 +127,7 @@ def effective_number_of_genes(species: str, config: Optional[dict] = None) -> in
     if modified:
         cfg._set_cache(config, "fetch_sets_for_some_genes", species, cached)
 
-    intervals = cached["intervals"]
+    intervals = cached["range_boundaries"]
     number = 0
     for i in range(1, len(intervals)):
         number += (intervals[i] - intervals[i-1] > 1) # account for the newline character

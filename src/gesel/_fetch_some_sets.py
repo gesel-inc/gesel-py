@@ -5,6 +5,7 @@ import biocutils
 from . import _new_config as cfg
 from ._fetch_all_sets import _compute_set_to_collection_indices 
 from ._fetch_some_collections import fetch_collection_sizes
+from . import _consolidate_ranges as cons
 
 
 def fetch_some_sets(
@@ -61,14 +62,8 @@ def fetch_some_sets(
             needed.append(s)
 
     if len(needed) > 0:
-        intervals = cached["intervals"]
-        starts = []
-        ends = []
-        for s in needed:
-            starts.append(intervals[s])
-            ends.append(intervals[s + 1] - 1) # remove the newline
+        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
 
-        deets = cfg._fetch_ranges(config, fname, starts, ends)
         name = []
         desc = []
         for d in deets:
@@ -78,7 +73,7 @@ def fetch_some_sets(
 
         extra_df = biocframe.BiocFrame({ "name": name, "description": desc })
         prior_details = biocutils.combine_rows(prior_details, extra_df)
-        prior_sets += needed
+        prior_sets += requested_ranges
         modified = True
 
     if modified:
@@ -102,7 +97,8 @@ def _get_single_set_ranges(config: dict, species: str, fname: str) -> tuple:
     coll_sizes = fetch_collection_sizes(species, config=config)
     collections, numbers = _compute_set_to_collection_indices(coll_sizes)
     cached = {
-        "intervals": ranges,
+        "range_boundaries": ranges,
+        "block_info": cons._define_blocks(ranges, block_size = cons._retrieve_consolidate_block_size(config)),
         "collections": collections,
         "numbers": numbers,
         "sizes": sizes,

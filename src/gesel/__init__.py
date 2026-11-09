@@ -42,6 +42,7 @@ from ._search_set_text import search_set_text
 from ._search_overlapping_sets import search_overlapping_sets, find_overlapping_sets
 
 from ._new_config import new_config, flush_memory_cache
+from ._consolidate_ranges import consolidate_block_size
 
 from ._prepare_gene_files import prepare_gene_files
 from ._validate_gene_files import validate_gene_files

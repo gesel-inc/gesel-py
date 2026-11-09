@@ -3,6 +3,8 @@ import biocutils
 
 from . import _new_config as cfg
 from . import _utils as utils
+from . import _consolidate_ranges as cons
+
 
 def fetch_genes_for_some_sets(species: str, sets: list, config: Optional[dict] = None) -> list:
     """
@@ -27,14 +29,15 @@ def fetch_genes_for_some_sets(species: str, sets: list, config: Optional[dict] =
 
     Examples:
         >>> import gesel
-        >>> first_set = gesel.fetch_genes_for_some_sets("9606", [0, 10, 20])
-        >>> len(first_set)
-        >>> first_set[0]
+        >>> some_sets = gesel.fetch_genes_for_some_sets("9606", [0, 10, 20])
+        >>> len(some_sets)
+        >>> first_set = some_sets[0]
+        >>> print(first_set)
         >>>
         >>> # Genes in the first set:
         >>> gene_symbols = gesel.fetch_all_genes("9606")["symbol"]
         >>> import biocutils
-        >>> biocutils.subset(gene_symbols, first_set[0])
+        >>> biocutils.subset(gene_symbols, first_set)
         >>>
         >>> # Identities of the sets used above.
         >>> set_info = gesel.fetch_all_sets("9606")
@@ -51,9 +54,10 @@ def fetch_genes_for_some_sets(species: str, sets: list, config: Optional[dict] =
     modified = False
 
     if cached is None:
-        intervals  = cfg._retrieve_ranges(config, fname)
+        intervals = cfg._retrieve_ranges(config, fname)
         cached = {
-            "intervals": intervals,
+            "range_boundaries": intervals,
+            "block_info": cons._define_blocks(intervals, cons._retrieve_consolidate_block_size(config)),
             "prior": {
                 "set": [],
                 "genes": []
@@ -72,16 +76,10 @@ def fetch_genes_for_some_sets(species: str, sets: list, config: Optional[dict] =
             needed.append(s)
 
     if len(needed) > 0:
-        intervals = cached["intervals"]
-        starts = []
-        ends = []
-        for s in needed:
-            starts.append(intervals[s])
-            ends.append(intervals[s + 1])
-        deets = cfg._fetch_ranges(config, fname, starts, ends)
+        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
         for line in deets:
             prior_genes.append(utils._decode_indices(line))
-        prior_set += needed
+        prior_set += requested_ranges
         modified = True
 
     if modified:

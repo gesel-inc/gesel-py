@@ -41,10 +41,10 @@ def _download_file(cache: str, url: str, overwrite: bool) -> str:
 
 
 def _decode_indices(line: str) -> list:
-    if line == b"\n":
+    if line == b"":
         return []
 
-    details = line.rstrip().split(b"\t") 
+    details = line.split(b"\t") 
     last = 0
     for i, x in enumerate(details):
         last += int(x)

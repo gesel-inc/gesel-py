@@ -3,6 +3,7 @@ import biocutils
 
 from . import _new_config as cfg
 from . import _utils as utils
+from . import _consolidate_ranges as cons
 
 
 def search_set_text(
@@ -97,11 +98,13 @@ def _fetch_sets_by_token(
     if type in cached:
         tfound = cached[type]
     else:
-        tfound = {}
         names, ranges = cfg._retrieve_ranges_with_names(config, fname)
-        tfound["ranges"] = ranges
-        tfound["names"] = names
-        tfound["prior"] = {}
+        tfound = {
+            "range_boundaries": ranges,
+            "block_info": cons._define_blocks(ranges, block_size = cons._retrieve_consolidate_block_size(config)),
+            "names": names,
+            "prior": {}
+        }
         modified = True
 
     tnames = tfound["names"]
@@ -163,16 +166,9 @@ def _fetch_sets_by_token(
     # Requesting ranges for anything that we're missing.
     to_request = list(to_request)
     if len(to_request) > 0:
-        ranges = tfound["ranges"]
-        starts = []
-        ends = []
-        for r in to_request:
-            starts.append(ranges[r])
-            ends.append(ranges[r + 1])
-
-        deets = cfg._fetch_ranges(config, fname, starts, ends)
-        for i, r in enumerate(to_request):
-            prior[tnames[r]] = utils._decode_indices(deets[i])
+        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, tfound["range_boundaries"], tfound["block_info"], to_request)
+        for r, line in zip(requested_ranges, deets):
+            prior[tnames[r]] = utils._decode_indices(line)
         modified = True
 
     # Filling up the caches for subsequent queries.

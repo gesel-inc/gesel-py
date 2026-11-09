@@ -3,6 +3,7 @@ import biocframe
 import biocutils
 
 from . import _new_config as cfg
+from . import _consolidate_ranges as cons
 
 
 def fetch_some_collections(
@@ -38,7 +39,7 @@ def fetch_some_collections(
 
     Examples:
         >>> import gesel
-        >>> gesel.fetch_some_collections("9606", 0)
+        >>> gesel.fetch_some_collections("9606", [0])
     """
 
     config = cfg._get_config(config)
@@ -59,14 +60,8 @@ def fetch_some_collections(
             needed.append(c)
 
     if len(needed) > 0:
-        intervals = cached["intervals"]
-        starts = []
-        ends = []
-        for s in needed:
-            starts.append(intervals[s])
-            ends.append(intervals[s + 1] - 1) # remove the newline
+        requested_ranges, deets = cons._fetch_consolidated_ranges(config, fname, cached["range_boundaries"], cached["block_info"], needed)
 
-        deets = cfg._fetch_ranges(config, fname, starts, ends)
         title = []
         desc = []
         maintainer = []
@@ -80,7 +75,7 @@ def fetch_some_collections(
 
         extra_df = biocframe.BiocFrame({ "title": title, "description": desc, "maintainer": maintainer, "source": src })
         prior_details = biocutils.combine_rows(prior_details, extra_df)
-        prior_collections += needed
+        prior_collections += requested_ranges
         modified = True
 
     if modified:
@@ -107,7 +102,8 @@ def _get_single_collection_ranges(config: dict, species: str, fname: str) -> lis
         starts.append(last)
 
     cached = {
-        "intervals": ranges,
+        "range_boundaries": ranges,
+        "block_info": cons._define_blocks(ranges, cons._retrieve_consolidate_block_size(config)),
         "starts": starts,
         "sizes": sizes,
         "prior": {

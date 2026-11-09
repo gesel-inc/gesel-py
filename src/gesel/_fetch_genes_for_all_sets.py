@@ -50,7 +50,7 @@ def fetch_genes_for_all_sets(species: str, config: Optional[dict] = None) -> lis
     output = []
     with gzip.open(path, "rb") as f:
         for line in f:
-            output.append(utils._decode_indices(line))
+            output.append(utils._decode_indices(line.rstrip()))
 
     cfg._set_cache(config, "fetch_genes_for_all_sets", species, output)
     return output

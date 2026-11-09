@@ -21,13 +21,12 @@ def download_database_ranges(
             This usually has the species identifier as a prefix.
 
         start:
-            List of integers containing the zero-indexed closed start of each byte range to extract from the file.
-            This list may be empty.
+            List of integers containing the start of each byte range,
+            see the ``start`` argument to be passed to the ``fetch_ranges`` function in :py:func:`~gesel.new_config`.
 
         end:
-            List of integers containing the zero-indexed open end of each byte range to extract from the file.
-            This should have the same length as ``start`` such that the ``i``-th range is defined as ``[start[i], end[i])``.
-            All ranges supplied in a single call to this function should be non-overlapping.
+            List of integers containing the end of each byte range,
+            see the ``end`` argument to be passed to the ``fetch_ranges`` function in :py:func:`~gesel.new_config`.
 
         url:
             Base URL to the Gesel database files.
@@ -42,8 +41,8 @@ def download_database_ranges(
             Only used if ``multipart = False``.
 
     Returns:
-        List of byte strings containing the requested bytes for each range.
-        For ranges where ``end <= start``, an empty string is returned.
+        List of tuples containing the retrieved byte ranges,
+        see the return value of the ``fetch_ranges`` function in :py:func:`~gesel.new_config`.
 
     Examples:
         >>> import gesel
@@ -65,14 +64,10 @@ def download_database_ranges(
     with ThreadPoolExecutor(max_workers = concurrency) as executor:
         collected = []
         for i in range(len(start)):
-            curstart = start[i]
-            curend = end[i]
-            if curstart < curend:
-                collected.append((i, executor.submit(_make_range_request, url, curstart, curend)))
-
-        output = [b""] * len(start)
-        for i, val in collected:
-            output[i] = val.result()
+            collected.append(executor.submit(_make_range_request, url, start[i], end[i]))
+        output = []
+        for val in collected:
+            output.append(val.result())
 
     return output
 
@@ -107,11 +102,26 @@ def range_concurrency(concurrency: Optional[int] = None):
     return previous
 
 
-def _make_range_request(url, curstart, curend) -> bytes:
+def _make_range_request(url, curstart, curend) -> tuple:
     resp = requests.get(url, headers = { "Range": "bytes=" + str(curstart) + "-" + str(curend - 1) }) # byte ranges are closed intervals, not half-open.
     if resp.status_code >= 300:
-        raise utils.format_error(resp)
-    return resp.content[:(curend - curstart)] # We use 'content' instead of 'text' to handle multi-byte characters correctly.
+        raise utils._format_error(resp)
+    if resp.status_code != 206:
+        raise ValueError("expected a partial content response from a range request")
+    loc_start, loc_end = _extract_range_location(resp.headers["Content-Range"].encode("UTF-8"))
+    # We use 'content' instead of 'text' to handle multi-byte characters correctly.
+    return resp.content, loc_start, loc_end 
+
+
+def _extract_range_location(crange) -> tuple:
+    to_bytes = crange.find(b"bytes ")
+    to_dash = crange.find(b"-")
+    to_slash = crange.find(b"/")
+    if to_bytes == -1 or to_dash == -1 or to_slash == -1 or to_dash >= to_slash:
+        raise RuntimeError("expected 'content-range' header to follow a 'bytes <start>-<end>/<size>' format")
+    curstart = int(crange[(to_bytes + 6):to_dash])
+    curend = int(crange[(to_dash + 1):to_slash]) + 1 # convert to an open end for consistency.
+    return curstart, curend
 
 
 def download_multipart_ranges(
@@ -128,57 +138,43 @@ def download_multipart_ranges(
             URL to a specific Gesel database file.
 
         start:
-            List of integers containing the zero-indexed closed start of each byte range to extract from the file.
-            This list may be empty.
+            List of integers containing the start of each byte range,
+            see the ``start`` argument to be passed to the ``fetch_ranges`` function in :py:func:`~gesel.new_config`.
 
         end:
-            List of integers containing the zero-indexed open end of each byte range to extract from the file.
-            This should have the same length as ``start`` such that the ``i``-th range is defined as ``[start[i], end[i])``.
-            All ranges supplied in a single call to this function should be non-overlapping.
+            List of integers containing the end of each byte range,
+            see the ``end`` argument to be passed to the ``fetch_ranges`` function in :py:func:`~gesel.new_config`.
 
         _mock:
             Internal use only.
 
     Returns:
-        List of byte strings containing the requested bytes for each range.
-        For ranges where ``end <= start``, an empty string is returned.
+        List of tuples containing the retrieved byte ranges,
+        see the return value of the ``fetch_ranges`` function in :py:func:`~gesel.new_config`.
 
     Examples:
         >>> import gesel
         >>> url = gesel.database_url() + "/9606_set2gene.tsv" 
         >>> gesel.download_multipart_ranges(url, [0], [100])
-        >>> gesel.download_multipart_ranges(url, [10, 100, 1000], [10, 150, 900])
         >>> # Note: as of writing, GitHub releases don't support multi-part range requests.
     """
 
-    collected = []
-    for i in range(len(start)):
-        curstart = start[i]
-        curend = end[i]
-        if curend <= curstart:
-            continue
-        collected.append((curstart, curend, i))
-    collected.sort()
-
-    output = [b""] * len(start)
-    if len(collected) == 0:
-        return output
+    if len(start) == 0:
+        return []
+    if len(start) == 1:
+        return [_make_range_request(url, start[0], end[0])]
 
     formatted = []
-    for curstart, curend, _ in collected:
+    for curstart, curend in zip(start, end):
         formatted.append(str(curstart) + "-" + str(curend - 1)) # byte ranges are closed intervals, not half-open.
-
     if _mock is None:
         resp = requests.get(url, headers = { "Range": "bytes=" + ", ".join(formatted) })
     else:
         resp = _mock(url, "bytes=" + ", ".join(formatted)) 
     if resp.status_code >= 300:
-        raise utils.format_error(resp)
-
-    if len(collected) == 1:
-        curstart, curend, curi = collected[0]
-        output[curi] = resp.content[:(curend - curstart)]
-        return output
+        raise utils._format_error(resp)
+    if resp.status_code != 206:
+        raise ValueError("expected a partial content response from a range request")
 
     ct = resp.headers["Content-Type"]
     prefix = "multipart/byteranges; boundary="
@@ -187,14 +183,7 @@ def download_multipart_ranges(
     boundary = ct[len(prefix):]
 
     # Remember, we operate on the byte strings to correctly handle ranges for multi-byte characters.
-    parsed_start, parsed_content = _parse_multipart_response(resp.content, boundary.encode("utf-8"))
-    import bisect
-    for curstart, curend, curi in collected:
-        chosen = bisect.bisect_right(parsed_start, curstart) - 1
-        offset = parsed_start[chosen]
-        output[curi] = parsed_content[chosen][(curstart - offset):(curend - offset)]
-
-    return output
+    return _parse_multipart_response(resp.content, boundary.encode("utf-8"))
 
 
 # WARNING: this part only works when the contents of body are fully string-able;
@@ -202,7 +191,6 @@ def download_multipart_ranges(
 def _parse_multipart_response(body: bytes, boundary: bytes) -> tuple[list, list]:
     position = 0
     boundary = b"--" + boundary
-    starts = []
     contents = []
 
     while True:
@@ -232,23 +220,14 @@ def _parse_multipart_response(body: bytes, boundary: bytes) -> tuple[list, list]
 
         if b"content-range" not in headers:
             raise RuntimeError("expected a 'content-range' header in each multi-part response")
-        crange = headers[b"content-range"]
-        to_bytes = crange.find(b"bytes ")
-        to_dash = crange.find(b"-")
-        to_slash = crange.find(b"/")
-        if to_bytes == -1 or to_dash == -1 or to_slash == -1 or to_dash >= to_slash:
-            raise RuntimeError("expected 'content-range' header to follow a 'bytes <start>-<end>/<size>' format")
-
-        first = int(crange[(to_bytes + 6):to_dash])
-        last = int(crange[(to_dash + 1):to_slash])
-        starts.append(first) 
-        curlen = last - first + 1
-        contents.append(body[position:(position + curlen)])
-        position += curlen 
+        first, last = _extract_range_location(headers[b"content-range"])
+        endpos = position + last - first
+        contents.append((body[position:endpos], first, last))
+        position = endpos
 
         remaining = body[position:(position + 2)]
         if remaining != b"\r\n":
             raise RuntimeError("expected a newline after each part of a multi-part response")
         position += 2
 
-    return starts, contents
+    return contents

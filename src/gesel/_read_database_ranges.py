@@ -15,17 +15,16 @@ def read_database_ranges(path: str, name: str, start: list, end: list) -> list:
             This usually has the species identifier as a prefix.
 
         start:
-            List of integers containing the zero-indexed closed start of each byte range to extract from the file.
-            This list may be empty.
+            List of integers containing the start of each byte range,
+            see the ``start`` argument to be passed to the ``fetch_ranges`` function in :py:func:`~gesel.new_config`.
 
         end:
-            List of integers containing the zero-indexed open end of each byte range to extract from the file.
-            This should have the same length as ``start`` such that the ``i``-th range is defined as ``[start[i], end[i])``.
-            All ranges supplied in a single call to this function should be non-overlapping.
+            List of integers containing the end of each byte range,
+            see the ``end`` argument to be passed to the ``fetch_ranges`` function in :py:func:`~gesel.new_config`.
 
     Returns:
-        List of byte strings containing the requested bytes for each range.
-        For ranges where ``end <= start``, an empty string is returned.
+        List of tuples containing the retrieved byte ranges,
+        see the return value of the ``fetch_ranges`` function in :py:func:`~gesel.new_config`.
 
     Examples:
         >>> import tempfile
@@ -39,13 +38,9 @@ def read_database_ranges(path: str, name: str, start: list, end: list) -> list:
         >>> gesel.read_database_ranges(tmp, "foo.txt", [0, 20, 10, 5], [6, 23, 15, 14])
     """
 
-    ordering = biocutils.order(start)
-    output = [b''] * len(start)
+    output = []
     with open(os.path.join(path, name), "rb") as handle:
-        for o in ordering:
-            s = start[o]
-            e = end[o]
-            if s < e:
-                handle.seek(s)
-                output[o] = handle.read(e - s)
+        for s, e in zip(start, end):
+            handle.seek(s)
+            output.append((handle.read(e - s), s, e))
     return output
