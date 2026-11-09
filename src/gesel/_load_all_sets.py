@@ -12,7 +12,7 @@ def load_all_sets(
     type: str,
     config: Optional[dict] = None,
     as_compressed: bool = False
-) -> tuple:
+) -> dict:
     """
     Load information about all gene sets for a species.
     This includes its gene membership as well as details like its name and description.
@@ -34,8 +34,7 @@ def load_all_sets(
             This assumes that the **compressed_lists** package is installed.
 
     Returns:
-        If ``as_compressed = False``, a tuple is returned with two elements.
-        This contains:
+        If ``as_compressed = False``, a dictionary is returned that contains:
         
         1. ``sets``, a :py:class:`~biocutils.NamedList` of length equal to the total number of sets for ``species``.
            Each list element is a nested list that corresponds to a gene set and contains the genes in that set.
@@ -60,8 +59,10 @@ def load_all_sets(
 
     Examples:
         >>> import gesel
-        >>> sets, details = gesel.load_all_sets("7227", "symbol")
-        >>> sets[:5]
+        >>> loaded = gesel.load_all_sets("7227", "symbol")
+        >>> sets = loaded["sets"]
+        >>> details = loaded["details"]
+        >>> print(sets[:5])
         >>> print(details)
         >>>
         >>> everything2 = gesel.load_all_sets("7227", "symbol", as_compressed = True)
@@ -85,4 +86,4 @@ def load_all_sets(
         output.set_element_metadata(details, in_place=True)
         return output
     else:
-        return all_sets, details
+        return { "sets": all_sets, "details": details }

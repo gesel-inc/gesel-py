@@ -6,7 +6,9 @@ def test_load_all_sets_local(local_config):
     species = local_config["species"]
     test_config = local_config["latest"]
 
-    loaded_sets, loaded_details = gesel.load_all_sets(species, "alpha", config=test_config)
+    loaded = gesel.load_all_sets(species, "alpha", config=test_config)
+    loaded_sets = loaded["sets"]
+    loaded_details = loaded["details"]
     assert len(loaded_sets) == loaded_details.shape[0]
     assert loaded_sets.get_names().as_list() == loaded_details.get_column("name")
     for i in loaded_sets:
@@ -20,7 +22,9 @@ def test_load_all_sets_local(local_config):
 
 
 def test_load_all_sets_remote():
-    loaded_sets, loaded_details = gesel.load_all_sets("7227", "symbol")
+    loaded = gesel.load_all_sets("7227", "symbol")
+    loaded_sets = loaded["sets"]
+    loaded_details = loaded["details"]
     assert len(loaded_sets) == loaded_details.shape[0]
 
     loaded_comp = gesel.load_all_sets("7227", "symbol", as_compressed = True)
