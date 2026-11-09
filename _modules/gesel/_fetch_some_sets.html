@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
-        <title>gesel._fetch_some_sets - gesel 0.0.post1.dev1+gdee25d17f documentation</title>
+        <title>gesel._fetch_some_sets - gesel 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -162,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.0.post1.dev1+gdee25d17f documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.0.post1.dev1+gdee25d17f documentation</span>
+  <span class="sidebar-brand-text">gesel 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -241,6 +241,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_new_config</span> <span class="k">as</span> <span class="n">cfg</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">._fetch_all_sets</span><span class="w"> </span><span class="kn">import</span> <span class="n">_compute_set_to_collection_indices</span> 
 <span class="kn">from</span><span class="w"> </span><span class="nn">._fetch_some_collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_collection_sizes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_consolidate_ranges</span> <span class="k">as</span> <span class="n">cons</span>
 
 
 <div class="viewcode-block" id="fetch_some_sets">
@@ -288,47 +289,39 @@
 
     <span class="n">fname</span> <span class="o">=</span> <span class="n">species</span> <span class="o">+</span> <span class="s2">"_sets.tsv"</span>
     <span class="n">cached</span><span class="p">,</span> <span class="n">modified</span> <span class="o">=</span> <span class="n">_get_single_set_ranges</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
-    <span class="n">prior_sets</span> <span class="o">=</span> <span class="n">cached</span><span class="p">[</span><span class="s2">"prior"</span><span class="p">][</span><span class="s2">"sets"</span><span class="p">]</span>
-    <span class="n">prior_details</span> <span class="o">=</span> <span class="n">cached</span><span class="p">[</span><span class="s2">"prior"</span><span class="p">][</span><span class="s2">"details"</span><span class="p">]</span>
+    <span class="n">priors</span> <span class="o">=</span> <span class="n">cached</span><span class="p">[</span><span class="s2">"prior"</span><span class="p">]</span>
 
-    <span class="c1"># TODO: move this to biocutils as setdiff().</span>
-    <span class="n">needed</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">already_present</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">prior_sets</span><span class="p">)</span>
+    <span class="n">needed_sets</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sets</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">already_present</span><span class="p">:</span>
-            <span class="n">needed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">priors</span><span class="p">:</span>
+            <span class="n">needed_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">needed</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">intervals</span> <span class="o">=</span> <span class="n">cached</span><span class="p">[</span><span class="s2">"intervals"</span><span class="p">]</span>
-        <span class="n">starts</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">ends</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">needed</span><span class="p">:</span>
-            <span class="n">starts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intervals</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
-            <span class="n">ends</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intervals</span><span class="p">[</span><span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># remove the newline</span>
-
-        <span class="n">deets</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_fetch_ranges</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">starts</span><span class="p">,</span> <span class="n">ends</span><span class="p">)</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">desc</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">deets</span><span class="p">:</span>
-            <span class="n">split</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
-            <span class="n">name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="n">desc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-
-        <span class="n">extra_df</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span> <span class="s2">"name"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"description"</span><span class="p">:</span> <span class="n">desc</span> <span class="p">})</span>
-        <span class="n">prior_details</span> <span class="o">=</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">combine_rows</span><span class="p">(</span><span class="n">prior_details</span><span class="p">,</span> <span class="n">extra_df</span><span class="p">)</span>
-        <span class="n">prior_sets</span> <span class="o">+=</span> <span class="n">needed</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">needed_sets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">modified</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">requested_ranges</span><span class="p">,</span> <span class="n">deets</span> <span class="o">=</span> <span class="n">cons</span><span class="o">.</span><span class="n">_fetch_consolidated_ranges</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">cached</span><span class="p">[</span><span class="s2">"range_boundaries"</span><span class="p">],</span> <span class="n">cached</span><span class="p">[</span><span class="s2">"block_info"</span><span class="p">],</span> <span class="n">needed_sets</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">requested_ranges</span><span class="p">,</span> <span class="n">deets</span><span class="p">):</span>
+            <span class="n">split</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">priors</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="k">if</span> <span class="n">modified</span><span class="p">:</span>
-        <span class="n">cached</span><span class="p">[</span><span class="s2">"prior"</span><span class="p">][</span><span class="s2">"sets"</span><span class="p">]</span> <span class="o">=</span> <span class="n">prior_sets</span>
-        <span class="n">cached</span><span class="p">[</span><span class="s2">"prior"</span><span class="p">][</span><span class="s2">"details"</span><span class="p">]</span> <span class="o">=</span> <span class="n">prior_details</span>
+        <span class="c1"># Technically not necessary as these were modified by reference, but let's just set them to be safe.</span>
+        <span class="n">cached</span><span class="p">[</span><span class="s2">"prior"</span><span class="p">]</span> <span class="o">=</span> <span class="n">priors</span>
         <span class="n">cfg</span><span class="o">.</span><span class="n">_set_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">"fetch_some_sets"</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">cached</span><span class="p">)</span>
 
-    <span class="n">output</span> <span class="o">=</span> <span class="n">prior_details</span><span class="p">[</span><span class="n">biocutils</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">prior_sets</span><span class="p">),:]</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">set_column</span><span class="p">(</span><span class="s2">"size"</span><span class="p">,</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">cached</span><span class="p">[</span><span class="s2">"sizes"</span><span class="p">],</span> <span class="n">sets</span><span class="p">))</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">set_column</span><span class="p">(</span><span class="s2">"collection"</span><span class="p">,</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">cached</span><span class="p">[</span><span class="s2">"collections"</span><span class="p">],</span> <span class="n">sets</span><span class="p">))</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">set_column</span><span class="p">(</span><span class="s2">"number"</span><span class="p">,</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">cached</span><span class="p">[</span><span class="s2">"numbers"</span><span class="p">],</span> <span class="n">sets</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">output</span></div>
+    <span class="n">output_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">output_descriptions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sets</span><span class="p">:</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="n">priors</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+        <span class="n">output_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">output_descriptions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="n">output_names</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="n">output_descriptions</span><span class="p">,</span> 
+        <span class="s2">"size"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">cached</span><span class="p">[</span><span class="s2">"sizes"</span><span class="p">],</span> <span class="n">sets</span><span class="p">),</span>
+        <span class="s2">"collection"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">cached</span><span class="p">[</span><span class="s2">"collections"</span><span class="p">],</span> <span class="n">sets</span><span class="p">),</span>
+        <span class="s2">"number"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">cached</span><span class="p">[</span><span class="s2">"numbers"</span><span class="p">],</span> <span class="n">sets</span><span class="p">)</span>
+    <span class="p">})</span></div>
 
 
 
@@ -341,14 +334,12 @@
     <span class="n">coll_sizes</span> <span class="o">=</span> <span class="n">fetch_collection_sizes</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
     <span class="n">collections</span><span class="p">,</span> <span class="n">numbers</span> <span class="o">=</span> <span class="n">_compute_set_to_collection_indices</span><span class="p">(</span><span class="n">coll_sizes</span><span class="p">)</span>
     <span class="n">cached</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"intervals"</span><span class="p">:</span> <span class="n">ranges</span><span class="p">,</span>
+        <span class="s2">"range_boundaries"</span><span class="p">:</span> <span class="n">ranges</span><span class="p">,</span>
+        <span class="s2">"block_info"</span><span class="p">:</span> <span class="n">cons</span><span class="o">.</span><span class="n">_define_blocks</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">block_size</span> <span class="o">=</span> <span class="n">cons</span><span class="o">.</span><span class="n">_retrieve_consolidate_block_size</span><span class="p">(</span><span class="n">config</span><span class="p">)),</span>
         <span class="s2">"collections"</span><span class="p">:</span> <span class="n">collections</span><span class="p">,</span>
         <span class="s2">"numbers"</span><span class="p">:</span> <span class="n">numbers</span><span class="p">,</span>
         <span class="s2">"sizes"</span><span class="p">:</span> <span class="n">sizes</span><span class="p">,</span>
-        <span class="s2">"prior"</span><span class="p">:</span> <span class="p">{</span> 
-            <span class="s2">"sets"</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">"details"</span><span class="p">:</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span> <span class="s2">"name"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"description"</span><span class="p">:</span> <span class="p">[]</span> <span class="p">})</span>
-        <span class="p">}</span>
+        <span class="s2">"prior"</span><span class="p">:</span> <span class="p">{}</span>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="n">cached</span><span class="p">,</span> <span class="kc">True</span>
@@ -421,7 +412,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=6f76cb38"></script>
+</div><script src="../../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
-        <title>gesel._find_overlapping_sets - gesel 0.0.post1.dev1+gdee25d17f documentation</title>
+        <title>gesel._rename_genes_in_sets - gesel 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -162,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.0.post1.dev1+gdee25d17f documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.0.post1.dev1+gdee25d17f documentation</span>
+  <span class="sidebar-brand-text">gesel 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -233,138 +233,62 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for gesel._find_overlapping_sets</h1><div class="highlight"><pre>
+          <h1>Source code for gesel._rename_genes_in_sets</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">biocutils</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">biocframe</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">._fetch_sets_for_some_genes</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_sets_for_some_genes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._fetch_all_genes</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_all_genes</span>
 
 
-<div class="viewcode-block" id="find_overlapping_sets">
-<a class="viewcode-back" href="../../api/gesel.html#gesel.find_overlapping_sets">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">find_overlapping_sets</span><span class="p">(</span>
-    <span class="n">species</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">genes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="n">counts_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_rename_genes_in_sets</span><span class="p">(</span><span class="n">gene_ids</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">sets</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">curset</span> <span class="ow">in</span> <span class="n">sets</span><span class="p">:</span>
+        <span class="n">present</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">collected</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">curset</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">nm</span> <span class="ow">in</span> <span class="n">gene_ids</span><span class="p">[</span><span class="n">g</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">nm</span> <span class="ow">in</span> <span class="n">present</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">collected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nm</span><span class="p">)</span> <span class="c1"># making sure we add things in order.</span>
+                <span class="n">present</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nm</span><span class="p">)</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">collected</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span> 
+
+
+<div class="viewcode-block" id="rename_genes_in_sets">
+<a class="viewcode-back" href="../../api/gesel.html#gesel.rename_genes_in_sets">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rename_genes_in_sets</span><span class="p">(</span><span class="n">species</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sets</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Find all sets overlapping any gene in a user-supplied list, and return the number of overlaps per set.</span>
+<span class="sd">    Convert genes in sets from row indices to their identifiers.</span>
+<span class="sd">    If a gene has no identifiers of the specified ``type``, it is omitted from the affected character vectors in the output list.</span>
+<span class="sd">    If a gene has multiple identifiers of the specified ``type``, all identifiers are reported in the affected character vectors in the output list.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        species:</span>
 <span class="sd">            NCBI taxonomy ID of the species of interest.</span>
 
-<span class="sd">        genes:</span>
-<span class="sd">            List of integers containing gene indices.</span>
-<span class="sd">            Each gene index refers to a row of the data frame returned by :py:func:`~gesel.fetch_all_genes`.</span>
+<span class="sd">        sets:</span>
+<span class="sd">            List of lists, typically returned by :py:func:`~gesel.fetch_genes_for_some_sets` or :py:func:`~gesel.fetch_genes_for_all_sets`.</span>
+<span class="sd">            Each inner list represents a gene set and contains the identities of the genes (as row indices) in that set.</span>
 
-<span class="sd">        counts_only:</span>
-<span class="sd">            Whether to only report the number of overlapping genes for each set.</span>
+<span class="sd">        type:</span>
+<span class="sd">            Type of gene identifier to convert to.</span>
+<span class="sd">            This can be any type listed in :py:func:`~gesel.fetch_gene_types`.</span>
 
 <span class="sd">        config:</span>
 <span class="sd">            Configuration object, typically created by :py:func:`~gesel.new_config`.</span>
 <span class="sd">            If ``None``, the default configuration is used.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A tuple of length 2.</span>
-
-<span class="sd">        The first element is a :py:class:`~biocframe.BiocFrame` describing the overlapping sets.</span>
-<span class="sd">        Each row represents a set that is identified by the set index in the ``set`` column.</span>
-<span class="sd">        (This set index refers to a row of the data frame returned by :py:func:`~gesel.fetch_all_sets`.)</span>
-<span class="sd">        It also has:</span>
-
-<span class="sd">        - The ``counts`` column, if ``counts_only = True``.</span>
-<span class="sd">          This specifies the number of overlaps between the genes in the set and those in ``genes``.</span>
-<span class="sd">        - The ``genes`` column, if ``counts_only = False``.</span>
-<span class="sd">          This is a list that contains the entries of ``genes`` that overlap with those in the set.</span>
-
-<span class="sd">        Rows are sorted by the number of overlapping genes, in decreasing order.</span>
-
-<span class="sd">        The second element is an integer scalar containing the number of genes in ``genes`` that are present in at least one set in the Gesel database for ``species``.</span>
-<span class="sd">        This is intended for use as the number of draws when performing a hypergeomtric test for gene set enrichment, instead of ``len(genes)``.</span>
-<span class="sd">        It ensures that genes outside of the Gesel universe are ignored, e.g., due to user error, different genome versions.</span>
-<span class="sd">        Otherwise, unknown genes would inappropriately increase the number of draws and inflate the enrichment p-value.</span>
+<span class="sd">        List of lists of strings.</span>
+<span class="sd">        Each inner list represents a gene set and contains the identifies of the genes (as the specified ``type``) in that set.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; # Present like the first 10 genes are what we're interested in.</span>
-<span class="sd">        &gt;&gt;&gt; genes_of_interest = range(10)</span>
-<span class="sd">        &gt;&gt;&gt;</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; overlaps, present = gesel.find_overlapping_sets("9606", genes_of_interest)</span>
-<span class="sd">        &gt;&gt;&gt; print(overlaps)</span>
-<span class="sd">        &gt;&gt;&gt; present</span>
-<span class="sd">        &gt;&gt;&gt;</span>
-<span class="sd">        &gt;&gt;&gt; # More details on the overlapping sets.</span>
-<span class="sd">        &gt;&gt;&gt; all_sets = gesel.fetch_all_sets("9606")</span>
-<span class="sd">        &gt;&gt;&gt; print(all_sets[overlaps["set"],:])</span>
+<span class="sd">        &gt;&gt;&gt; sets = gesel.fetch_genes_for_some_sets("9606", range(0, 5))</span>
+<span class="sd">        &gt;&gt;&gt; gesel.rename_genes_in_sets("9606", sets, "symbol")</span>
 <span class="sd">    """</span>
-
-    <span class="n">info</span> <span class="o">=</span> <span class="n">fetch_sets_for_some_genes</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">genes</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">counts_only</span><span class="p">:</span>
-        <span class="n">collected</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">sets</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sets</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">collected</span><span class="p">:</span>
-                    <span class="n">collected</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">collected</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-
-        <span class="n">sets</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">collected</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-            <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
-
-        <span class="n">for_sorting</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">counts</span><span class="p">):</span>
-            <span class="n">for_sorting</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">count</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
-        <span class="n">for_sorting</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-        <span class="n">o</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">for_sorting</span><span class="p">]</span>
-        <span class="c1">#o = biocutils.order(counts, decreasing=True)</span>
-
-        <span class="n">overlap</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span>
-            <span class="s2">"set"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">o</span><span class="p">),</span>
-            <span class="s2">"count"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
-        <span class="p">})</span>
-
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">collected</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">g</span><span class="p">,</span> <span class="n">sets</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
-            <span class="n">gid</span> <span class="o">=</span> <span class="n">genes</span><span class="p">[</span><span class="n">g</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sets</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">collected</span><span class="p">:</span>
-                    <span class="n">collected</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gid</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">collected</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">gid</span><span class="p">]</span>
-
-        <span class="n">sets</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">members</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">genes</span> <span class="ow">in</span> <span class="n">collected</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-            <span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">genes</span><span class="p">)</span>
-            <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">genes</span><span class="p">))</span>
-
-        <span class="n">for_sorting</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">counts</span><span class="p">):</span>
-            <span class="n">for_sorting</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">count</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
-        <span class="n">for_sorting</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-        <span class="n">o</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">for_sorting</span><span class="p">]</span>
-        <span class="c1">#o = biocutils.order(counts, decreasing=True)</span>
-
-        <span class="n">overlap</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span>
-            <span class="s2">"set"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">o</span><span class="p">),</span>
-            <span class="s2">"genes"</span><span class="p">:</span> <span class="n">biocutils</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
-        <span class="p">})</span>
-
-    <span class="n">present</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">sets</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-        <span class="n">present</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-
-    <span class="k">return</span> <span class="n">overlap</span><span class="p">,</span> <span class="n">present</span></div>
+    <span class="n">all_genes</span> <span class="o">=</span> <span class="n">fetch_all_genes</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="p">[</span><span class="nb">type</span><span class="p">],</span> <span class="n">config</span> <span class="o">=</span> <span class="n">config</span><span class="p">)[</span><span class="nb">type</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">_rename_genes_in_sets</span><span class="p">(</span><span class="n">all_genes</span><span class="p">,</span> <span class="n">sets</span><span class="p">)</span></div>
 
 </pre></div>
         </article>
@@ -398,7 +322,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=6f76cb38"></script>
+</div><script src="../../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

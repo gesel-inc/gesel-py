@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="gesel" href="api/modules.html"><link rel="prev" title="Contributors" href="authors.html">
 
     <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
-        <title>Changelog - gesel 0.0.post1.dev1+gdee25d17f documentation</title>
+        <title>Changelog - gesel 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -163,7 +163,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">gesel 0.0.post1.dev1+gdee25d17f documentation</div></a>
+      <a href="index.html"><div class="brand">gesel 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -184,7 +184,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
-  <span class="sidebar-brand-text">gesel 0.0.post1.dev1+gdee25d17f documentation</span>
+  <span class="sidebar-brand-text">gesel 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -242,6 +242,22 @@
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
+<section id="version-0-2-0">
+<h2>Version 0.2.0<a class="headerlink" href="#version-0-2-0" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Consolidate multiple range requests into blocks to reduce network traffic and improve caching in all <code class="docutils literal notranslate"><span class="pre">*_some_*()</span></code> functions.
+The block size can be set via <code class="docutils literal notranslate"><span class="pre">consolidate_block_size()</span></code> or the <code class="docutils literal notranslate"><span class="pre">consolidate_block_size=</span></code> argument in <code class="docutils literal notranslate"><span class="pre">new_config()</span></code>.</p></li>
+<li><p>Relaxed the requirements for the <code class="docutils literal notranslate"><span class="pre">fetch_ranges=</span></code> function in <code class="docutils literal notranslate"><span class="pre">new_config()</span></code> to support coalesced ranges in the output.</p></li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">load_all_sets()</span></code>, <code class="docutils literal notranslate"><span class="pre">rename_genes_in_sets()</span></code> and <code class="docutils literal notranslate"><span class="pre">query_sets()</span></code> for more user-friendly interactions with the Gesel database.</p></li>
+<li><p>Renamed <code class="docutils literal notranslate"><span class="pre">map_genes_by_name()</span></code> to <code class="docutils literal notranslate"><span class="pre">create_gene_identifier_map()</span></code> for consistency with the R package.</p></li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">read_database_ranges()</span></code> to allow fetching of ranges from a local file.</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">types=None</span></code> as the default in <code class="docutils literal notranslate"><span class="pre">search_genes()</span></code> to use all available gene types.</p></li>
+<li><p>Wrap the <strong>gesel</strong> C++ library to support validation of database and gene annotation files in the <code class="docutils literal notranslate"><span class="pre">validate_*_files()</span></code> functions.</p></li>
+<li><p>Renamed <code class="docutils literal notranslate"><span class="pre">find_overlapping_sets()</span></code> to <code class="docutils literal notranslate"><span class="pre">search_overlapping_sets()</span></code> for consistency with the R package.
+The new function now computes hypergeometric p-values to test for enrichment.
+It also returns a BiocFrame directly rather than a tuple, given that the <code class="docutils literal notranslate"><span class="pre">present</span></code> option is not particularly relevant to most users.</p></li>
+</ul>
+</section>
 <section id="version-0-1-1">
 <h2>Version 0.1.1<a class="headerlink" href="#version-0-1-1" title="Link to this heading">¶</a></h2>
 <ul class="simple">
@@ -314,6 +330,7 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#version-0-2-0">Version 0.2.0</a></li>
 <li><a class="reference internal" href="#version-0-1-1">Version 0.1.1</a></li>
 <li><a class="reference internal" href="#version-0-1-0">Version 0.1.0</a></li>
 </ul>
@@ -327,7 +344,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=6f76cb38"></script>
+</div><script src="_static/documentation_options.js?v=938c9ccc"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

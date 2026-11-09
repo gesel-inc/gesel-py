@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
-        <title>gesel._download_gene_file - gesel 0.0.post1.dev1+gdee25d17f documentation</title>
+        <title>gesel._download_gene_file - gesel 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -162,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.0.post1.dev1+gdee25d17f documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.0.post1.dev1+gdee25d17f documentation</span>
+  <span class="sidebar-brand-text">gesel 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -235,7 +235,9 @@
         <article role="main" id="furo-main-content">
           <h1>Source code for gesel._download_gene_file</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_utils</span> <span class="k">as</span> <span class="n">utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._cache_directory</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache_directory</span>
 
 
 <div class="viewcode-block" id="download_gene_file">
@@ -260,7 +262,7 @@
 
 <span class="sd">        cache:</span>
 <span class="sd">            Path to a cache directory.</span>
-<span class="sd">            If ``None``, it is set to :py:func:`~cache_directory`.</span>
+<span class="sd">            If ``None``, it is set to :py:func:`~gesel.cache_directory`.</span>
 
 <span class="sd">        overwrite:</span>
 <span class="sd">            Boolean indicating whether any cached file should be overwritten with a new download.</span>
@@ -274,6 +276,8 @@
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">url</span> <span class="o">=</span> <span class="n">gene_url</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="n">cache_directory</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">_download_file</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">)</span></div>
 
 
@@ -351,7 +355,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=6f76cb38"></script>
+</div><script src="../../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

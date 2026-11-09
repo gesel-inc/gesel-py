@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
-        <title>gesel._utils - gesel 0.0.post1.dev1+gdee25d17f documentation</title>
+        <title>gesel._validate_database_files - gesel 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -162,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.0.post1.dev1+gdee25d17f documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.0.post1.dev1+gdee25d17f documentation</span>
+  <span class="sidebar-brand-text">gesel 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -233,108 +233,40 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for gesel._utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.parse</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+          <h1>Source code for gesel._validate_database_files</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_lib_gesel</span> <span class="k">as</span> <span class="n">lib</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_format_error</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
-    <span class="n">ctype</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">"content-type"</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">ctype</span> <span class="o">==</span> <span class="s2">"text/plain"</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
-
-
-<span class="n">_cache_directory</span> <span class="o">=</span> <span class="kc">None</span>
-
-
-<div class="viewcode-block" id="cache_directory">
-<a class="viewcode-back" href="../../api/gesel.html#gesel.cache_directory">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">cache_directory</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="validate_database_files">
+<a class="viewcode-back" href="../../api/gesel.html#gesel.validate_database_files">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_database_files</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">species</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">num_genes</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Get or set the default cache directory for :py:func:`~gesel.download_database_file` and :py:func:`~gesel.download_gene_file`.</span>
+<span class="sd">    Validate Gesel database files against the `specification &lt;https://github.com/gesel-inc/gesel-spec&gt;`_.</span>
+<span class="sd">    Invalid formatting will cause an error to be raised.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path:</span>
-<span class="sd">            Path to a new cache directory.</span>
+<span class="sd">            Path to a directory containing the database files.</span>
+
+<span class="sd">        species:</span>
+<span class="sd">            NCBI taxonomy ID of the species of interest.</span>
+
+<span class="sd">        num_genes:</span>
+<span class="sd">            Total number of genes available for this species.</span>
+<span class="sd">            This can be obtained as the return value of :py:func:`~gesel.validate_gene_files`.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        If ``path = None``, the path to the Gesel cache directory is returned.</span>
-<span class="sd">        This defaults to a location defined by the **appdirs** package,</span>
-<span class="sd">        and can be changed by setting the ``GESEL_CACHE_DIRECTORY`` environment variable before the first call to this function.</span>
+<span class="sd">        ``None``.</span>
 
-<span class="sd">        If ``path`` is provided, it is used to set the location of the cache directory, and the previous location is returned.</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; gesel.cache_directory()</span>
-<span class="sd">        &gt;&gt;&gt; old = gesel.cache_directory("/tmp/foo/bar") # setting it.</span>
-<span class="sd">        &gt;&gt;&gt; gesel.cache_directory() # now it's changed.</span>
-<span class="sd">        &gt;&gt;&gt; gesel.cache_directory(old) # setting it back.</span>
 <span class="sd">    """</span>
-    <span class="k">global</span> <span class="n">_cache_directory</span>
-    <span class="k">if</span> <span class="n">_cache_directory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">"GESEL_CACHE_DIRECTORY"</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
-            <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"GESEL_CACHE_DIRECTORY"</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">appdirs</span>
-            <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">appdirs</span><span class="o">.</span><span class="n">user_cache_dir</span><span class="p">(</span><span class="s2">"gesel"</span><span class="p">)</span>
+    <span class="n">lib</span><span class="o">.</span><span class="n">validate_database_files</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">species</span> <span class="o">+</span> <span class="s2">"_"</span><span class="p">),</span> <span class="n">num_genes</span><span class="p">)</span></div>
 
-    <span class="n">previous</span> <span class="o">=</span> <span class="n">_cache_directory</span>
-    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">path</span>
-    <span class="k">return</span> <span class="n">previous</span></div>
-
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_download_file</span><span class="p">(</span>
-    <span class="n">cache</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">cache</span> <span class="o">=</span> <span class="n">cache_directory</span><span class="p">()</span>
-
-    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="n">target</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">overwrite</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
-        <span class="c1"># Saving to a temporary file and renaming it on success,</span>
-        <span class="c1"># so we don't fail with a partially downloaded file in the cache.</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
-        <span class="n">tempfid</span><span class="p">,</span> <span class="n">temppath</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">tempfid</span><span class="p">)</span> <span class="c1"># avoid opening a handle to this file until we need it.</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
-            <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">300</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">_format_error</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temppath</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">temppath</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="c1"># this should be more or less atomic when both paths are on the same filesystem, so we'll omit the locks.</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">temppath</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temppath</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">target</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_decode_indices</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="n">details</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span> 
-    <span class="n">last</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">details</span><span class="p">):</span>
-        <span class="n">last</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">details</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">last</span>
-    <span class="k">return</span> <span class="n">details</span> 
 </pre></div>
         </article>
       </div>
@@ -367,7 +299,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=6f76cb38"></script>
+</div><script src="../../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

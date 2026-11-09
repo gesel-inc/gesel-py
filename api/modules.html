@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="gesel package" href="gesel.html"><link rel="prev" title="Changelog" href="../changelog.html">
 
     <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
-        <title>gesel - gesel 0.0.post1.dev1+gdee25d17f documentation</title>
+        <title>gesel - gesel 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -163,7 +163,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">gesel 0.0.post1.dev1+gdee25d17f documentation</div></a>
+      <a href="../index.html"><div class="brand">gesel 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -184,7 +184,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.0.post1.dev1+gdee25d17f documentation</span>
+  <span class="sidebar-brand-text">gesel 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -247,6 +247,8 @@
 <li class="toctree-l1"><a class="reference internal" href="gesel.html">gesel package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="gesel.html#module-gesel">Module contents</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.cache_directory"><code class="docutils literal notranslate"><span class="pre">cache_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.consolidate_block_size"><code class="docutils literal notranslate"><span class="pre">consolidate_block_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.create_gene_identifier_map"><code class="docutils literal notranslate"><span class="pre">create_gene_identifier_map()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.database_url"><code class="docutils literal notranslate"><span class="pre">database_url()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.download_database_file"><code class="docutils literal notranslate"><span class="pre">download_database_file()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.download_database_ranges"><code class="docutils literal notranslate"><span class="pre">download_database_ranges()</span></code></a></li>
@@ -269,11 +271,20 @@
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.find_overlapping_sets"><code class="docutils literal notranslate"><span class="pre">find_overlapping_sets()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.flush_memory_cache"><code class="docutils literal notranslate"><span class="pre">flush_memory_cache()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.gene_url"><code class="docutils literal notranslate"><span class="pre">gene_url()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.load_all_sets"><code class="docutils literal notranslate"><span class="pre">load_all_sets()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.map_genes_by_name"><code class="docutils literal notranslate"><span class="pre">map_genes_by_name()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.new_config"><code class="docutils literal notranslate"><span class="pre">new_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.prepare_database_files"><code class="docutils literal notranslate"><span class="pre">prepare_database_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.prepare_gene_files"><code class="docutils literal notranslate"><span class="pre">prepare_gene_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.query_sets"><code class="docutils literal notranslate"><span class="pre">query_sets()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.range_concurrency"><code class="docutils literal notranslate"><span class="pre">range_concurrency()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.read_database_ranges"><code class="docutils literal notranslate"><span class="pre">read_database_ranges()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.rename_genes_in_sets"><code class="docutils literal notranslate"><span class="pre">rename_genes_in_sets()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.search_genes"><code class="docutils literal notranslate"><span class="pre">search_genes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.search_overlapping_sets"><code class="docutils literal notranslate"><span class="pre">search_overlapping_sets()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.search_set_text"><code class="docutils literal notranslate"><span class="pre">search_set_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.validate_database_files"><code class="docutils literal notranslate"><span class="pre">validate_database_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gesel.html#gesel.validate_gene_files"><code class="docutils literal notranslate"><span class="pre">validate_gene_files()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -331,7 +342,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=6f76cb38"></script>
+</div><script src="../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

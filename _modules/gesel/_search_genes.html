@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
-        <title>gesel._search_genes - gesel 0.0.post1.dev1+gdee25d17f documentation</title>
+        <title>gesel._search_genes - gesel 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -162,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.0.post1.dev1+gdee25d17f documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.0.post1.dev1+gdee25d17f documentation</span>
+  <span class="sidebar-brand-text">gesel 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -237,7 +237,8 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_new_config</span> <span class="k">as</span> <span class="n">cfg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">._map_genes_by_name</span><span class="w"> </span><span class="kn">import</span> <span class="n">map_genes_by_name</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._create_gene_identifier_map</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_gene_identifier_map</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._fetch_gene_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_gene_types</span>
 
 
 <div class="viewcode-block" id="search_genes">
@@ -245,7 +246,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">search_genes</span><span class="p">(</span>
     <span class="n">species</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">genes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="n">types</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"entrez"</span><span class="p">,</span> <span class="s2">"ensembl"</span><span class="p">,</span> <span class="s2">"symbol"</span><span class="p">],</span>
+    <span class="n">types</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">ignore_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -261,7 +262,7 @@
 
 <span class="sd">        types:</span>
 <span class="sd">            Types of gene identifiers to return.</span>
-<span class="sd">            Typically one or more of ``symbol``, ``entrez``, and/or ``ensembl``.</span>
+<span class="sd">            If ``None``, defaults to the available types from :py:func:`~gesel.fetch_gene_types`.</span>
 
 <span class="sd">        ignore_case:</span>
 <span class="sd">            Whether case should be ignored when creating the mapping.</span>
@@ -290,12 +291,15 @@
     <span class="k">if</span> <span class="n">ignore_case</span><span class="p">:</span>
         <span class="n">genes</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">genes</span><span class="p">]</span>
 
+    <span class="k">if</span> <span class="n">types</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="n">fetch_gene_types</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="n">config</span><span class="p">)</span>
+
     <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">genes</span><span class="p">)):</span>
         <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
 
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">types</span><span class="p">:</span>
-        <span class="n">mappings</span> <span class="o">=</span> <span class="n">map_genes_by_name</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">ignore_case</span><span class="o">=</span><span class="n">ignore_case</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">mappings</span> <span class="o">=</span> <span class="n">create_gene_identifier_map</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">ignore_case</span><span class="o">=</span><span class="n">ignore_case</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">genes</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">mappings</span><span class="p">:</span>
                 <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">mappings</span><span class="p">[</span><span class="n">g</span><span class="p">]</span>
@@ -334,7 +338,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=6f76cb38"></script>
+</div><script src="../../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

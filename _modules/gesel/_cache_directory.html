@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
-        <title>gesel._map_genes_by_name - gesel 0.0.post1.dev1+gdee25d17f documentation</title>
+        <title>gesel._cache_directory - gesel 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -162,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.0.post1.dev1+gdee25d17f documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.0.post1.dev1+gdee25d17f documentation</span>
+  <span class="sidebar-brand-text">gesel 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -233,104 +233,50 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for gesel._map_genes_by_name</h1><div class="highlight"><pre>
+          <h1>Source code for gesel._cache_directory</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_new_config</span> <span class="k">as</span> <span class="n">cfg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">._fetch_all_genes</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_all_genes</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 
-<div class="viewcode-block" id="map_genes_by_name">
-<a class="viewcode-back" href="../../api/gesel.html#gesel.map_genes_by_name">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">map_genes_by_name</span><span class="p">(</span>
-    <span class="n">species</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">ignore_case</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="n">_cache_directory</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="cache_directory">
+<a class="viewcode-back" href="../../api/gesel.html#gesel.cache_directory">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">cache_directory</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Create a mapping of gene identifiers (Ensembl, symbol, etc.) to their gene indices.</span>
+<span class="sd">    Get or set the default cache directory for :py:func:`~gesel.download_database_file` and :py:func:`~gesel.download_gene_file`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        species:</span>
-<span class="sd">            NCBI taxonomy ID of the species of interest.</span>
-
-<span class="sd">        type:</span>
-<span class="sd">            Type of gene identifier.</span>
-<span class="sd">            Typically one of ``symbol``, ``entrez``, and/or ``ensembl``.</span>
-
-<span class="sd">        ignore_case:</span>
-<span class="sd">            Whether case should be ignored when creating the mapping.</span>
-
-<span class="sd">        config:</span>
-<span class="sd">            Configuration object, typically created by :py:func:`~gesel.new_config`.</span>
-<span class="sd">            If ``None``, the default configuration is used.</span>
+<span class="sd">        path:</span>
+<span class="sd">            Path to a new cache directory.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Dictionary where each key is the gene identifier of the specified ``type`` and each value is a list of integers.</span>
-<span class="sd">        Each list contains the indices of genes associated with that identifier (after ignoring case, if ``ignore_case = True``).</span>
-<span class="sd">        List entries should be interpreted as row indices into the data frame returned by :py:func:`~gesel.fetch_all_genes`.</span>
+<span class="sd">        If ``path = None``, the path to the Gesel cache directory is returned.</span>
+<span class="sd">        This defaults to a location defined by the **appdirs** package,</span>
+<span class="sd">        and can be changed by setting the ``GESEL_CACHE_DIRECTORY`` environment variable before the first call to this function.</span>
+
+<span class="sd">        If ``path`` is provided, it is used to set the location of the cache directory, and the previous location is returned.</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; import gesel</span>
-<span class="sd">        &gt;&gt;&gt; mapping = gesel.map_genes_by_name("9606", type="symbol")</span>
-<span class="sd">        &gt;&gt;&gt;</span>
-<span class="sd">        &gt;&gt;&gt; # Taking it for a spin:</span>
-<span class="sd">        &gt;&gt;&gt; found = mapping["SNAP25"]</span>
-<span class="sd">        &gt;&gt;&gt; print(found)</span>
-<span class="sd">        &gt;&gt;&gt;</span>
-<span class="sd">        &gt;&gt;&gt; # Cross-checking it</span>
-<span class="sd">        &gt;&gt;&gt; ref = gesel.fetch_all_genes("9606")["symbol"]</span>
-<span class="sd">        &gt;&gt;&gt; import biocutils</span>
-<span class="sd">        &gt;&gt;&gt; biocutils.subset(ref, found)</span>
+<span class="sd">        &gt;&gt;&gt; gesel.cache_directory()</span>
+<span class="sd">        &gt;&gt;&gt; old = gesel.cache_directory("/tmp/foo/bar") # setting it.</span>
+<span class="sd">        &gt;&gt;&gt; gesel.cache_directory() # now it's changed.</span>
+<span class="sd">        &gt;&gt;&gt; gesel.cache_directory(old) # setting it back.</span>
 <span class="sd">    """</span>
+    <span class="k">global</span> <span class="n">_cache_directory</span>
+    <span class="k">if</span> <span class="n">_cache_directory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">"GESEL_CACHE_DIRECTORY"</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"GESEL_CACHE_DIRECTORY"</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">appdirs</span>
+            <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">appdirs</span><span class="o">.</span><span class="n">user_cache_dir</span><span class="p">(</span><span class="s2">"gesel"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">ignore_case</span><span class="p">:</span>
-        <span class="n">store_name</span> <span class="o">=</span> <span class="s2">"lower"</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">store_name</span> <span class="o">=</span> <span class="s2">"cased"</span>
-
-    <span class="n">config</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_get_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-    <span class="n">cached</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">_get_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">"map_genes_by_name"</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
-
-    <span class="n">modified</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">cached</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="k">if</span> <span class="n">store_name</span> <span class="ow">in</span> <span class="n">cached</span><span class="p">:</span>
-        <span class="n">sfound</span> <span class="o">=</span> <span class="n">cached</span><span class="p">[</span><span class="n">store_name</span><span class="p">]</span>
-        <span class="n">modified</span> <span class="o">=</span> <span class="kc">False</span> 
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">sfound</span> <span class="o">=</span> <span class="p">{}</span> 
-        <span class="n">modified</span> <span class="o">=</span> <span class="kc">True</span> 
-
-    <span class="k">if</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">sfound</span><span class="p">:</span>
-        <span class="n">tfound</span> <span class="o">=</span> <span class="n">sfound</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">tfound</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">modified</span> <span class="o">=</span> <span class="kc">True</span>
-
-        <span class="n">genes</span> <span class="o">=</span> <span class="n">fetch_all_genes</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="p">[</span><span class="nb">type</span><span class="p">],</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)[</span><span class="nb">type</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">names</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">genes</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">ignore_case</span><span class="p">:</span>
-                    <span class="n">nm</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">nm</span> <span class="o">=</span> <span class="n">n</span>
-                <span class="k">if</span> <span class="n">nm</span> <span class="ow">in</span> <span class="n">tfound</span><span class="p">:</span>
-                    <span class="n">tfound</span><span class="p">[</span><span class="n">nm</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">tfound</span><span class="p">[</span><span class="n">nm</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">i</span><span class="p">])</span>
-
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tfound</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">tfound</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">modified</span><span class="p">:</span>
-        <span class="n">sfound</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span> <span class="o">=</span> <span class="n">tfound</span>
-        <span class="n">cached</span><span class="p">[</span><span class="n">store_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">sfound</span>
-        <span class="n">cfg</span><span class="o">.</span><span class="n">_set_cache</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">"map_genes_by_name"</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">cached</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">tfound</span></div>
+    <span class="n">previous</span> <span class="o">=</span> <span class="n">_cache_directory</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_cache_directory</span> <span class="o">=</span> <span class="n">path</span>
+    <span class="k">return</span> <span class="n">previous</span></div>
 
 </pre></div>
         </article>
@@ -364,7 +310,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=6f76cb38"></script>
+</div><script src="../../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
-        <title>gesel._new_config - gesel 0.0.post1.dev1+gdee25d17f documentation</title>
+        <title>gesel._new_config - gesel 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -162,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">gesel 0.0.post1.dev1+gdee25d17f documentation</div></a>
+      <a href="../../index.html"><div class="brand">gesel 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,7 +183,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">gesel 0.0.post1.dev1+gdee25d17f documentation</span>
+  <span class="sidebar-brand-text">gesel 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -248,7 +248,8 @@
     <span class="n">fetch_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fetch_file_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
     <span class="n">fetch_ranges</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">fetch_ranges_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">fetch_ranges_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+    <span class="n">consolidate_block_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Create a new configuration object to specify how the Gesel database should be queried.</span>
@@ -279,13 +280,34 @@
 <span class="sd">            Dictionary of name:value pairs containing extra arguments to pass to ``fetch_file``.</span>
 
 <span class="sd">        fetch_ranges:</span>
-<span class="sd">            Function that accepts three arguments - </span>
-<span class="sd">            the name of the file in the Gesel database, an integer vector containing the starts of the byte ranges, and another vector containing the ends of the byte ranges -</span>
-<span class="sd">            and returns a list of byte strings containing the contents of the specified ranges.</span>
+<span class="sd">            Function that accepts three arguments:</span>
+
+<span class="sd">            - ``name``, the name of a Gesel database file.</span>
+<span class="sd">            - ``start``, a list of integers containing the zero-indexed closed start of each byte range to extract from the file.</span>
+<span class="sd">              This may be of zero length.</span>
+<span class="sd">            - ``end``, a list of integers containing the zero-indexed open end of each byte range to extract from the file.</span>
+<span class="sd">              This should have the same length as ``start`` such that the ``i``-th byte range is defined as ``[start[i], end[i])``.</span>
+<span class="sd">              The set of byte ranges should be non-empty, non-overlapping, and sorted by increasing start/end position.</span>
+
+<span class="sd">            It should return a list containing tuples of:</span>
+
+<span class="sd">            1. A byte string representing the contents of a "retrieved" byte range.</span>
+<span class="sd">            2. An integer containing the zero-indexed closed start of the retrieved range.</span>
+<span class="sd">            3. An integer containing the zero-indexed open end of the retrieved range.</span>
+
+<span class="sd">            All retrieved byte ranges are non-empty but may be overlapping and in any order.</span>
+<span class="sd">            Each "requested" byte range (i.e., defined by ``start`` and ``end``) will be enclosed within at least one retrieved byte range.</span>
+<span class="sd">            Note that the retrieved byte ranges may not have a 1-to-1 mapping to the requested byte ranges,</span>
+<span class="sd">            e.g., if the server decides that adjacent requested ranges can be merged into a single output range.</span>
+
 <span class="sd">            If ``None``, it defaults to :py:func:`~gesel.download_database_ranges`.</span>
 
 <span class="sd">        fetch_ranges_kwargs:</span>
 <span class="sd">            Dictionary of name:value pairs containing extra arguments to pass to ``fetch_ranges``.</span>
+
+<span class="sd">        consolidate_block_size:</span>
+<span class="sd">            Block size for consolidated requests.</span>
+<span class="sd">            If ``None``, it defaults to :py:func:`~gesel.consolidate_block_size`.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Dictionary of Gesel configuration settings.</span>
@@ -302,7 +324,8 @@
         <span class="s2">"fetch_file"</span><span class="p">:</span> <span class="n">fetch_file</span><span class="p">,</span>
         <span class="s2">"fetch_file_kwargs"</span><span class="p">:</span> <span class="n">fetch_file_kwargs</span><span class="p">,</span>
         <span class="s2">"fetch_ranges"</span><span class="p">:</span> <span class="n">fetch_ranges</span><span class="p">,</span>
-        <span class="s2">"fetch_ranges_kwargs"</span><span class="p">:</span> <span class="n">fetch_ranges_kwargs</span>
+        <span class="s2">"fetch_ranges_kwargs"</span><span class="p">:</span> <span class="n">fetch_ranges_kwargs</span><span class="p">,</span>
+        <span class="s2">"consolidate_block_size"</span><span class="p">:</span> <span class="n">consolidate_block_size</span>
     <span class="p">}</span></div>
 
 
@@ -455,7 +478,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=6f76cb38"></script>
+</div><script src="../../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
